@@ -36,23 +36,30 @@ Only the ticker is strictly needed to start; gather the rest as you go.
 
 ## Tooling note — how "copy + populate" actually happens
 
-The available Google MCP tools are **Drive file-level only** (copy/create/read a
-whole file). There is **no Sheets cell-write or duplicate-tab API**, so you
-cannot programmatically add the new tab or type into cells. The reliable
-workflow is therefore:
+**Preferred — the Google Sheets MCP server (`google-sheets`, see
+[.mcp.json](../../../.mcp.json) and [docs/google-sheets-mcp-setup.md](../../../docs/google-sheets-mcp-setup.md)).**
+When its tools are available you can do the whole thing directly, no paste:
 
-1. You gather all the data and build a fully-populated, **tab-separated (TSV)**
-   grid that mirrors the template exactly.
-2. The user does two clicks: duplicate the `Sell Template` tab → rename it to
-   the ticker.
-3. The user selects cell `A1` of the new tab and pastes your TSV
-   (Edit → Paste, or Ctrl/Cmd-V). TSV keeps the comma-containing numbers
-   (e.g. `143,374,098,000`) inside single cells, and pasting over the duplicated
-   template preserves its Yes/No dropdowns and formatting.
+1. `copy_sheet` — duplicate the `Sell Template` tab into the same spreadsheet.
+2. `rename_sheet` — rename the copy to the ticker (e.g. `NVO`).
+3. `batch_update_cells` (or `update_cells`) — write the values into the cells
+   per the field map below. Use `get_sheet_data`/`list_sheets` first to confirm
+   the live layout and that the ticker tab doesn't already exist.
 
-Always hand the user the TSV in a fenced code block plus the two-click
-instructions. If a Google **Sheets** write integration is ever added, you can
-skip the paste and write the cells directly — the field map below still applies.
+Spreadsheet id: `1A5lDRpfB8QaSG2OYh08OCd0CMXV2maUAnGI-mGhnbUo`. Writing literal
+`Yes`/`No` into the dropdown cells keeps the data validation intact.
+
+**Fallback — copy/paste (use only if the `google-sheets` tools are NOT loaded,
+i.e. the integration isn't authenticated yet).**
+
+1. Build a fully-populated, **tab-separated (TSV)** grid mirroring the template.
+2. Tell the user to duplicate the `Sell Template` tab → rename it to the ticker.
+3. Tell them to select `A1` of the new tab and paste the TSV. TSV keeps the
+   comma-containing numbers (e.g. `143,374,098,000`) inside single cells, and
+   pasting over the duplicated template preserves dropdowns and formatting.
+
+Detect which path applies by checking whether the `google-sheets` MCP tools are
+present; prefer the direct path whenever they are.
 
 ## Procedure
 
@@ -126,9 +133,12 @@ investing*:
 - Peer price action
 - Analyst downgrades
 
-### 5. Build the TSV and deliver
-Produce the populated grid as TSV matching the layout below, then give the user
-the two-click duplicate-and-rename steps and tell them to paste at `A1`.
+### 5. Write the tab
+- **If the `google-sheets` MCP tools are available:** `copy_sheet` the
+  `Sell Template` tab, `rename_sheet` to the ticker, then `batch_update_cells`
+  with the values per the layout below. Confirm the result and link the tab.
+- **Otherwise:** produce the populated grid as TSV matching the layout below and
+  give the user the duplicate-rename-paste steps (paste at `A1`).
 
 ## Template layout reference (for building the TSV)
 
