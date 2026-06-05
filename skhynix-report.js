@@ -116,8 +116,32 @@ children.push(leadBullet("The bull framing", "A high-single-digit forward P/E fo
 children.push(leadBullet("The bear framing", "A ~7x multiple on peak-cycle earnings is the classic cyclical trap — low P/Es at the top, high P/Es at the bottom. After a ~250% run, the price already discounts a great deal of good news. Normalise margins toward a mid-cycle 30–40% and the multiple looks far less generous."));
 children.push(hr());
 
+// ----------------------------------------------- PRICE TARGET & SCENARIOS ------
+children.push(H1("7. Price Target & Scenario Analysis"));
+children.push(P("Because SK hynix's earnings are super-cycle-inflated, a single point target is misleading. We frame value across three through-cycle scenarios, anchored to the early-May 2026 price of ~₩1,686,000. These are illustrative, probability-weighted outcomes — not precise forecasts — and depend chiefly on how long the HBM shortage persists before triopoly capex closes the gap."));
+{
+  const w = [1700, 1300, 1500, 1500, 1400];
+  const rows = [
+    row(["Scenario", "Prob.", "Core assumption", "12–18m target", "vs spot"], w, {1:{align:C},3:{align:C},4:{align:C}}),
+    row(["Bull", "35%", "Structural HBM shortage to 2030; margins hold", "₩2,400,000", "+42%"], w,
+        {1:{align:C},3:{align:R,bold:true},4:{align:R,color:GREEN,bold:true}}),
+    row(["Base", "40%", "HBM premium persists; margins ease to mid-cycle", "₩1,900,000", "+13%"], w,
+        {1:{align:C},3:{align:R,bold:true},4:{align:R,color:GREEN}}),
+    row(["Bear", "25%", "Cycle rolls over; capacity catches demand", "₩1,100,000", "-35%"], w,
+        {1:{align:C},3:{align:R,bold:true},4:{align:R,color:RED,bold:true}}),
+    row(["Weighted", "100%", "Probability-weighted expected value", "₩1,875,000", "+11%"], w,
+        {0:{bold:true,fill:"D9E2F3"},1:{align:C,bold:true,fill:"D9E2F3"},2:{bold:true,fill:"D9E2F3"},3:{align:R,bold:true,fill:"D9E2F3"},4:{align:R,bold:true,fill:"D9E2F3"}}),
+  ];
+  children.push(table(rows, w));
+}
+children.push(P(""));
+children.push(P("The asymmetry is the point: the probability-weighted target sits only ~11% above spot, yet the bear case implies a ~35% drawdown. After a ~250% YTD run, the distribution of outcomes is skewed — modest expected upside against a fat left tail. The bull case is credible but requires the shortage to outlast three well-funded expanders; the bear case requires only that memory behave the way memory has always behaved.", { italics: true }));
+children.push(leadBullet("Bull triggers", "HBM4E qualified ahead of peers; Nvidia Rubin volumes exceed plan; 2027 supply still sold out; conventional DRAM stays tight."));
+children.push(leadBullet("Bear triggers", "Samsung/Micron close the Nvidia qualification gap; AI-capex growth decelerates; combined 2026–27 capex visibly outruns demand; HBM spot pricing rolls over."));
+children.push(hr());
+
 // ------------------------------------------------------------------ RISKS ------
-children.push(H1("7. Key Risks"));
+children.push(H1("8. Key Risks"));
 children.push(leadBullet("Cyclicality", "Memory is the most cyclical major tech sub-sector. The current shortage will eventually be met by industry-wide capacity additions, and pricing can reverse sharply."));
 children.push(leadBullet("Self-inflicted supply", "SK hynix, Samsung and Micron are collectively spending tens of billions to expand HBM — the cure for the very shortage driving today's margins."));
 children.push(leadBullet("Customer concentration", "Heavy dependence on Nvidia and the AI accelerator roadmap. Any slowdown in AI capex, or an architecture that needs less memory, hits the core thesis."));
@@ -127,9 +151,10 @@ children.push(leadBullet("Macro & geopolitical", "Tariff barriers, export contro
 children.push(hr());
 
 // -------------------------------------------------------- INVESTMENT VIEW ------
-children.push(H1("8. Investment View"));
+children.push(H1("9. Investment View"));
 children.push(P("SK hynix is the highest-quality way to own the AI memory cycle. It has earned a structural advantage in HBM, a net-cash balance sheet, and earnings power that, even haircut for cyclicality, dwarfs anything in its history. The franchise quality is real and has stepped up."));
 children.push(P("But the security is still, at root, a cyclical commodity producer enjoying an exceptional — and partly self-correcting — shortage. The 72% margin is a peak signal, not a baseline. The investment decision therefore reduces to a single question: how long does the HBM shortage persist before the triopoly's combined capex closes the gap? Bulls see a multi-year structural shortage into 2030; bears see the seeds of the next down-cycle already in the ground."));
+children.push(P("Our probability-weighted scenario work (Section 7) puts fair value around ₩1,875,000 — roughly 11% above the early-May 2026 price — against a bear-case drawdown near 35%. That is positive but modest expected value with a materially fat left tail. The implication is not 'avoid', but 'size and time with discipline': this is a position to scale into on cyclical weakness rather than to chase after a ~250% run."));
 children.push(leadBullet("Suitable for", "Investors who want concentrated, high-conviction exposure to AI infrastructure and can tolerate severe drawdowns and cyclicality."));
 children.push(leadBullet("Less suitable for", "Investors seeking stable compounding, who should weight the peak-cycle entry point and the history of memory boom-bust heavily."));
 children.push(leadBullet("Watch items", "HBM pricing trends, Samsung/Micron HBM4 qualification at Nvidia, the 2026 capex figure across all three players, and any change in Nvidia's accelerator roadmap or AI capex commentary."));
