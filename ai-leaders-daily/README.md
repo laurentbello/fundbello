@@ -18,28 +18,34 @@ Elon Musk · Dario Amodei** (plus broader lab/firm news that bears on competitiv
 - `watchlist.md` — **you edit this.** Your holdings + the moat behind each; graded every run.
 - `send_email.py` — delivery only (no LLM/API). Sends a pre-written digest JSON via Gmail SMTP.
 
-## Setup (one-time, in Claude Code on the web)
-1. **Add your holdings** → edit `watchlist.md` and commit (placeholder examples are in there now).
-2. **Set two environment variables** on the environment this repo uses (so the scheduled session
-   can send mail):
-   - `GMAIL_ADDRESS` — the Gmail account to send **from**
-   - `GMAIL_APP_PASSWORD` — a Gmail **App Password** for that account
-   - *(optional `RECIPIENT` — defaults to `laurentbello@gmail.com`)*
+## Setup (one-time) — as a Claude Code **Routine**
+This runs as a scheduled cloud session on your Claude subscription (no API key). Routines are
+created/managed at **[claude.ai/code/routines](https://claude.ai/code/routines)**, the Desktop
+app, or `/schedule` in a **local terminal** — note `/schedule` is disabled *inside* a Claude
+Code on the web session, so use the web Routines page.
 
-   Getting an App Password: enable 2-Step Verification on the sending Google account, then
-   Google Account → **Security → App passwords** → create one for "Mail" and use the 16-char
-   value. (Gmail blocks plain-password SMTP; the app password is the supported path.)
-3. **Make sure the environment's network policy allows outbound** (SMTP to `smtp.gmail.com:465`).
-   If egress is locked down, the send step will fail with a connection error — loosen the policy
-   or tell me and I'll adapt. (Web search for the research step also needs network access.)
-4. **Create a scheduled trigger** (Automations / "Schedule" in the web app) on this repo:
-   - **When:** daily, 1 PM Mauritius. That's `0 9 * * *` if it asks for UTC cron, or pick
-     timezone `Indian/Mauritius` at 13:00.
-   - **Prompt:** *"Follow the instructions in `ai-leaders-daily/PROMPT.md` and send today's
-     briefing."*
-   - Ensure **web search** is enabled for that environment.
+1. **Add your holdings** → edit `watchlist.md` and commit.
+2. **Merge this branch to the default branch.** Routines clone the repo's *default* branch, so
+   these files (`PROMPT.md`, `watchlist.md`, `send_email.py`) must be on `main`.
+3. **Create the routine** at [claude.ai/code/routines](https://claude.ai/code/routines) → **New routine**:
+   - **Prompt:** *"Follow the instructions in `ai-leaders-daily/PROMPT.md` and send today's briefing."*
+   - **Repository:** `laurentbello/fundbello`.
+   - **Environment:** set **Network access = Full** (Gmail SMTP `smtp.gmail.com:465` is not in the
+     default "Trusted" allowlist), and add **environment variables**:
+     - `GMAIL_ADDRESS` — the Gmail account to send **from**
+     - `GMAIL_APP_PASSWORD` — a Gmail **App Password** for that account
+     - *(optional `RECIPIENT` — defaults to `laurentbello@gmail.com`)*
 
-Each run: the session researches → writes `out/digest.json` → runs `send_email.py` to deliver it.
+     App Password: enable 2-Step Verification on the sending Google account → Google Account →
+     **Security → App passwords** → create one for "Mail" (16 chars). Gmail blocks plain-password
+     SMTP; the app password is the supported path.
+   - **Trigger → Schedule:** **daily at 1:00 PM**. Enter it in your **local (Mauritius) time** —
+     the form converts to UTC automatically, so no cron math needed. (For a custom cadence you can
+     run `/schedule update` from a local terminal; minimum interval is 1 hour.)
+4. Click **Create**, then **Run now** on the routine's page to test immediately.
+
+Each run: the cloud session researches → writes `out/digest.json` → runs `send_email.py` to
+deliver it. Watch any run as a normal session to see exactly what it did.
 
 ## Editing what it watches
 - **Your positions:** edit `watchlist.md`, commit. No code change.
@@ -54,7 +60,10 @@ Trigger a session manually with the same prompt: *"Follow `ai-leaders-daily/PROM
 today's briefing."* If `GMAIL_ADDRESS` / `GMAIL_APP_PASSWORD` are set and egress is open, the
 email arrives; if not, the session reports the exact error so you can fix the setup.
 
-## Why not GitHub Actions?
-A cron in GitHub Actions can't use your Claude membership — it would need a paid API key. Since
-you want to avoid API billing, the scheduled-session approach above is the right fit: same daily
-cadence, same hands-off send, but the model usage rides on your subscription.
+## Why a Routine (not GitHub Actions)?
+A cron in GitHub Actions can't use your Claude membership — it would need a paid API key. A
+**Routine** runs the session on your subscription instead: same daily cadence, same hands-off
+send, zero API billing. Note: routines must be **created by you** at claude.ai/code/routines —
+there is no agent/API tool to create one (the `/fire` endpoint only *triggers* an existing
+routine), and `/schedule` is disabled inside web sessions. So I prepared everything the routine
+runs; creating the routine itself is the one step that has to happen in your account.
