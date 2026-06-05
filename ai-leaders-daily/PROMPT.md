@@ -1,10 +1,11 @@
 # AI Leaders Daily — Agent Prompt (Moat & Disruption Watch)
 
-> Single source of truth for the agent's behavior. Runs as a **Claude Code scheduled trigger**
-> (billed to Laurent's Claude membership — no paid API). Paste the `## ROLE` … end of this file
-> into the trigger prompt, or point the trigger at this file. The session researches with
-> WebSearch/WebFetch, then **sends** the email itself via `send_email.py` (Gmail SMTP) — it does
-> not rely on the draft-only Gmail connector. See `README.md` for trigger + env setup.
+> Single source of truth for the agent's behavior. Runs as a **Claude Code Routine** (a
+> scheduled cloud session billed to Laurent's Claude membership — no paid API). The routine's
+> prompt points here: *"Follow ai-leaders-daily/PROMPT.md and send today's briefing."* The
+> session researches with WebSearch/WebFetch, then **sends** the email itself via `send_email.py`
+> (Gmail SMTP) — it does not rely on the draft-only Gmail connector. See `README.md` for the
+> routine + environment setup (env vars, Full network access).
 
 ---
 
