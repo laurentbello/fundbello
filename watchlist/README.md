@@ -13,7 +13,8 @@ email itself over Gmail SMTP, so there's no Anthropic API key and no draft step.
 ## How it's organized
 ```
 watchlist/
-├── PROMPT.md                       # the agent's instructions (single source of truth)
+├── PROMPT.md                       # QUARTERLY run — full earnings/spread workup (single source of truth)
+├── PROMPT-fast.md                  # MONTHLY run — event-driven fast-trigger sweep, alerts only
 ├── README.md                       # this file — Routine + environment setup
 ├── send_email.py                   # delivery only (no LLM/API); sends a digest JSON via Gmail SMTP
 └── skills/
@@ -60,10 +61,19 @@ Code on the web session, so use the web Routines page).
      a local terminal if needed.
 3. Click **Create**, then **Run now** to test immediately.
 
-> Want faster coverage of the time-sensitive legislative/stablecoin triggers (CCCA attachment, a
-> major-merchant stablecoin launch)? Add a second, lighter **monthly** routine with the same prompt —
-> when there's no new earnings exhibit the agent simply runs the Trigger 2/3/4 news sweep and sends a
-> short status.
+### Monthly fast-trigger routine (recommended second routine)
+The quarterly run can't catch a CCCA attachment, a regulator's network-fee ruling, or a
+major-merchant stablecoin launch that lands *between* earnings — those can move any day. Add a
+second, lighter routine to sweep just those:
+- **Prompt:** *"Follow the instructions in `watchlist/PROMPT-fast.md` and run the fast-trigger sweep."*
+- **Repository / Environment:** same as above (`laurentbello/fundbello`, Network = Full, the two
+  Gmail env vars).
+- **Trigger → Schedule:** **monthly**.
+
+Unlike the quarterly digest, this sweep is an **exception monitor: it emails only when a fast trigger
+fires** (or a development is material enough to act on now). Most months it runs, finds nothing, and
+sends nothing — the session log shows `all quiet — no email sent`. It never pulls earnings data or
+touches the spread CSV, so it makes no commits.
 
 ## Testing it now
 Trigger a session manually with the same prompt: *"Follow `watchlist/PROMPT.md` and run this cycle's
