@@ -21,7 +21,7 @@ export default function InvestorsPage() {
         </h1>
         <p className="mt-4 leading-relaxed text-fg-soft">
           Every manager below is followed filing-by-filing. Open a profile for
-          full holdings, sector allocation, and quarter-over-quarter activity.
+          full holdings and quarter-over-quarter activity.
         </p>
       </Reveal>
 

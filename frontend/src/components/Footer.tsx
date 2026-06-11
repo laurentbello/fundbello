@@ -22,10 +22,10 @@ export default function Footer() {
           </nav>
         </div>
         <p className="mt-6 text-xs leading-relaxed text-fg-faint">
-          © {new Date().getFullYear()} FundBello. All data shown is
-          illustrative sample data derived from public 13F-style filings and is
-          provided for research purposes only. Nothing on this site constitutes
-          investment advice.
+          © {new Date().getFullYear()} FundBello. Data is derived from public
+          13F and fund filings and is provided for research purposes only. It
+          may contain errors or be out of date. Nothing on this site
+          constitutes investment advice.
         </p>
       </div>
     </footer>
