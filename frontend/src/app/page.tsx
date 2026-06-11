@@ -4,6 +4,7 @@ import { formatMoney, formatPct } from "@/lib/format";
 import Reveal from "@/components/Reveal";
 import ActionBadge from "@/components/ActionBadge";
 import SearchBox from "@/components/SearchBox";
+import SponsorSlot from "@/components/SponsorSlot";
 
 export default function Home() {
   const stocks = aggregateStocks();
@@ -122,6 +123,11 @@ export default function Home() {
             </table>
           </div>
         </section>
+      </Reveal>
+
+      {/* Sponsor slot — single, clearly-labelled, never covers content */}
+      <Reveal delay={100} className="mt-8">
+        <SponsorSlot />
       </Reveal>
 
       {/* Top holdings + recent activity */}
