@@ -7,60 +7,65 @@ import {
 } from "@/lib/data";
 import { formatMoney, formatPct } from "@/lib/format";
 import Reveal from "@/components/Reveal";
-import Sparkline from "@/components/Sparkline";
 import ActionBadge from "@/components/ActionBadge";
+import SearchBox from "@/components/SearchBox";
 
 export default function Home() {
-  const topStocks = aggregateStocks().slice(0, 8);
+  const stocks = aggregateStocks();
+  const topStocks = stocks.slice(0, 8);
   const recentMoves = investors
     .flatMap((inv) =>
       inv.activity.map((a) => ({
         investor: inv,
-        value:
-          inv.holdings.find((h) => h.ticker === a.ticker)?.value ?? 0,
+        value: inv.holdings.find((h) => h.ticker === a.ticker)?.value ?? 0,
         ...a,
       })),
     )
     .sort((a, b) => b.value - a.value)
     .slice(0, 8);
 
+  const searchStocks = stocks.map((s) => ({
+    ticker: s.ticker,
+    tickerSlug: s.tickerSlug,
+    company: s.company,
+    holders: s.holders.length,
+  }));
+  const searchFunds = investors.map((i) => ({
+    slug: i.slug,
+    name: i.name,
+    manager: i.manager,
+  }));
+
   return (
     <div className="mx-auto max-w-7xl px-4 pt-28 pb-20 sm:px-6 lg:px-8">
-      {/* Intro */}
+      {/* Intro + search */}
       <Reveal>
         <h1 className="font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
           Track the world&apos;s greatest investors
         </h1>
-        <p className="mt-3 max-w-2xl leading-relaxed text-fg-soft">
-          Portfolio holdings and trading activity of legendary fund managers,
-          updated every quarter from public filings.
-        </p>
         <p
           className="mt-3 text-sm text-fg-faint"
           style={{ fontVariantNumeric: "tabular-nums" }}
         >
           {platformStats.investorsTracked} managers ·{" "}
           {formatMoney(platformStats.assetsTracked)} tracked ·{" "}
-          {LATEST_QUARTER} filings live
+          {LATEST_QUARTER} filings
         </p>
+        <div className="mt-6">
+          <SearchBox stocks={searchStocks} funds={searchFunds} />
+        </div>
       </Reveal>
 
       {/* Managers table */}
       <Reveal delay={80}>
         <section className="mt-10 overflow-hidden rounded-2xl border border-line bg-surface/60">
-          <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-line px-6 py-4">
+          <div className="border-b border-line px-6 py-4">
             <h2 className="font-display text-lg font-semibold text-fg">
               Managers
             </h2>
-            <Link
-              href="/investors"
-              className="text-sm text-gold-soft transition-colors hover:text-gold"
-            >
-              Search &amp; filter →
-            </Link>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] text-sm">
+            <table className="w-full min-w-[480px] text-sm">
               <thead>
                 <tr className="border-b border-line text-left text-[11px] tracking-widest text-fg-faint uppercase">
                   <th scope="col" className="px-6 py-3 font-medium">
@@ -72,14 +77,8 @@ export default function Home() {
                   <th scope="col" className="px-4 py-3 text-right font-medium">
                     Portfolio
                   </th>
-                  <th scope="col" className="px-4 py-3 text-right font-medium">
-                    Holdings
-                  </th>
-                  <th scope="col" className="px-4 py-3 text-right font-medium">
-                    QoQ
-                  </th>
                   <th scope="col" className="px-6 py-3 text-right font-medium">
-                    Trend
+                    Holdings
                   </th>
                 </tr>
               </thead>
@@ -121,30 +120,8 @@ export default function Home() {
                     <td className="px-4 py-3.5 text-right font-medium text-fg">
                       {formatMoney(inv.aum)}
                     </td>
-                    <td className="px-4 py-3.5 text-right text-fg-soft">
+                    <td className="px-6 py-3.5 text-right text-fg-soft">
                       {inv.holdingsCount}
-                    </td>
-                    <td
-                      className={`px-4 py-3.5 text-right font-medium ${
-                        inv.qoqChange == null
-                          ? "text-fg-faint"
-                          : inv.qoqChange >= 0
-                            ? "text-gain"
-                            : "text-loss"
-                      }`}
-                    >
-                      {inv.qoqChange == null
-                        ? "—"
-                        : formatPct(inv.qoqChange, true)}
-                    </td>
-                    <td className="px-6 py-3.5">
-                      <span className="flex justify-end">
-                        {inv.trend.length > 1 ? (
-                          <Sparkline data={inv.trend} width={88} height={26} />
-                        ) : (
-                          <span className="text-fg-faint">—</span>
-                        )}
-                      </span>
                     </td>
                   </tr>
                 ))}
@@ -186,7 +163,7 @@ export default function Home() {
               <tbody style={{ fontVariantNumeric: "tabular-nums" }}>
                 {topStocks.map((s) => (
                   <tr
-                    key={s.ticker}
+                    key={s.tickerSlug}
                     className="group border-b border-line/50 transition-colors last:border-0 hover:bg-raised/60"
                   >
                     <td className="px-6 py-3">

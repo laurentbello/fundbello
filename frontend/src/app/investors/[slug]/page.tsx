@@ -47,7 +47,7 @@ export default async function InvestorPage({
     <div className="mx-auto max-w-7xl px-4 pt-24 pb-20 sm:px-6 lg:px-8">
       <Reveal>
         <Link
-          href="/investors"
+          href="/"
           className="group inline-flex items-center gap-1.5 text-sm text-fg-soft transition-colors hover:text-gold-soft"
         >
           <ArrowLeft
