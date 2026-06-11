@@ -82,10 +82,18 @@ log shows `all quiet — no email sent`. It never pulls earnings data or touches
 makes no commits.
 
 ## Testing it now
-Trigger a session manually with the same prompt: *"Follow `watchlist/PROMPT.md` and run this cycle's
-watchlist check."* If `GMAIL_ADDRESS` / `GMAIL_APP_PASSWORD` are set and egress is open, the email
-arrives; if not, the session reports the exact error so you can fix the setup. You can also run the
-core signal directly without the agent:
+**Guaranteed-email check (recommended first run):** trigger a manual session with the SETUP TEST
+prompt — *"Follow `watchlist/PROMPT.md` — SETUP TEST — and confirm delivery."* The `SETUP TEST` token
+puts the agent in setup-test mode: it bypasses the send-gate and emails a short "setup confirmed"
+digest (current spread table + status) regardless of triggers, without fetching earnings or making
+any commits. If the email arrives, your env vars + egress are correct; if not, the session reports
+the exact error. Use this once to prove the pipe works, then remove `SETUP TEST` for real runs.
+
+**Normal manual run:** *"Follow `watchlist/PROMPT.md` and run this cycle's watchlist check."* — this
+is event-gated, so unless Visa has posted a new quarter or a trigger fired, it correctly sends
+nothing and logs why.
+
+You can also run the core signal directly without the agent:
 `python3 watchlist/skills/visa-moat-monitoring/scripts/europe_spread_tracker.py`
 
 ## Cost
