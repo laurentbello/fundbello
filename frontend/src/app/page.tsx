@@ -1,10 +1,5 @@
 import Link from "next/link";
-import {
-  investors,
-  aggregateStocks,
-  platformStats,
-  LATEST_QUARTER,
-} from "@/lib/data";
+import { investors, aggregateStocks, LATEST_QUARTER } from "@/lib/data";
 import { formatMoney, formatPct } from "@/lib/format";
 import Reveal from "@/components/Reveal";
 import ActionBadge from "@/components/ActionBadge";
@@ -47,8 +42,6 @@ export default function Home() {
           className="mt-3 text-sm text-fg-faint"
           style={{ fontVariantNumeric: "tabular-nums" }}
         >
-          {platformStats.investorsTracked} managers ·{" "}
-          {formatMoney(platformStats.assetsTracked)} tracked ·{" "}
           {LATEST_QUARTER} filings
         </p>
         <div className="mt-6">
