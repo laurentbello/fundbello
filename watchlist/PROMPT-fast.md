@@ -38,6 +38,13 @@ For `visa-moat-monitoring`, the fast triggers are:
   in Germany/France — note movement so the quarterly run can heighten spread sensitivity once live.
 
 ## TASK (every run)
+0. **SETUP TEST MODE.** If the run prompt for this session contains the token `SETUP TEST`
+   (case-insensitive), this is a one-time delivery check, not a real sweep. Skip the research and
+   send (steps 5–7) a short confirmation digest — subject `Moat Watchlist — fast-sweep setup
+   confirmed (DD Mon YYYY)`, body one line "Delivery path verified — this is a setup test, not an
+   alert" plus the list of fast triggers being watched. **Bypass the send decision** (always send in
+   this mode). Do not research, commit, or push. End with the one-line confirmation. Otherwise,
+   ignore this step and proceed normally.
 1. **ORIENT.** List the skill dirs under `watchlist/skills/`; read each `SKILL.md`; collect its
    event-driven triggers (as above). Do not run "First-run setup" or any tracker script here.
 2. **SWEEP the last ~10 days** (a touch more than the weekly interval, to avoid gaps). For each
