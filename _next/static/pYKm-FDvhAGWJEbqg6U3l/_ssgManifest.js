@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002Finvestors\u002F[slug]","\u002Fstocks\u002F[ticker]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()

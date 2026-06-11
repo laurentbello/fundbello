@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[97367,["/fundbello/_next/static/chunks/12pylkgnitr4c.js","/fundbello/_next/static/chunks/14mrh2-p_w84d.js"],"ViewportBoundary"]
+3:I[97367,["/fundbello/_next/static/chunks/12pylkgnitr4c.js","/fundbello/_next/static/chunks/14mrh2-p_w84d.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+5:I[27201,["/fundbello/_next/static/chunks/12pylkgnitr4c.js","/fundbello/_next/static/chunks/14mrh2-p_w84d.js"],"IconMark"]
+0:{"rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"0068 — Who owns Manycore Tech Inc — Dataroma Global"}],["$","meta","1",{"name":"description","content":"See which legendary investors hold Manycore Tech Inc (0068), their position sizes, and Q1 2026 buying and selling activity."}],["$","link","2",{"rel":"icon","href":"/fundbello/favicon.ico?favicon.2vob68tjqpejf.ico","sizes":"256x256","type":"image/x-icon"}],["$","$L5","3",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"pYKm-FDvhAGWJEbqg6U3l"}
