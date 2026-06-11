@@ -10,11 +10,19 @@ npm run build       # rebuild the static site
 ```
 
 The sheet must be shared as **"Anyone with the link can view"** for the sync
-to work. The sheet keeps all quarterly snapshots; the site only displays each
-fund's most recent quarter and uses older snapshots to compute the
+to work. The sheet keeps all quarterly snapshots; the site only displays funds
+that filed in the most recent quarter and uses older snapshots to compute the
 quarter-over-quarter change and the portfolio trend sparkline. New funds added
 to the sheet appear automatically; to show a manager name for them, add an
 entry to `FUND_META` in `src/lib/data.ts`.
+
+## Deployment
+
+The site deploys to GitHub Pages via `.github/workflows/deploy.yml`. Every
+deploy re-runs `sync-data` against the sheet, so to update the live site:
+edit the sheet, then either trigger the **Deploy site** workflow from the
+GitHub Actions tab (Run workflow), push any commit, or wait for the weekly
+scheduled run (Mondays 06:00 UTC).
 
 ## Getting Started
 

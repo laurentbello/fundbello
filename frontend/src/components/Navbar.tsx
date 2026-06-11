@@ -27,7 +27,7 @@ export default function Navbar() {
             <Landmark size={14} aria-hidden="true" />
           </span>
           <span className="font-display text-lg font-semibold tracking-tight">
-            FundBello
+            Dataroma Global
           </span>
         </Link>
 

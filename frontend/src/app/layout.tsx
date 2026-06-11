@@ -18,8 +18,8 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "FundBello — Follow the World's Greatest Investors",
-    template: "%s — FundBello",
+    default: "Dataroma Global — Follow the World's Greatest Investors",
+    template: "%s — Dataroma Global",
   },
   description:
     "Institutional-grade research tracking the portfolio holdings and trading activity of legendary international investors and hedge fund managers.",
