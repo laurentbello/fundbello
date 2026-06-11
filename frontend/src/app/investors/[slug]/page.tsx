@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { investors, getInvestor, LATEST_QUARTER } from "@/lib/data";
+import { investors, getInvestor } from "@/lib/data";
 import { formatMoney, formatPct, formatShares } from "@/lib/format";
 import Reveal from "@/components/Reveal";
 import ActionBadge from "@/components/ActionBadge";
@@ -20,9 +20,18 @@ export async function generateMetadata({
   const inv = getInvestor(slug);
   if (!inv) return {};
   return {
-    title: `${inv.name} — ${inv.firm}`,
-    description: `Track ${inv.name}'s portfolio at ${inv.firm}: top holdings, sector allocation and the latest ${LATEST_QUARTER} trading activity.`,
+    title: `${inv.name} — Portfolio`,
+    description: `Track ${inv.name}'s portfolio: holdings and the latest ${inv.quarterLabel} trading activity.`,
   };
+}
+
+function formatDate(iso: string): string {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
 }
 
 export default async function InvestorPage({
@@ -33,8 +42,6 @@ export default async function InvestorPage({
   const { slug } = await params;
   const investor = getInvestor(slug);
   if (!investor) notFound();
-
-  const maxSector = Math.max(...investor.sectors.map((s) => s.pct));
 
   return (
     <div className="mx-auto max-w-7xl px-4 pt-24 pb-20 sm:px-6 lg:px-8">
@@ -57,30 +64,34 @@ export default async function InvestorPage({
             {investor.name}
           </h1>
           <p className="mt-1.5 text-fg-soft">
-            {investor.firm} · {investor.country} · {investor.strategy}
-          </p>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-fg-faint italic">
-            “{investor.philosophy}”
+            {investor.manager ? `${investor.manager} · ` : ""}
+            As filed {investor.quarterLabel} ({formatDate(investor.asOf)})
           </p>
         </div>
 
         {/* Stats strip */}
-        <dl className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line/60 sm:grid-cols-4 lg:grid-cols-7">
+        <dl className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line/60 sm:grid-cols-5">
           {[
             { label: "Portfolio", value: formatMoney(investor.aum) },
             {
               label: "QoQ change",
-              value: formatPct(investor.qoqChange, true),
-              tone: investor.qoqChange >= 0 ? "gain" : "loss",
+              value:
+                investor.qoqChange == null
+                  ? "—"
+                  : formatPct(investor.qoqChange, true),
+              tone:
+                investor.qoqChange == null
+                  ? undefined
+                  : investor.qoqChange >= 0
+                    ? "gain"
+                    : "loss",
             },
             { label: "Holdings", value: String(investor.holdingsCount) },
             {
               label: "Top-10 weight",
               value: formatPct(investor.concentration),
             },
-            { label: "Turnover", value: formatPct(investor.turnover) },
-            { label: "Long-run CAGR", value: formatPct(investor.cagr) },
-            { label: "Since", value: String(investor.since) },
+            { label: "As of", value: formatDate(investor.asOf) },
           ].map((s) => (
             <div key={s.label} className="bg-surface/90 px-4 py-4">
               <dt className="text-[11px] tracking-widest text-fg-faint uppercase">
@@ -110,7 +121,9 @@ export default async function InvestorPage({
             <h2 className="font-display text-lg font-semibold text-fg">
               Holdings
             </h2>
-            <p className="text-xs text-fg-faint">As filed · {LATEST_QUARTER}</p>
+            <p className="text-xs text-fg-faint">
+              As filed · {investor.quarterLabel}
+            </p>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] text-sm">
@@ -181,14 +194,14 @@ export default async function InvestorPage({
                     </td>
                     <td
                       className={`px-4 py-3.5 text-right font-medium ${
-                        h.changePct > 0
-                          ? "text-gain"
-                          : h.changePct < 0
-                            ? "text-loss"
-                            : "text-fg-faint"
+                        h.changePct == null || h.changePct === 0
+                          ? "text-fg-faint"
+                          : h.changePct > 0
+                            ? "text-gain"
+                            : "text-loss"
                       }`}
                     >
-                      {h.changePct === 0
+                      {h.changePct == null || h.changePct === 0
                         ? "—"
                         : h.action === "new"
                           ? "NEW"
@@ -205,77 +218,44 @@ export default async function InvestorPage({
         </section>
       </Reveal>
 
-      {/* Activity + sector allocation */}
-      <div className="mt-8 grid gap-8 lg:grid-cols-2">
-        <Reveal delay={120}>
-          <section className="overflow-hidden rounded-2xl border border-line bg-surface/60">
-            <div className="border-b border-line px-6 py-4">
-              <h2 className="font-display text-lg font-semibold text-fg">
-                Recent activity
-              </h2>
-            </div>
+      {/* Quarterly activity */}
+      <Reveal delay={120}>
+        <section className="mt-8 overflow-hidden rounded-2xl border border-line bg-surface/60">
+          <div className="border-b border-line px-6 py-4">
+            <h2 className="font-display text-lg font-semibold text-fg">
+              Activity · {investor.quarterLabel}
+            </h2>
+          </div>
+          {investor.activity.length === 0 ? (
+            <p className="px-6 py-8 text-sm text-fg-soft">
+              No position changes reported this quarter.
+            </p>
+          ) : (
             <ul>
               {investor.activity.map((a) => (
                 <li
-                  key={`${a.quarter}-${a.ticker}`}
+                  key={`${a.action}-${a.ticker}`}
                   className="border-b border-line/50 last:border-0"
                 >
                   <Link
                     href={`/stocks/${a.ticker.toLowerCase()}`}
                     className="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-raised/60"
                   >
-                    <span
-                      className="w-16 shrink-0 text-xs text-fg-faint"
-                      style={{ fontVariantNumeric: "tabular-nums" }}
-                    >
-                      {a.quarter}
-                    </span>
                     <ActionBadge action={a.action} />
                     <span className="font-semibold text-fg">{a.ticker}</span>
-                    <span className="ml-auto hidden truncate pl-3 text-xs text-fg-soft sm:block">
+                    <span className="hidden truncate text-xs text-fg-faint sm:block">
+                      {a.company}
+                    </span>
+                    <span className="ml-auto pl-3 text-right text-xs text-fg-soft">
                       {a.detail}
                     </span>
                   </Link>
                 </li>
               ))}
             </ul>
-          </section>
-        </Reveal>
-
-        <Reveal delay={160}>
-          <section className="overflow-hidden rounded-2xl border border-line bg-surface/60">
-            <div className="border-b border-line px-6 py-4">
-              <h2 className="font-display text-lg font-semibold text-fg">
-                Sector allocation
-              </h2>
-            </div>
-            <ul className="px-6 py-4">
-              {investor.sectors.map((s) => (
-                <li key={s.sector} className="flex items-center gap-4 py-2">
-                  <span className="w-40 shrink-0 truncate text-sm text-fg-soft">
-                    {s.sector}
-                  </span>
-                  <span
-                    className="h-2 flex-1 overflow-hidden rounded-full bg-line"
-                    aria-hidden="true"
-                  >
-                    <span
-                      className="block h-full rounded-full bg-gold/70"
-                      style={{ width: `${(s.pct / maxSector) * 100}%` }}
-                    />
-                  </span>
-                  <span
-                    className="w-12 shrink-0 text-right text-sm font-medium text-fg"
-                    style={{ fontVariantNumeric: "tabular-nums" }}
-                  >
-                    {formatPct(s.pct)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </Reveal>
-      </div>
+          )}
+        </section>
+      </Reveal>
     </div>
   );
 }
