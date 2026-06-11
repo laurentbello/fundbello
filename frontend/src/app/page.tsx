@@ -11,14 +11,17 @@ import Sparkline from "@/components/Sparkline";
 import ActionBadge from "@/components/ActionBadge";
 
 export default function Home() {
-  const ranked = [...investors].sort((a, b) => b.aum - a.aum);
   const topStocks = aggregateStocks().slice(0, 8);
   const recentMoves = investors
     .flatMap((inv) =>
-      inv.activity
-        .filter((a) => a.quarter === LATEST_QUARTER)
-        .map((a) => ({ investor: inv, ...a })),
+      inv.activity.map((a) => ({
+        investor: inv,
+        value:
+          inv.holdings.find((h) => h.ticker === a.ticker)?.value ?? 0,
+        ...a,
+      })),
     )
+    .sort((a, b) => b.value - a.value)
     .slice(0, 8);
 
   return (
@@ -64,7 +67,7 @@ export default function Home() {
                     Manager
                   </th>
                   <th scope="col" className="px-4 py-3 font-medium">
-                    Strategy
+                    Top holding
                   </th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">
                     Portfolio
@@ -81,7 +84,7 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody style={{ fontVariantNumeric: "tabular-nums" }}>
-                {ranked.map((inv) => (
+                {investors.map((inv) => (
                   <tr
                     key={inv.slug}
                     className="group border-b border-line/50 transition-colors last:border-0 hover:bg-raised/60"
@@ -94,13 +97,26 @@ export default function Home() {
                         <span className="font-semibold text-fg transition-colors group-hover:text-gold-soft">
                           {inv.name}
                         </span>
-                        <span className="text-xs text-fg-faint">
-                          {inv.firm}
-                        </span>
+                        {inv.manager && (
+                          <span className="text-xs text-fg-faint">
+                            {inv.manager}
+                          </span>
+                        )}
                       </Link>
                     </td>
                     <td className="px-4 py-3.5 text-fg-soft">
-                      {inv.strategy}
+                      {inv.holdings[0] ? (
+                        <>
+                          <span className="font-medium text-fg">
+                            {inv.holdings[0].ticker}
+                          </span>{" "}
+                          <span className="text-xs text-fg-faint">
+                            {formatPct(inv.holdings[0].weight)}
+                          </span>
+                        </>
+                      ) : (
+                        "—"
+                      )}
                     </td>
                     <td className="px-4 py-3.5 text-right font-medium text-fg">
                       {formatMoney(inv.aum)}
@@ -110,18 +126,24 @@ export default function Home() {
                     </td>
                     <td
                       className={`px-4 py-3.5 text-right font-medium ${
-                        inv.qoqChange >= 0 ? "text-gain" : "text-loss"
+                        inv.qoqChange == null
+                          ? "text-fg-faint"
+                          : inv.qoqChange >= 0
+                            ? "text-gain"
+                            : "text-loss"
                       }`}
                     >
-                      {formatPct(inv.qoqChange, true)}
+                      {inv.qoqChange == null
+                        ? "—"
+                        : formatPct(inv.qoqChange, true)}
                     </td>
                     <td className="px-6 py-3.5">
                       <span className="flex justify-end">
-                        <Sparkline
-                          data={inv.performance}
-                          width={88}
-                          height={26}
-                        />
+                        {inv.trend.length > 1 ? (
+                          <Sparkline data={inv.trend} width={88} height={26} />
+                        ) : (
+                          <span className="text-fg-faint">—</span>
+                        )}
                       </span>
                     </td>
                   </tr>

@@ -1,5 +1,21 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Updating data from the Google Sheet
+
+Fund holdings live in [this Google Sheet](https://docs.google.com/spreadsheets/d/1cMno13PITLQpnIyl7fCKT436nDSC26X51fGdMur9eGI/edit?gid=0). To refresh the site:
+
+```bash
+npm run sync-data   # regenerates src/data/holdings.json from the sheet
+npm run build       # rebuild the static site
+```
+
+The sheet must be shared as **"Anyone with the link can view"** for the sync
+to work. The sheet keeps all quarterly snapshots; the site only displays each
+fund's most recent quarter and uses older snapshots to compute the
+quarter-over-quarter change and the portfolio trend sparkline. New funds added
+to the sheet appear automatically; to show a manager name for them, add an
+entry to `FUND_META` in `src/lib/data.ts`.
+
 ## Getting Started
 
 First, run the development server:

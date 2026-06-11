@@ -140,9 +140,11 @@ export default async function StockPage({
                         <span className="font-semibold text-fg transition-colors group-hover:text-gold-soft">
                           {investor.name}
                         </span>
-                        <span className="text-xs text-fg-faint">
-                          {investor.firm}
-                        </span>
+                        {investor.manager && (
+                          <span className="text-xs text-fg-faint">
+                            {investor.manager}
+                          </span>
+                        )}
                       </Link>
                     </td>
                     <td className="px-4 py-4 text-right font-medium text-fg">
