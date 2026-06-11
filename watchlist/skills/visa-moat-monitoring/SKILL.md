@@ -1,3 +1,8 @@
+---
+name: visa-moat-monitoring
+description: Quarterly moat-erosion monitoring for a Visa (V) equity position. Use each Visa earnings cycle to track the Europe-vs-US payments-volume spread (Wero/EPI/digital-euro early warning) plus cross-border, stablecoin, network-fee, and CCCA triggers, and to apply the standing sell/trim/exit discipline. Bundles europe_spread_tracker.py for the primary spread signal.
+---
+
 # Visa (V) — Moat Erosion Monitoring Module
 > Self-contained module for the watchlist agent. Append to SKILL.md or save as a referenced section.
 > Established June 2026 following the V/MA moat audit. Position added ~$300 (April 2026).
