@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { aggregateStocks, getStock, LATEST_QUARTER } from "@/lib/data";
 import { formatMoney, formatPct, formatShares } from "@/lib/format";
 import Reveal from "@/components/Reveal";
-import CountUp from "@/components/CountUp";
 import ActionBadge from "@/components/ActionBadge";
 import { ArrowLeft } from "lucide-react";
 
@@ -67,8 +66,8 @@ export default async function StockPage({
         </div>
         <dl className="flex gap-px overflow-hidden rounded-2xl border border-line bg-line/60">
           <div className="bg-surface/90 px-6 py-4 text-center">
-            <dd className="font-display text-2xl font-semibold text-fg">
-              <CountUp value={stock.totalValue} kind="money" />
+            <dd className="font-display text-2xl font-semibold text-fg" style={{ fontVariantNumeric: "tabular-nums" }}>
+              {formatMoney(stock.totalValue)}
             </dd>
             <dt className="mt-1 text-[11px] tracking-widest text-fg-faint uppercase">
               Combined value
