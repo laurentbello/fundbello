@@ -157,7 +157,7 @@ export default async function InvestorPage({
                   >
                     <td className="px-6 py-3.5">
                       <Link
-                        href={`/stocks/${h.ticker.toLowerCase()}`}
+                        href={`/stocks/${h.tickerSlug}`}
                         className="group flex flex-col"
                       >
                         <span className="font-semibold text-fg transition-colors group-hover:text-gold-soft">
@@ -238,7 +238,7 @@ export default async function InvestorPage({
                   className="border-b border-line/50 last:border-0"
                 >
                   <Link
-                    href={`/stocks/${a.ticker.toLowerCase()}`}
+                    href={`/stocks/${a.tickerSlug}`}
                     className="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-raised/60"
                   >
                     <ActionBadge action={a.action} />

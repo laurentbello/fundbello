@@ -5,11 +5,12 @@
  * change and the portfolio trend can be computed.
  *
  * Usage:  npm run sync-data
+ *         npm run sync-data -- path/to/export.csv   (parse a local CSV instead)
  *
  * The sheet must be shared as "Anyone with the link can view" for the
  * CSV export endpoint to work without credentials.
  */
-import { writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -85,15 +86,21 @@ function toIsoDate(s) {
   return `20${m[3]}-${String(MONTHS[m[2]]).padStart(2, "0")}-${m[1].padStart(2, "0")}`;
 }
 
-const res = await fetch(URL, { redirect: "follow" });
-if (!res.ok) {
-  console.error(
-    `Failed to fetch sheet (HTTP ${res.status}). ` +
-      "Make sure the sheet is shared as 'Anyone with the link can view'.",
-  );
-  process.exit(1);
+let csv;
+const localPath = process.argv[2];
+if (localPath) {
+  csv = readFileSync(localPath, "utf8");
+} else {
+  const res = await fetch(URL, { redirect: "follow" });
+  if (!res.ok) {
+    console.error(
+      `Failed to fetch sheet (HTTP ${res.status}). ` +
+        "Make sure the sheet is shared as 'Anyone with the link can view'.",
+    );
+    process.exit(1);
+  }
+  csv = await res.text();
 }
-const csv = await res.text();
 const rows = parseCsv(csv);
 
 const header = rows[0].map((h) => h.trim().toLowerCase());
@@ -125,7 +132,9 @@ for (const r of rows.slice(1)) {
   const fund = (r[idx.fund] ?? "").trim();
   const snapshot = toIsoDate(r[idx.snapshot]);
   if (!/Investments$/.test(fund) || !snapshot) continue;
-  const ticker = (r[idx.ticker] ?? "").trim();
+  // Dual-ticker cells (e.g. "PRM\nPRMB" after a symbol change) keep the
+  // current symbol, which is listed last.
+  const ticker = (r[idx.ticker] ?? "").trim().split(/\s+/).pop() ?? "";
   if (!ticker) continue;
   records.push({
     ticker,

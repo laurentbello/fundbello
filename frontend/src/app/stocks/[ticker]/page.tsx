@@ -9,7 +9,7 @@ import ActionBadge from "@/components/ActionBadge";
 import { ArrowLeft } from "lucide-react";
 
 export function generateStaticParams() {
-  return aggregateStocks().map((s) => ({ ticker: s.ticker.toLowerCase() }));
+  return aggregateStocks().map((s) => ({ ticker: s.tickerSlug }));
 }
 
 export async function generateMetadata({

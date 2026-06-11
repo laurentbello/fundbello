@@ -20,6 +20,7 @@ export type HoldingAction = "new" | "add" | "trim" | "hold" | "exit";
 
 export interface Holding {
   ticker: string;
+  tickerSlug: string;
   company: string;
   weight: number; // % of portfolio
   value: number; // USD
@@ -30,6 +31,7 @@ export interface Holding {
 
 export interface Activity {
   ticker: string;
+  tickerSlug: string;
   company: string;
   action: HoldingAction;
   detail: string;
@@ -51,27 +53,40 @@ export interface Investor {
 }
 
 /** Display metadata for funds we know; anything new in the sheet still works. */
-const FUND_META: Record<string, { slug: string; display: string; manager: string | null }> = {
-  "Akre Capital Management, LLC": {
-    slug: "akre-capital",
-    display: "Akre Capital Management",
-    manager: "John Neff",
-  },
-  "AltaRock Partners LP": {
-    slug: "altarock-partners",
-    display: "AltaRock Partners",
-    manager: "Mark Massey",
-  },
-  "Altimeter Capital Management, LP": {
-    slug: "altimeter-capital",
-    display: "Altimeter Capital Management",
-    manager: "Brad Gerstner",
-  },
-  "Atreides Management, LP": {
-    slug: "atreides-management",
-    display: "Atreides Management",
-    manager: "Gavin Baker",
-  },
+const FUND_META: Record<
+  string,
+  { slug: string; display: string; manager: string | null }
+> = {
+  "Akre Capital Management, LLC": { slug: "akre-capital", display: "Akre Capital Management", manager: "John Neff" },
+  "AltaRock Partners LP": { slug: "altarock-partners", display: "AltaRock Partners", manager: "Mark Massey" },
+  "Altimeter Capital Management, LP": { slug: "altimeter-capital", display: "Altimeter Capital", manager: "Brad Gerstner" },
+  "Atreides Management, LP": { slug: "atreides-management", display: "Atreides Management", manager: "Gavin Baker" },
+  "Blue Box Wealth Management SA": { slug: "blue-box", display: "Blue Box Wealth Management", manager: "William de Gale" },
+  "Blue Whale Capital LLP": { slug: "blue-whale", display: "Blue Whale Capital", manager: "Stephen Yiu" },
+  "Coatue Management, L.L.C.": { slug: "coatue", display: "Coatue Management", manager: "Philippe Laffont" },
+  "Crake Asset Management LLP": { slug: "crake", display: "Crake Asset Management", manager: null },
+  "Edgewood Management LLC": { slug: "edgewood", display: "Edgewood Management", manager: "Alan Breed" },
+  "Egerton Capital (UK) LLP": { slug: "egerton", display: "Egerton Capital", manager: "John Armitage" },
+  "Fundsmith Investment Services Ltd.": { slug: "fundsmith-investment-services", display: "Fundsmith Investment Services", manager: "Terry Smith" },
+  "Fundsmith LLP": { slug: "fundsmith", display: "Fundsmith", manager: "Terry Smith" },
+  "Harvard Management Company, Inc.": { slug: "harvard-management", display: "Harvard Management Company", manager: null },
+  "I.G.Y. Ltd": { slug: "igy", display: "I.G.Y.", manager: "Nick Sleep" },
+  "Lakehouse Capital Pty Ltd.": { slug: "lakehouse", display: "Lakehouse Capital", manager: null },
+  "Lone Pine Capital, L.L.C.": { slug: "lone-pine", display: "Lone Pine Capital", manager: "Stephen Mandel" },
+  "Oakcliff Capital Management LLC": { slug: "oakcliff", display: "Oakcliff Capital", manager: "Bryan Lawrence" },
+  "Octahedron Capital Management LP": { slug: "octahedron", display: "Octahedron Capital", manager: "Ram Parameswaran" },
+  "Pershing Square Capital Management, L.P.": { slug: "pershing-square", display: "Pershing Square", manager: "Bill Ackman" },
+  "Punch Card Management, LP": { slug: "punch-card", display: "Punch Card Management", manager: "Norbert Lou" },
+  "Rivulet Capital, LLC": { slug: "rivulet", display: "Rivulet Capital", manager: "Joshua Kuntz & Barry Lebovits" },
+  "Ruane, Cunniff & Goldfarb L.P.": { slug: "ruane-cunniff", display: "Ruane, Cunniff & Goldfarb", manager: null },
+  "RV Capital AG": { slug: "rv-capital", display: "RV Capital", manager: "Rob Vinall" },
+  "Skye Global Management LP": { slug: "skye-global", display: "Skye Global Management", manager: "Jamie Sterne" },
+  "Soroban Capital Partners LP": { slug: "soroban", display: "Soroban Capital", manager: "Eric Mandelblatt" },
+  "Surgocap Partners LP": { slug: "surgocap", display: "Surgocap Partners", manager: "Mala Gaonkar" },
+  "TCI Fund Management Limited": { slug: "tci", display: "TCI Fund Management", manager: "Sir Christopher Hohn" },
+  "The WindAcre Partnership LLC": { slug: "windacre", display: "The WindAcre Partnership", manager: "Snehal Amin" },
+  "Triple Frond Partners LLC": { slug: "triple-frond", display: "Triple Frond Partners", manager: null },
+  "Valley Forge Capital Management, LP": { slug: "valley-forge", display: "Valley Forge Capital", manager: "Dev Kantesaria" },
 };
 
 function slugify(s: string): string {
@@ -79,6 +94,10 @@ function slugify(s: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+export function tickerSlug(ticker: string): string {
+  return slugify(ticker);
 }
 
 export function quarterLabel(isoDate: string): string {
@@ -100,7 +119,17 @@ function actionFor(row: SheetRow): HoldingAction {
   return "hold";
 }
 
+/**
+ * The site displays the most recent quarter only: funds without a filing in
+ * the globally-latest snapshot (stale or removed from the universe) are
+ * dropped. Older snapshots still feed QoQ change and the trend sparkline.
+ */
 function buildInvestors(rows: SheetRow[]): Investor[] {
+  const globalLatest = rows.reduce(
+    (max, r) => (r.snapshot > max ? r.snapshot : max),
+    "",
+  );
+
   const byFund = new Map<string, SheetRow[]>();
   for (const r of rows) {
     const list = byFund.get(r.fund) ?? [];
@@ -112,6 +141,7 @@ function buildInvestors(rows: SheetRow[]): Investor[] {
   for (const [fund, fundRows] of byFund) {
     const snapshots = [...new Set(fundRows.map((r) => r.snapshot))].sort();
     const latest = snapshots[snapshots.length - 1];
+    if (latest !== globalLatest) continue;
     const previous = snapshots[snapshots.length - 2];
 
     const totalFor = (snap: string) =>
@@ -119,12 +149,25 @@ function buildInvestors(rows: SheetRow[]): Investor[] {
         .filter((r) => r.snapshot === snap)
         .reduce((sum, r) => sum + (r.valueMM ?? 0), 0) * 1e6;
 
-    const latestRows = fundRows
-      .filter((r) => r.snapshot === latest)
-      .sort((a, b) => (b.weightPct ?? 0) - (a.weightPct ?? 0));
+    // Merge the rare duplicate ticker rows (e.g. 13F + aggregated MF data).
+    const merged = new Map<string, SheetRow>();
+    for (const r of fundRows.filter((r) => r.snapshot === latest)) {
+      const existing = merged.get(r.ticker);
+      if (!existing) {
+        merged.set(r.ticker, { ...r });
+      } else {
+        existing.valueMM = (existing.valueMM ?? 0) + (r.valueMM ?? 0);
+        existing.weightPct = (existing.weightPct ?? 0) + (r.weightPct ?? 0);
+        existing.shares = (existing.shares ?? 0) + (r.shares ?? 0);
+      }
+    }
+    const latestRows = [...merged.values()].sort(
+      (a, b) => (b.weightPct ?? 0) - (a.weightPct ?? 0),
+    );
 
     const holdings: Holding[] = latestRows.map((r) => ({
       ticker: r.ticker,
+      tickerSlug: tickerSlug(r.ticker),
       company: r.company,
       weight: r.weightPct ?? 0,
       value: (r.valueMM ?? 0) * 1e6,
@@ -140,6 +183,7 @@ function buildInvestors(rows: SheetRow[]): Investor[] {
       const delta = r.sharesChange == null ? "" : formatChangeShares(r.sharesChange);
       activity.push({
         ticker: r.ticker,
+        tickerSlug: tickerSlug(r.ticker),
         company: r.company,
         action,
         detail:
@@ -152,10 +196,13 @@ function buildInvestors(rows: SheetRow[]): Investor[] {
     }
     if (previous) {
       const latestTickers = new Set(latestRows.map((r) => r.ticker));
+      const exited = new Set<string>();
       for (const r of fundRows.filter((r) => r.snapshot === previous)) {
-        if (!latestTickers.has(r.ticker)) {
+        if (!latestTickers.has(r.ticker) && !exited.has(r.ticker)) {
+          exited.add(r.ticker);
           activity.push({
             ticker: r.ticker,
+            tickerSlug: tickerSlug(r.ticker),
             company: r.company,
             action: "exit",
             detail: "Closed position",
@@ -197,7 +244,7 @@ function buildInvestors(rows: SheetRow[]): Investor[] {
 export const investors: Investor[] = buildInvestors(rawHoldings as SheetRow[]);
 
 export const LATEST_QUARTER = quarterLabel(
-  investors.map((i) => i.asOf).sort().at(-1) ?? "2025-12-30",
+  investors.map((i) => i.asOf).sort().at(-1) ?? "2026-03-30",
 );
 
 export function getInvestor(slug: string): Investor | undefined {
@@ -206,6 +253,7 @@ export function getInvestor(slug: string): Investor | undefined {
 
 export interface StockAggregate {
   ticker: string;
+  tickerSlug: string;
   company: string;
   holders: {
     investor: Investor;
@@ -220,10 +268,18 @@ export function aggregateStocks(): StockAggregate[] {
   const map = new Map<string, StockAggregate>();
   for (const inv of investors) {
     for (const h of inv.holdings) {
-      let agg = map.get(h.ticker);
+      let agg = map.get(h.tickerSlug);
       if (!agg) {
-        agg = { ticker: h.ticker, company: h.company, holders: [], totalValue: 0, buys: 0, sells: 0 };
-        map.set(h.ticker, agg);
+        agg = {
+          ticker: h.ticker,
+          tickerSlug: h.tickerSlug,
+          company: h.company,
+          holders: [],
+          totalValue: 0,
+          buys: 0,
+          sells: 0,
+        };
+        map.set(h.tickerSlug, agg);
       }
       agg.holders.push({ investor: inv, holding: h });
       agg.totalValue += h.value;
@@ -234,10 +290,9 @@ export function aggregateStocks(): StockAggregate[] {
   return [...map.values()].sort((a, b) => b.totalValue - a.totalValue);
 }
 
-export function getStock(ticker: string): StockAggregate | undefined {
-  return aggregateStocks().find(
-    (s) => s.ticker.toLowerCase() === ticker.toLowerCase(),
-  );
+export function getStock(slug: string): StockAggregate | undefined {
+  const target = slug.toLowerCase();
+  return aggregateStocks().find((s) => s.tickerSlug === target);
 }
 
 export const platformStats = {
