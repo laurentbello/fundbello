@@ -191,7 +191,7 @@ export default function Home() {
                   >
                     <td className="px-6 py-3">
                       <Link
-                        href={`/stocks/${s.ticker.toLowerCase()}`}
+                        href={`/stocks/${s.tickerSlug}`}
                         className="flex flex-col"
                       >
                         <span className="font-semibold text-fg transition-colors group-hover:text-gold-soft">

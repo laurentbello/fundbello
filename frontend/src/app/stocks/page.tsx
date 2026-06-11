@@ -60,7 +60,7 @@ export default function StocksPage() {
                     <td className="px-7 py-4 text-fg-faint">{i + 1}</td>
                     <td className="px-4 py-4">
                       <Link
-                        href={`/stocks/${s.ticker.toLowerCase()}`}
+                        href={`/stocks/${s.tickerSlug}`}
                         className="flex items-center gap-2"
                       >
                         <span className="flex flex-col">
