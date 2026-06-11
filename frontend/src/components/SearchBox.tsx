@@ -77,7 +77,7 @@ export default function SearchBox({
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder='Which investors own… e.g. "GE"'
+          placeholder="Company/ticker"
           autoComplete="off"
           className="h-12 w-full rounded-xl border border-line bg-surface pr-4 pl-11 text-base text-fg placeholder:text-fg-faint focus:border-gold/50 focus:ring-2 focus:ring-gold/20 focus:outline-none"
         />
