@@ -5,6 +5,7 @@ import { aggregateStocks, getStock, LATEST_QUARTER } from "@/lib/data";
 import { formatMoney, formatPct, formatShares } from "@/lib/format";
 import Reveal from "@/components/Reveal";
 import ActionBadge from "@/components/ActionBadge";
+import SponsorSlot from "@/components/SponsorSlot";
 import { ArrowLeft } from "lucide-react";
 
 export function generateStaticParams() {
@@ -179,6 +180,10 @@ export default async function StockPage({
             </table>
           </div>
         </div>
+      </Reveal>
+
+      <Reveal delay={120} className="mt-8">
+        <SponsorSlot />
       </Reveal>
     </div>
   );
