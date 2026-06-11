@@ -26,6 +26,15 @@ triggers, data series, cadence, and discipline. Run every skill that is DUE this
 it — step 1 discovers every skill present.)*
 
 ## TASK (every run)
+0. **SETUP TEST MODE.** If the run prompt for this session contains the token `SETUP TEST`
+   (case-insensitive), this is a one-time delivery check, not a real monitoring run. Do the minimum:
+   run the spread tracker on existing data (`python3
+   watchlist/skills/visa-moat-monitoring/scripts/europe_spread_tracker.py`), then compose and SEND
+   (steps 4–6) a short confirmation digest — subject `Moat Watchlist — setup confirmed (DD Mon YYYY)`,
+   body containing one line "Delivery path verified — this is a setup test, not an alert" plus the
+   current spread table and per-holding STATUS. **Bypass the WHEN TO SEND gate** (always send in this
+   mode). Do **not** fetch earnings, do **not** research triggers, and do **not** commit or push
+   anything. End with the one-line confirmation. Otherwise, ignore this step and proceed normally.
 1. **ORIENT.** List the skill dirs under `watchlist/skills/`. For each, read its `SKILL.md`. If a
    skill's data/script files are missing, run its "First-run setup" (create them verbatim from the
    embedded blocks, then run its verification). Decide which skills are DUE this run per their stated
