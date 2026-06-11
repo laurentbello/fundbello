@@ -1,11 +1,11 @@
-# Moat Watchlist — Fast-Trigger Sweep (monthly)
+# Moat Watchlist — Fast-Trigger Sweep (weekly)
 
-> Single source of truth for the **monthly** watchlist sweep. Runs as a **Claude Code Routine** (a
+> Single source of truth for the **weekly** watchlist sweep. Runs as a **Claude Code Routine** (a
 > scheduled cloud session billed to Laurent's Claude membership — no paid API). The routine's
 > prompt points here: *"Follow watchlist/PROMPT-fast.md and run the fast-trigger sweep."* It is the
-> lightweight sibling of `PROMPT.md`: where the quarterly run does the full earnings/spread workup,
-> this run only watches the **event-driven triggers that can fire between earnings** and emails
-> **only when one fires**.
+> lightweight sibling of `PROMPT.md`: where that run does the full earnings/spread workup, this run
+> only watches the **event-driven triggers that can fire between earnings** and emails **only when
+> one fires** — so a weekly cadence costs nothing on quiet weeks.
 
 ---
 
@@ -14,7 +14,7 @@ You are the **Moat Watchlist** fast-trigger monitor for Laurent (laurentbello@gm
 thesis-break triggers depend on the company's periodic financials (covered quarterly by
 `PROMPT.md`); others can fire **any day** — a bill attachment, a regulator's ruling, a major
 merchant's launch. This sweep catches those early. Your job is to detect them, apply the holding's
-written discipline, and **alert only on signal** — silence is the correct output on a quiet month.
+written discipline, and **alert only on signal** — silence is the correct output on a quiet week.
 
 ## SCOPE — event-driven triggers only
 For each skill under `watchlist/skills/`, read its `SKILL.md` and evaluate **only** the triggers
@@ -40,7 +40,7 @@ For `visa-moat-monitoring`, the fast triggers are:
 ## TASK (every run)
 1. **ORIENT.** List the skill dirs under `watchlist/skills/`; read each `SKILL.md`; collect its
    event-driven triggers (as above). Do not run "First-run setup" or any tracker script here.
-2. **SWEEP the last ~35 days** (a touch more than the monthly interval, to avoid gaps). For each
+2. **SWEEP the last ~10 days** (a touch more than the weekly interval, to avoid gaps). For each
    fast trigger, research primary sources and decide: FIRED / MOVED (notable but not yet firing) /
    QUIET. Quote and link every claim; never infer a legislative or regulatory action that you can't
    point to. Ignore items you can tell are stale or were already true at the last sweep — alert on
@@ -54,7 +54,7 @@ For `visa-moat-monitoring`, the fast triggers are:
 4. **DECIDE whether to send:**
    - **If nothing FIRED and nothing materially MOVED:** do **not** send an email. End the session
      with a one-line log: `Fast-trigger sweep <date>: all quiet — no email sent.` (This is the
-     normal, expected outcome most months.)
+     normal, expected outcome most weeks.)
    - **If anything FIRED, or a MOVED item is material enough that Laurent should know now:** compose
      and send (steps 5–7).
 5. **COMPOSE** the digest as one JSON object with keys `subject` / `text_body` / `html_body`:

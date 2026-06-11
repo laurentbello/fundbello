@@ -72,14 +72,22 @@ it — step 1 discovers every skill present.)*
    Needs `GMAIL_ADDRESS` and `GMAIL_APP_PASSWORD` in the environment (and outbound SMTP allowed). If
    it errors (missing env / blocked egress), report the exact error in one line so it can be fixed —
    do not silently fail.
-7. End with a one-line confirmation: subject sent + the single most important takeaway (which
-   trigger, if any, fired and the discipline it invokes). Don't ask follow-up questions during an
-   unattended run.
+7. End with a one-line confirmation: subject sent (or skipped) + the single most important takeaway
+   (which trigger, if any, fired and the discipline it invokes). Don't ask follow-up questions during
+   an unattended run.
 
-## ALWAYS SEND
-Send every cycle, even when nothing fires — an "ALL CLEAR" with the current spread is itself the
-signal Laurent is paying attention to. Keep all-clear emails short; make any fired trigger
-impossible to miss.
+## WHEN TO SEND (self-clocking — run weekly, email ~quarterly)
+This routine runs **weekly**, but Visa only reports ~4×/year, so most weeks there is nothing new.
+Gate the email on real news instead of the calendar:
+- **SEND** the full digest (steps 4–6) when **either**: (a) step 2a found a NEW earnings exhibit
+  this run (a quarter you hadn't logged yet), **or** (b) any trigger FIRED. A new-quarter ALL-CLEAR
+  is the quarterly heartbeat — keep it short; make any fired trigger impossible to miss.
+- **DO NOT SEND** when there is no new exhibit AND nothing fired (the normal weekly outcome). Skip
+  steps 4–6 and just end with a one-line log: `Watchlist check <date>: no new Visa quarter, no
+  trigger — no email sent.`
+This makes the weekly cadence behave as quarterly while auto-tracking Visa's actual (drifting)
+report dates. (The web Routines scheduler offers daily/weekly only — pick **weekly**; this gate
+supplies the quarterly rhythm.)
 
 ## STYLE
 Rules over vibes. Separate **fact** (quoted/linked primary source) from your **read** of it. Never
