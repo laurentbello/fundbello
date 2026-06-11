@@ -13,8 +13,8 @@ email itself over Gmail SMTP, so there's no Anthropic API key and no draft step.
 ## How it's organized
 ```
 watchlist/
-├── PROMPT.md                       # QUARTERLY run — full earnings/spread workup (single source of truth)
-├── PROMPT-fast.md                  # MONTHLY run — event-driven fast-trigger sweep, alerts only
+├── PROMPT.md                       # EARNINGS run — full spread/trigger workup; emails on a new Visa quarter
+├── PROMPT-fast.md                  # FAST-TRIGGER sweep — event-driven; emails only when a trigger fires
 ├── README.md                       # this file — Routine + environment setup
 ├── send_email.py                   # delivery only (no LLM/API); sends a digest JSON via Gmail SMTP
 └── skills/
@@ -43,37 +43,43 @@ Routines are created/managed at **[claude.ai/code/routines](https://claude.ai/co
 Desktop app, or `/schedule` in a **local terminal** (note `/schedule` is disabled *inside* a Claude
 Code on the web session, so use the web Routines page).
 
+> **About cadence:** the web Routines scheduler only offers **daily / weekly** — there is no
+> "quarterly" option. Both routines below are therefore scheduled **weekly**, and each one decides
+> internally whether the week warrants an email. The earnings run sends only when Visa posts a new
+> quarter (≈4×/year); the fast sweep sends only when a trigger fires. So "weekly" is the cadence the
+> *session* runs at, not the cadence you get *email* at — the prompts supply the real rhythm and
+> auto-track Visa's actual (drifting) report dates.
+
 1. **Merge this to `main`** — routines clone the repo's *default* branch, and the agent also pushes
-   the updated CSV to that branch. (This currently lives on a feature branch / PR.)
-2. **Create the routine** → **New routine**:
+   the updated CSV to that branch.
+2. **Create the earnings routine** → **New routine**:
    - **Prompt:** *"Follow the instructions in `watchlist/PROMPT.md` and run this cycle's watchlist check."*
    - **Repository:** `laurentbello/fundbello`.
    - **Environment:** set **Network access = Full** (the agent fetches investor.visa.com, congress.gov,
      etc., and Gmail SMTP `smtp.gmail.com:465` is not in the default "Trusted" allowlist), and add
      **environment variables**:
      - `GMAIL_ADDRESS` — the Gmail account to send **from**
-     - `GMAIL_APP_PASSWORD` — a Gmail **App Password** for that account (16 chars; Security → App
-       passwords, requires 2-Step Verification)
+     - `GMAIL_APP_PASSWORD` — a Gmail **App Password** for that account (16 chars, **no spaces**;
+       Security → App passwords, requires 2-Step Verification)
      - *(optional `RECIPIENT` — defaults to `laurentbello@gmail.com`)*
-   - **Trigger → Schedule:** **quarterly**, a few days after each Visa earnings release (next: **after
-     Jul 28, 2026**). Enter times in your **local (Mauritius) time** — the form converts to UTC.
-     Routines' minimum interval is 1 hour; for an exact quarterly cadence use `/schedule update` from
-     a local terminal if needed.
+   - **Trigger → Schedule:** **weekly** (pick any day/time; enter it in your local Mauritius time, the
+     form converts to UTC). The prompt's "WHEN TO SEND" gate makes it email only on a new Visa quarter
+     or a fired trigger, so the other ~48 weeks it runs, finds nothing new, and sends nothing.
 3. Click **Create**, then **Run now** to test immediately.
 
-### Monthly fast-trigger routine (recommended second routine)
-The quarterly run can't catch a CCCA attachment, a regulator's network-fee ruling, or a
+### Fast-trigger routine (recommended second routine)
+The earnings run can't catch a CCCA attachment, a regulator's network-fee ruling, or a
 major-merchant stablecoin launch that lands *between* earnings — those can move any day. Add a
 second, lighter routine to sweep just those:
 - **Prompt:** *"Follow the instructions in `watchlist/PROMPT-fast.md` and run the fast-trigger sweep."*
 - **Repository / Environment:** same as above (`laurentbello/fundbello`, Network = Full, the two
   Gmail env vars).
-- **Trigger → Schedule:** **monthly**.
+- **Trigger → Schedule:** **weekly**.
 
-Unlike the quarterly digest, this sweep is an **exception monitor: it emails only when a fast trigger
-fires** (or a development is material enough to act on now). Most months it runs, finds nothing, and
-sends nothing — the session log shows `all quiet — no email sent`. It never pulls earnings data or
-touches the spread CSV, so it makes no commits.
+This sweep is an **exception monitor: it emails only when a fast trigger fires** (or a development is
+material enough to act on now). Most weeks it runs, finds nothing, and sends nothing — the session
+log shows `all quiet — no email sent`. It never pulls earnings data or touches the spread CSV, so it
+makes no commits.
 
 ## Testing it now
 Trigger a session manually with the same prompt: *"Follow `watchlist/PROMPT.md` and run this cycle's
