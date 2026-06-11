@@ -2,7 +2,7 @@ name: Deploy site
 
 on:
   push:
-    branches: [main, claude/trusting-turing-9rfmg2]
+    branches: [main]
   schedule:
     # Re-sync from the Google Sheet and redeploy every Monday 06:00 UTC.
     - cron: "0 6 * * 1"
