@@ -16,23 +16,6 @@
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-playfair), ui-serif, Georgia, serif;
-
-  --animate-marquee: marquee 45s linear infinite;
-  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-  --animate-shimmer: shimmer 2.4s ease-in-out infinite;
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes shimmer {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
-  }
 }
 
 html {
@@ -51,33 +34,22 @@ body {
   color: var(--color-fg);
 }
 
-/* Scroll-reveal primitive: starts hidden, .is-visible animates in.
-   Falls back to visible when JS hasn't attached (no-js / bots). */
+/* Entrance fade-up. Pure CSS so content always renders, even when
+   JavaScript is unavailable; animations run without JS in all browsers. */
+@keyframes reveal-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.text-glow {
-  text-shadow: 0 0 24px rgba(217, 164, 65, 0.35);
-}
-
-.hairline-gradient {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(217, 164, 65, 0.5),
-    transparent
-  );
+  animation: reveal-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -85,9 +57,7 @@ body {
     scroll-behavior: auto;
   }
   .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
+    animation: none;
   }
   *,
   *::before,
