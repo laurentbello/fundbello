@@ -1,0 +1,60 @@
+name: Deploy site
+
+on:
+  push:
+    branches: [main, claude/trusting-turing-9rfmg2]
+  schedule:
+    # Re-sync from the Google Sheet and redeploy every Monday 06:00 UTC.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - run: npm ci
+        working-directory: frontend
+
+      - name: Sync data from Google Sheet
+        working-directory: frontend
+        run: |
+          npm run sync-data || echo "::warning::Sheet sync failed — building with last committed holdings.json"
+
+      - uses: actions/configure-pages@v5
+
+      - name: Build static site
+        working-directory: frontend
+        env:
+          NEXT_BASE_PATH: /fundbello
+        run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
