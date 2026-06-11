@@ -9,16 +9,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
+# Pages is configured with source "Deploy from a branch: gh-pages", so this
+# workflow builds the site and pushes it to that branch; GitHub then serves it.
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -37,24 +37,16 @@ jobs:
         run: |
           npm run sync-data || echo "::warning::Sheet sync failed — building with last committed holdings.json"
 
-      - uses: actions/configure-pages@v5
-
       - name: Build static site
         working-directory: frontend
         env:
           NEXT_BASE_PATH: /fundbello
-        run: npm run build
+        run: |
+          npm run build
+          touch out/.nojekyll
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Publish to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: frontend/out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: frontend/out
