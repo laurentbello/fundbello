@@ -27,6 +27,37 @@
 - contract escalators:      CPI-linked, intact
 - credit rating:            investment grade achieved/held
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Revenue = Σ(sites × tenancy ratio × rent/tenant), rent CPI-escalated under long MSAs
+- EBITDA = Revenue × tower-margin; new colocation drops in at ~zero incremental cost
+- Recurring leveraged FCF = EBITDA − maintenance capex − cash interest; the interest line
+  (and thus deleveraging + rating) is what turns the equity story   ← **thesis hinges here**
+- FCF use = deleverage → IG rating → buyback resumption
+- Leaf observables: net debt/EBITDA, RLFCF/share, tenancy ratio, CPI escalators, rating
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| Net debt / EBITDA trajectory | The whole re-rate is the deleveraging-and-IG turn; pace is debated | Quarterly results; rating-agency reports |
+| Recurring leveraged FCF / share | Proves the FCF inflection the equity story rests on | H1 / FY results & guidance |
+| Anchor-MNO contracted tenancy / CPI escalators | Guards the contracted-cash base under the leverage | MSA disclosures, MNO network-sharing news |
+
+### Thresholds
+- STRENGTHEN (add / upsize): deleveraging ahead of plan + buyback launched/expanded; or
+  rating upgrade to mid-IG + tenancy ratio rising
+- BREAK (trim / exit): anchor-MNO churn removes contracted tenancy beyond guidance, OR
+  CPI escalators renegotiated down at a major MSA, OR deleveraging stalls 2 quarters
+- Position rules: add band < €30; trim if EV/EBITDA > 22 with deleveraging complete
+
+### Next checkpoint
+Jul 2026 — H1 results (reads ND/EBITDA path, RLFCF guidance, buyback) + rating reviews
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on the deleveraging-to-IG FCF turn on a contracted, CPI-linked tower base;
+the live read is ND/EBITDA falling on plan with the rating outlook intact.
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: anchor MNO churn / network-sharing deal removes contracted tenancy beyond

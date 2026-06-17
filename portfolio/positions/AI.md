@@ -26,6 +26,36 @@
 - ROCE:                       ≥ low-double-digit, rising
 - net debt/EBITDA:            ≤ ~2.0x   # confirm
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Revenue = On-site [contracted volume + energy pass-through] + Merchant/Bulk [volume × price]
+- EBIT = Revenue × operating margin; underlying PRICING (net of pass-through energy) covering
+  cost inflation is the pricing-power signal   ← **thesis hinges here**
+- Margin also lifts from efficiencies + mix; energy is a pass-through, not a driver
+- FCF/ROCE = EBITDA − take-or-pay-contracted growth capex; only funded at hurdle IRRs
+- Leaf observables: underlying pricing %, operating margin, ROCE, backlog IRR, ND/EBITDA
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| Underlying pricing (%, ex energy pass-through) | The moat in one number; bears question its durability vs cost | Quarterly Gas & Services pricing disclosure |
+| Operating margin trend | Confirms price > cost is converting to margin | Quarterly / H1 results |
+| Decarbonization backlog IRR / take-or-pay terms | Tests that load-bearing H2/CCS capital stays contracted | FID announcements; CMD updates |
+
+### Thresholds
+- STRENGTHEN (add / upsize): pricing accelerating + margin expansion ahead of plan; or
+  large take-or-pay backlog signed at accretive IRR
+- BREAK (trim / exit): underlying pricing < 0% for 2 consecutive quarters (pricing-power break)
+- Position rules: add band < €150; trim if fwd P/E > 28
+
+### Next checkpoint
+Jul 2026 — H1 results (reads pricing, operating margin, ROCE, backlog/IRR commentary)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on underlying pricing staying positive through input-cost cycles; the live
+read is the quarterly Gas & Services pricing print — confirm it covers cost inflation.
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: underlying pricing turns negative for 2 consecutive quarters (pricing power

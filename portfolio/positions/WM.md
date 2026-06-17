@@ -26,6 +26,35 @@
 - net leverage:             on path to ≤ 3.0x by YE2026
 - Healthcare synergy target: ≥ $250M (Stericycle integration)
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Revenue = Volume × Yield, across Collection / Landfill-disposal / Recycling / RNG lines
+- Operating EBIT = Revenue × margin, where margin = f(price/cost spread); route density →
+  disposal internalization lifts the incremental margin   ← **thesis hinges here**
+- FCF = EBIT − maintenance capex − RNG/sustainability growth capex + IRA/RNG credits
+- Additive optionality (non-load-bearing): WM Healthcare (Stericycle) synergy capture
+- Leaf observables: core price %, internal cost inflation %, internalization rate, synergy $
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| Core price growth (%) | The pricing-power moat in one number; debated vs cost inflation | Quarterly earnings exhibit / call — "core price" |
+| Price/cost spread (bps) | Cleanest read on moat vs inflation; thesis-defining | Earnings deck: core price vs internal-cost-inflation |
+| Healthcare (Stericycle) synergy run-rate ($) | Tests the only load-bearing piece of optionality | Integration updates on calls / 8-K |
+
+### Thresholds
+- STRENGTHEN (add / upsize): price/cost spread widening with core price ≥ +5% sustained
+- BREAK (trim / exit): core price < 4.5% OR spread < 150 bps for 2 consecutive quarters
+- Position rules: starter ~$221; add tranche-1 < $205; full 4–5% at $190–195; re-underwrite > $230
+
+### Next checkpoint
+28 Jul 2026 — Q2 earnings (reads core price, spread, Healthcare synergy, leverage path)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on the price/cost spread (pricing power on un-permittable disposal); confirm
+spread ≥ 150 bps and core price ≥ 4.5% at the 28 Jul Q2 print.
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: core price < 4.5% OR price/cost spread < 150 bps, for 2 consecutive

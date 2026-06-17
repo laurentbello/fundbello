@@ -27,6 +27,38 @@
 - value-added services growth:   double-digit (leadership segment)
 - network/scheme fees:           not capped by regulation
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Net revenue = Payment network [GDV × yield + cross-border volume × higher yield] +
+  Value-added services & solutions [cyber/data/consulting/open-banking] − rebates/incentives
+- Two levers: cross-border (richest yield) and VAS (fastest-growing, Mastercard's relative
+  edge vs Visa); VAS out-growth is what differentiates the multiple   ← **thesis hinges here**
+- EBIT = revenue × high network margin; EPS × buyback
+- Leaf observables: cross-border growth %, VAS growth %, CCCA/network-fee status
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| Value-added services growth (%) | MA's differentiator vs Visa; the bull case for the premium | Quarterly results — VAS segment |
+| Cross-border volume growth (%) | The richest-yield lever; geopolitically debated | Quarterly earnings — cross-border line |
+| CCCA / network-fee regulation status | A routing mandate or scheme-fee cap is the structural break | congress.gov; EU IFR / RBA / Fed news |
+
+### Thresholds
+- STRENGTHEN (add / upsize): cross-border reaccel + VAS ahead of plan; or CCCA dies in
+  committee + buyback step-up
+- BREAK (trim / exit): per DISCIPLINE — any single trigger → HARD REVIEW; two concurrent OR
+  prob-weighted IRR < 8% → TRIM to 2/3. (Triggers: cross-border < 8% 2Q; network-fee cap;
+  CCCA attachment; tier-1 stablecoin checkout; VAS growth → single-digit 2Q)
+- Position rules: add on thesis-intact weakness (define level)
+
+### Next checkpoint
+Next quarterly earnings (reads GDV, cross-border, VAS growth, guidance)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on VAS out-growth + cross-border take-rate vs CCCA/A2A; the live read is VAS
+still outgrowing the network. (Moves with Visa — cluster the shared CCCA/network-fee/A2A driver.)
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: cross-border volume growth < +8% YoY for 2 consecutive quarters (the profit

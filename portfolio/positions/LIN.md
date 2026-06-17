@@ -27,6 +27,36 @@
 - sale-of-gas backlog:        growing, all contracted
 - buyback:                    ongoing net share-count reduction
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Revenue = On-site [contracted volume + cost pass-through] + Merchant/Package [volume × price]
+- EBIT = Revenue × margin; Linde's pricing leadership keeps price > cost, expanding the
+  sector-best operating margin through the cycle   ← **thesis hinges here**
+- EPS = EBIT growth × relentless buyback (net share-count reduction)
+- FCF/ROCE = EBITDA − contracted sale-of-gas backlog capex (disciplined)
+- Leaf observables: pricing %, operating margin, ROCE, backlog (contracted), buyback pace
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| Pricing (%) | Linde's edge is pricing discipline; the bear case is it rolling over | Quarterly earnings — price component |
+| Operating margin | Confirms sector-leading margin still expanding | Quarterly results |
+| Sale-of-gas backlog (contracted vs merchant) | Tests capital discipline on clean-H2 / project growth | Quarterly backlog disclosure; FID news |
+
+### Thresholds
+- STRENGTHEN (add / upsize): pricing + margin accelerating with buyback step-up; or large
+  contracted backlog win at accretive ROCE
+- BREAK (trim / exit): pricing < 0% for 2 consecutive quarters (pricing leadership lost)
+- Position rules: add band < $400; trim if fwd P/E > 30
+
+### Next checkpoint
+Next quarterly earnings (reads pricing, margin, ROCE, backlog, buyback pace)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on pricing discipline (price > cost → margin) compounded by buybacks; the
+live read is the quarterly price print staying positive with margin expanding.
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: pricing turns negative for 2 consecutive quarters (pricing leadership lost)

@@ -63,6 +63,9 @@ For each holding, read its `positions/<TICKER>.md`, then:
   filings (8-K / regulatory), legal/regulatory actions, M&A, management changes, and price
   moves that cross a pre-registered level. Skip routine sell-side noise and anything in the
   position's NOISE FILTER. Use WebSearch/WebFetch; quote and link primary sources.
+  **Front-run the playbook's "Isolated KPIs (the monitoring set — max 3)" first** — those
+  are the high-weight, contested metrics the thesis hinges on; check them before sweeping
+  general news, and read the "One-line thesis" to know what X currently doing Y looks like.
 - **b.** Map each development to that name's pre-registered signals (the `signals` block +
   memo). Decide the tier: **URGENT / WATCH / CLEAR**.
 - **c.** Record a per-name verdict (hold these in working memory or jot to

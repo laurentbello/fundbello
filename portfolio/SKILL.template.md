@@ -25,6 +25,33 @@
 - <metric>: <anchor value>                       # e.g. Adj EBITDA anchor $X (NOT GAAP)
 - <metric>: <anchor value>
 
+## DRIVER TREE & KPI ISOLATION
+# The analytical core: decompose the financials, then isolate the ≤3 KPIs that actually
+# move the thesis and are genuinely contested. These are the monitor's front-running set.
+
+### Driver tree
+# Decompose the financial output (revenue / EBIT / FCF) into multiplicative + additive
+# operating components, recursively, until each leaf is a real-world observable.
+# 4–6 lines. Mark which branch the thesis hinges on.
+- <output = component × component + component …>
+- <... recurse toward leaf observables …>   ← **thesis hinges here**
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| <kpi> | <high weight on value AND genuinely debated> | <where it shows up first> |
+
+### Thresholds
+- STRENGTHEN (add / upsize): <pre-committed condition>
+- BREAK (trim / exit): <pre-committed condition>
+- Position rules (entry / size / re-underwrite price): <if applicable>
+
+### Next checkpoint
+<earnings date or catalyst that reads the isolated branch — DD Mon YYYY>
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on <X>; X is currently doing <Y>.
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM, no improvisation)
 # Each must be a testable condition with an operator + threshold + persistence.

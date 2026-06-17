@@ -26,6 +26,38 @@
 - gross margin:               holding/expanding (high-40s%)   # confirm
 - China revenue mix:          within underwritten export-control assumptions
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Revenue = Systems [WFE etch/deposition share × served WFE] + CSBG [installed-base
+  spares/service/upgrades, recurring]
+- Systems is cyclical (memory-heavy) and gated by export-control scope; the etch/dep
+  technology-leadership SHARE on leading-edge nodes is the durable edge   ← **thesis hinges here**
+- CSBG annuity cushions the WFE down-cycles; gross margin holds with mix
+- FCF → aggressive buyback (EPS compounding)
+- Leaf observables: etch/dep share, served WFE / memory capex, China mix, CSBG growth
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| Etch/deposition share on leading-edge nodes | The durable moat vs AMAT/TEL; share shifts are the structural risk | Earnings commentary; node-win disclosures |
+| Export-control scope + China revenue mix | Gates the served TAM; the cyclical+policy swing | US BIS policy; quarterly China-mix disclosure |
+| CSBG (installed-base) revenue growth | The recurring cushion that de-risks WFE cyclicality | Quarterly results — CSBG segment |
+
+### Thresholds
+- STRENGTHEN (add / upsize): NAND/DRAM capex recovery + etch/dep share gains; or CSBG
+  inflection + margin expansion + buyback step-up
+- BREAK (trim / exit): export controls cut a larger China/served-market slice than
+  underwritten; or etch/dep share loss on a leading-edge node
+- Position rules: add band < $70 (confirm split-adjusted); trim if fwd P/E > 28 at WFE peak
+
+### Next checkpoint
+Next quarterly earnings (reads WFE outlook, China mix, CSBG, gross margin, buyback)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on etch/deposition leadership share through the WFE cycle, cushioned by CSBG;
+the live read is share held + export-control scope. (Moves with ASML — cluster the semis driver.)
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: tightened export controls cut a structurally larger China/served-market slice

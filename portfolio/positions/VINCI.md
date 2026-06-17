@@ -28,6 +28,36 @@
 - contracting book-to-bill:  ≥ 1.0x
 - net financial debt/EBITDA: ≤ 3.0x   # confirm
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Revenue = Concessions [toll traffic × tariff + airport pax × rev/pax] + Contracting [backlog × execution]
+- Concession EBIT ≈ near-fixed-cost base, so margin scales with traffic × tariff; the toll
+  tariff inflation pass-through is the value engine   ← **thesis hinges here**
+- Contracting EBIT = thin-margin but cash-generative; funds the concession/dividend engine
+- FCF = concession EBITDA − maintenance − new-concession capex → dividend + buyback
+- Leaf observables: toll tariff reset %, toll traffic %, airport pax, backlog book-to-bill
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| French motorway tariff reset vs CPI formula | The inflation pass-through IS the concession value; politically contested | Annual gov tariff decree (Feb) / ASF filings |
+| VINCI Airports pax growth (%) | Second value lever, above-GDP; recovery debated | VINCI Airports monthly traffic releases |
+| Net debt / EBITDA | Guards against value-destructive concession M&A | H1 / FY results |
+
+### Thresholds
+- STRENGTHEN (add / upsize): accretive new airport/road concession at IRR ≥ base case; or
+  tariff formula reaffirmed + buyback step-up
+- BREAK (trim / exit): motorway tariff formula impaired OR windfall concession tax enacted
+- Position rules: add band < €100; trim if fwd P/E > 18 with airports fully recovered
+
+### Next checkpoint
+Jul 2026 — H1 results (reads toll tariff/traffic, airport pax, backlog, ND/EBITDA)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on the French motorway tariff inflation pass-through; the live read is whether
+the formula stays intact — confirm no windfall concession tax / re-regulation.
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: French government re-opens/cuts motorway concession tariff formula OR

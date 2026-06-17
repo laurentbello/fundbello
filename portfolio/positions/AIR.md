@@ -28,6 +28,37 @@
 - adj EBIT margin:            expanding toward guided range
 - free cash flow:             positive, funding dividend/buyback
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Revenue = Commercial [deliveries × price] + Services + Defence/Space + Helicopters
+- Commercial deliveries are backlog-constrained, NOT demand-constrained, so output =
+  production RATE; hitting the monthly A320 rate is the value lever   ← **thesis hinges here**
+- EBIT margin expands with rate (fixed-cost absorption + learning curve)
+- FCF = deliveries cash − ramp working capital − R&D → dividend/buyback
+- Leaf observables: A320 monthly rate, FY deliveries vs guide, book-to-bill, adj EBIT margin
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| A320-family delivery ramp vs guided rate | Output (not demand) = the FCF/margin lever; ramp pace hotly debated | Monthly Airbus orders & deliveries |
+| Full-year delivery guidance vs actuals | The clean test of whether the ramp is on track | Quarterly results / guidance updates |
+| Book-to-bill | Confirms the backlog annuity isn't softening | Order announcements; air-show campaigns |
+
+### Thresholds
+- STRENGTHEN (add / upsize): rate target reached/raised + margin inflection; or large net
+  order intake + FCF beat
+- BREAK (trim / exit): FY delivery guidance cut on a STRUCTURAL supply/engine constraint;
+  or an A320neo technical/cert event forcing groundings/uncompensated rework
+- Position rules: add band < €140; trim if fwd P/E > 25 with ramp de-risked
+
+### Next checkpoint
+Jul 2026 — H1 results (reads deliveries vs guide, A320 rate, margin, FCF)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on converting a sold-out backlog into deliveries at the guided A320 rate; the
+live read is the ramp tracking full-year guidance (judge vs guide, not a slow month).
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: full-year delivery guidance cut materially due to a structural (not

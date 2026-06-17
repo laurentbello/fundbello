@@ -30,6 +30,37 @@
 - value-added services:       double-digit growth
 - network/scheme fees:        not capped by regulation
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Net revenue = Service [PV × yield] + Data-processing [transactions × fee] + International
+  [cross-border volume × higher yield] + Value-added services − client incentives
+- Cross-border carries the richest yield, so it's the disproportionate profit lever; the
+  threat to it (A2A/stablecoin disintermediation, network-fee caps) is the swing ← **thesis hinges here**
+- EBIT = revenue × ~60%+ margin (network scale); EPS × buyback
+- Leaf observables: Europe-vs-US PV spread, cross-border growth %, CCCA status, VAS growth
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| Europe-vs-US payments-volume spread | Earliest read on A2A/Wero/EPI displacement of the network | Visa quarterly Operational Performance Data (see watchlist tracker) |
+| Cross-border volume growth (%) | The richest-yield profit lever; geopolitically debated | Quarterly earnings — cross-border line |
+| CCCA legislative status (S.3623/H.R.7035) | A US routing mandate is the structural take-rate break | congress.gov; committee/floor news |
+
+### Thresholds
+- STRENGTHEN (add / upsize): cross-border reaccel + VAS ahead of plan; or CCCA dies in
+  committee / Europe spread stable + buyback step-up
+- BREAK (trim / exit): per DISCIPLINE — any single trigger → HARD REVIEW; two concurrent OR
+  prob-weighted IRR < 8% → TRIM to 2/3; BREAK-1 (Europe spread) + BREAK-3 (CCCA) → EXIT review
+- Position rules: add on thesis-intact weakness (define level); see watchlist skill for detail
+
+### Next checkpoint
+Next Visa fiscal-quarter earnings (Jan/Apr/Jul/Oct) — reads PV, cross-border, Europe spread
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on cross-border take-rate surviving A2A/stablecoin + CCCA; the live read is
+the Europe-vs-US spread (A2A early warning) and CCCA legislative status.
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1 (Europe spread): Visa Europe payments-volume growth lags US by the registered

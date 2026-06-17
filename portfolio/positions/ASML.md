@@ -26,6 +26,38 @@
 - installed-base mgmt revenue: growing, recurring
 - gross margin:               expanding toward guided range (high-50s%)   # confirm
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Revenue = System sales [units × ASP, EUV/High-NA monopoly + DUV] + Installed Base Mgmt
+  [service/upgrades on the fielded fleet, recurring]
+- Demand = served WFE × litho intensity, but the served market is gated by export-control
+  scope; the addressable TAM is the swing factor   ← **thesis hinges here**
+- Backlog (net bookings) front-runs revenue; gross margin expands with EUV/High-NA mix + IBM
+- FCF → buyback + dividend
+- Leaf observables: net bookings, China mix, EUV/High-NA shipments, export-control scope
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| Export-control scope (China + allied tightening) | Defines the served TAM; the single biggest debated swing | US BIS / Dutch (NL) / EU policy announcements |
+| Net bookings (orders) | Front-runs the revenue path 2–3 quarters out; lumpy and watched | Quarterly results — order intake |
+| High-NA / EUV adoption + IB mgmt revenue | The growth leg + recurring annuity | Earnings commentary; customer (TSMC/Intel) capex |
+
+### Thresholds
+- STRENGTHEN (add / upsize): bookings reaccel + High-NA orders ahead of plan; or IB-mgmt
+  revenue inflection + margin expansion
+- BREAK (trim / exit): export controls remove a structurally larger served-market slice
+  than underwritten; or a credible competing EUV / alt-patterning path emerges
+- Position rules: add band < $650; trim if fwd P/E > 40 at cycle peak
+
+### Next checkpoint
+Next quarterly earnings (reads net bookings, China mix, gross margin, guidance)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on the EUV monopoly's served TAM surviving export-control scope; the live
+read is bookings + policy headlines (judge bookings over 2+ quarters — they're lumpy).
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: a tightened export-control regime removes a structurally larger slice of the

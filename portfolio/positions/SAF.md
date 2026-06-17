@@ -27,6 +27,38 @@
 - LEAP shop-visit ramp:       on guided trajectory
 - free cash flow conversion:  strong, funding buyback/dividend
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Revenue = Propulsion [OE engines (low/neg margin) + Civil aftermarket (high margin)] +
+  Equipment/Defence
+- Profit ≈ dominated by civil aftermarket = installed base × shop-visit rate × spares
+  pricing; this annuity on CFM56/LEAP is the whole engine   ← **thesis hinges here**
+- OE is a razor (loss-leader) that seeds future aftermarket razor-blades
+- FCF = aftermarket cash − OE working-capital drag − R&D → buyback/dividend
+- Leaf observables: civil aftermarket growth %, RPK, LEAP shop-visit ramp, spares pricing
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| Civil aftermarket (spares) growth (%) | The high-margin annuity = ~all the profit; cycle timing debated | Quarterly results — civil aftermarket line |
+| LEAP shop-visit ramp + margin | When LEAP turns razor→blade is the next-leg swing factor | Earnings commentary / guidance |
+| Global RPK growth | Demand driver of shop visits + spares | IATA monthly traffic data |
+
+### Thresholds
+- STRENGTHEN (add / upsize): aftermarket reacceleration + spares pricing above plan; or
+  LEAP shop-visit ramp + margin inflection ahead of guidance
+- BREAK (trim / exit): civil aftermarket growth ≤ low-single-digit/negative for 2 quarters
+  absent a one-off (the annuity breaks)
+- Position rules: add band < €180; trim if fwd P/E > 28 with cycle peaking
+
+### Next checkpoint
+Jul 2026 — H1 results (reads civil aftermarket %, LEAP ramp, FCF, guidance)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on the high-margin civil-aftermarket annuity on the CFM/LEAP base; the live
+read is aftermarket growth staying double-digit, not OE ship counts.
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: civil aftermarket (spares) growth decelerates to low-single-digit / negative

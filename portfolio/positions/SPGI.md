@@ -27,6 +27,38 @@
 - operating margin:           expanding, high-40s%+   # confirm
 - Indices/Mobility growth:    double-digit
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Revenue = Ratings [issuance × fee, transactional] + Recurring [Market Intel + Indices +
+  Commodity Insights + Mobility — subscription/asset-linked]
+- Ratings = high-incremental-margin but cyclical with issuance; Recurring dampens the cycle
+  and is the durability the multiple rests on   ← **thesis hinges here**
+- EBIT = Revenue × margin (near-zero marginal cost on ratings); EPS × buyback
+- FCF → buyback + dividend
+- Leaf observables: recurring growth %, net retention, issuance volumes, Indices AUM/licensing
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| Recurring/subscription revenue growth + net retention | The cycle-proof durability the valuation pays for; debated vs AI/competition | Quarterly results — non-issuance segments |
+| Debt issuance volumes (transaction ratings driver) | The cyclical swing; front-runs ratings revenue | SIFMA/Dealogic issuance data; refi-wall trackers |
+| Ratings-regulation status | The only structural break to the duopoly | SEC/ESMA proposals, issuer-rotation bills |
+
+### Thresholds
+- STRENGTHEN (add / upsize): issuance reaccel + recurring holding + buyback step-up; or
+  index AUM/licensing inflecting + margin expansion
+- BREAK (trim / exit): structural ratings re-regulation (issuer rotation / forced
+  competition / fee caps); or recurring growth → low-single-digit for 2 quarters
+- Position rules: add band < $420; trim if fwd P/E > 35
+
+### Next checkpoint
+Next quarterly earnings (reads ratings vs issuance, recurring growth, margin, buyback)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on cycle-proof recurring revenue layered on the ratings duopoly; the live
+read is recurring growth + retention holding while issuance does the cyclical work.
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: structural regulatory change to the ratings model (mandatory issuer rotation,

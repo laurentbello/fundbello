@@ -26,6 +26,37 @@
 - net debt (ex-infra-project):   conservative at the corporate level
 - new-concession IRR:            ≥ base case on greenfield awards
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Value ≈ Σ concession equity stakes [managed lanes + 407 ETR + airports] + construction
+- Managed-lane revenue = traffic × dynamic toll; tolls are congestion-priced with NO
+  regulated cap, so revenue compounds with congestion   ← **thesis hinges here**
+- 407 ETR = traffic × above-inflation toll → dividend distributions to Ferrovial
+- FCF / NAV = concession distributions + asset-recycling gains − corporate costs
+- Leaf observables: managed-lane revenue/traffic, 407 toll + dividend, new-concession IRR
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| US managed-lane revenue growth (traffic × dynamic toll) | The uncapped pricing engine; the entire premium rests on it | Quarterly results — managed-lanes segment |
+| 407 ETR toll growth + dividend resumption | Crown-jewel cash; regulation/distribution timing debated | 407 ETR traffic reports; Ferrovial results |
+| New managed-lane concession IRR | Tests capital-recycling discipline | Award announcements / capital-markets updates |
+
+### Thresholds
+- STRENGTHEN (add / upsize): new managed-lane win at IRR ≥ base case; or 407 dividend
+  step-up + managed-lane price strength
+- BREAK (trim / exit): a core US managed lane or 407 ETR gets a toll price-cap /
+  re-regulation (removes the un-capped pricing moat)
+- Position rules: add band < €32; trim once SOTP premium closed + assets de-risked
+
+### Next checkpoint
+Jul 2026 — H1 results (reads managed-lane revenue/traffic, 407 dividend, recycling)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on un-capped dynamic tolling (managed lanes + 407); the live read is whether
+any jurisdiction moves to cap those tolls — currently the key watch.
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: a US managed-lane jurisdiction imposes a price cap / re-regulates dynamic

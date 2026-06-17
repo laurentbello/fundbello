@@ -26,6 +26,39 @@
 - adjusted operating margin:  expanding, high-40s%+   # confirm
 - ARR (MA):                   growing double-digit
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Revenue = MIS [issuance × fee, transactional ratings] + Moody's Analytics [recurring
+  subscription ARR — risk/data/research/KYC/insurance]
+- MIS is high-margin but issuance-cyclical; MA's recurring ARR annuity is the durability
+  that smooths the cycle and anchors the multiple   ← **thesis hinges here**
+- EBIT = Revenue × margin (near-zero marginal cost on MIS); EPS × buyback
+- FCF → buyback + dividend
+- Leaf observables: MA ARR growth %, retention, issuance volumes, adj operating margin
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| Moody's Analytics ARR growth + retention | The recurring annuity the valuation rests on; AI-disruption debate | Quarterly results — MA ARR/retention |
+| Debt issuance volumes (MIS driver) | The cyclical swing; front-runs MIS revenue | SIFMA/Dealogic issuance; refi-wall trackers |
+| Ratings-regulation status | The only structural break to the duopoly | SEC/ESMA proposals, issuer-rotation bills |
+
+### Thresholds
+- STRENGTHEN (add / upsize): MA ARR reaccel + issuance recovery + buyback step-up; or
+  margin expansion ahead of plan
+- BREAK (trim / exit): structural ratings re-regulation (issuer rotation / forced
+  competition / fee caps); or MA ARR growth → low-single-digit / retention slips 2 quarters
+- Position rules: add band < $380; trim if fwd P/E > 35
+
+### Next checkpoint
+Next quarterly earnings (reads MIS vs issuance, MA ARR/retention, margin, buyback)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on MA's recurring ARR annuity de-risking the issuance-cyclical MIS duopoly;
+the live read is ARR growth + retention holding par. (Moves with SPGI — cluster the shared
+issuance/regulation driver.)
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: structural ratings re-regulation (mandatory issuer rotation, forced

@@ -27,6 +27,37 @@
 - commercial rev/pax:          rising YoY (uncapped lever)
 - net debt/EBITDA:             ≤ 3.0x   # confirm
 
+## DRIVER TREE & KPI ISOLATION
+
+### Driver tree
+- Revenue = Aero [pax × regulated max-tariff (DORA)] + Commercial [pax × uncapped rev/pax]
+- EBIT: aero is bounded by the DORA tariff path; the un-regulated commercial line is where
+  rev/pax can outgrow traffic at high incremental margin   ← **thesis hinges here**
+- FCF = EBITDA − airport capex (regulated asset base) → dividend
+- Additive: LatAm associates (Luton, Brazil, etc.) — incremental, not load-bearing
+- Leaf observables: pax growth, commercial rev/pax, DORA max-tariff path, ND/EBITDA
+
+### Isolated KPIs (the monitoring set — max 3)
+| KPI | Why it's the edge (high weight × contested) | Front-running data source |
+|-----|---------------------------------------------|---------------------------|
+| DORA III max-tariff path / dual-till treatment | Sets the bounded aero leg AND whether commercial upside is clawed back; the regulatory swing factor | CNMC/Ministry DORA consultations & resolutions |
+| Commercial revenue / pax | The uncapped alpha line; market debates its ceiling | Quarterly results — commercial segment |
+| Passenger traffic growth (%) | Volume driver of both legs | Aena monthly traffic statistics |
+
+### Thresholds
+- STRENGTHEN (add / upsize): DORA finalized at/above consultation path; or commercial
+  rev/pax inflecting up + distribution step-up
+- BREAK (trim / exit): DORA III max-tariff << consultation, OR dual-till re-regulated to
+  claw back commercial upside
+- Position rules: add band < €160; trim if fwd P/E > 16 on a fully-recovered traffic base
+
+### Next checkpoint
+Next DORA III milestone / Jul 2026 H1 results (reads traffic, commercial rev/pax, ND/EBITDA)
+
+### One-line thesis (for investor letter + daily review)
+Thesis hinges on DORA leaving the uncapped commercial upside intact; the live read is the
+DORA III tariff/dual-till resolution — confirm no commercial claw-back.
+
 ## PRE-REGISTERED SIGNALS
 ### 🔴 THESIS-BREAK tests (→ SELL/TRIM)
 - BREAK-1: DORA III (or successor) sets max-tariff growth materially below the
