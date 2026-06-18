@@ -16,6 +16,7 @@
 - 2026-07    | AI.PA   | H1 results             | HARD | watch: pricing, operating margin, ROCE, backlog/IRR
 - 2026-07    | SAF.PA  | H1 results             | HARD | watch: civil aftermarket %, LEAP ramp, FCF, guidance
 - 2026-07    | AIR.PA  | H1 results             | HARD | watch: deliveries vs guide, A320 rate, margin, FCF
+- 2026-07-20 | AIR.PA  | Farnborough Air Show (Jul 20-24) | SOFT | watch: book-to-bill, new orders, OEM announcements
 - 2026-Q3    | LIN     | Q2 earnings            | HARD | watch: pricing, margin, ROCE, backlog, buyback
 - 2026-Q3    | SPGI    | Q2 earnings            | HARD | watch: ratings vs issuance, recurring growth, margin, buyback
 - 2026-Q3    | MCO     | Q2 earnings            | HARD | watch: MIS vs issuance, MA ARR/retention, margin, buyback
@@ -25,7 +26,8 @@
 - 2026-Q3    | MA      | Q2 earnings            | HARD | watch: GDV, cross-border, VAS growth, guidance
 - YE2026     | WM      | leverage checkpoint    | HARD | watch: net leverage ≤ 3.0x confirmed?
 - ongoing    | V/MA    | CCCA (S.3623/H.R.7035) | HARD | watch: amendment / must-pass attachment (congress.gov)
-- ongoing    | AENA.MC | DORA III milestones    | HARD | watch: max-tariff path, dual-till treatment
+- 2026-09    | AENA.MC | DORA III Council of Ministers final approval | HARD | watch: adopted tariff path vs CNMC -0.59% recommendation; BREAK-1 test
+- 2026-06-03 | AENA.MC | DORA III — CNMC recommendation issued (PAST milestone) | HARD | CNMC recommended -0.59%/yr vs Aena +3.8%; non-binding; govt usually follows
 - ongoing    | ASML/LRCX | export-control policy | HARD | watch: scope expansion to EUV/etch/dep tools
 - mid-2026   | V/MA    | RBA review (network fees) | HARD | watch: scheme-fee cap proposals
 
