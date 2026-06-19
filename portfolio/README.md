@@ -5,28 +5,29 @@ schedule it reads every holding's **playbook** (`positions/<TICKER>.md`), checks
 pre-registered thesis-break / strengthen / price / catalyst **signal** has fired,
 **consolidates correlated moves by cluster** (so a single shared driver hitting two names is
 one read-through, not two alerts), applies each holding's written **discipline**, and
-**emails** the verdict to `laurentbello@gmail.com`. It does not trade and it does not
-editorialize — it enforces rules so decisions are made on signals, not headlines.
+**drafts** the verdict as a Gmail draft to `laurentbello@gmail.com` for you to review and
+send. It does not trade and it does not editorialize — it enforces rules so decisions are
+made on signals, not headlines.
 
 This is the multi-position sibling of `../watchlist/` (which deep-monitors Visa). Same
-delivery pipe (`send_email.py`), same **"Routine, not cron"** philosophy — scaled to the
-whole book.
+**"Routine, not cron"** philosophy — scaled to the whole book.
 
 **Runs on your Claude membership — no paid API.** The monitoring/research happens inside a
 Claude Code **Routine** (a scheduled cloud session covered by your subscription). That
-session sends the email itself over Gmail SMTP — no Anthropic API key, no draft step.
+session writes the digest into your **Gmail Drafts** via the Gmail MCP connection — no
+Anthropic API key, no app password, no SMTP. Nothing leaves your account until you hit send.
 
 ## How it's organized
 ```
 portfolio/
-├── PROMPT.md            # the Routine follows this — orient → per-name scan → cluster → digest → email
+├── PROMPT.md            # the Routine follows this — orient → per-name scan → cluster → digest → Gmail draft
 ├── README.md            # this file — Routine + environment setup
 ├── SKILL.template.md    # blank per-position playbook template (copy this to add a holding)
 ├── holdings.md          # the roster (weight | ticker | name | cluster | skill path) — also machine-parseable
 ├── cluster_map.md       # correlated-thesis layer (which names share a driver, aggregate weights)
 ├── catalyst_calendar.md # hard/soft events the monitor looks ahead to
 ├── last_run.md          # run state (last date / mode) — system of record for the lookback window
-├── send_email.py        # delivery only (no LLM/API); sends a digest JSON via Gmail SMTP
+├── send_email.py        # OPTIONAL legacy delivery (no LLM/API); SMTP auto-send of a digest JSON — superseded by the Gmail draft path
 ├── portfolio_monitor.sh # OPTIONAL headless runner (cron + `claude -p`); needs a paid API key — see below
 └── positions/           # one self-contained playbook per holding
     ├── WM.md            #   ← worked example (Waste Management)
@@ -63,9 +64,9 @@ the Desktop app, or `/schedule` in a **local terminal** (`/schedule` is disabled
 session, so use the web Routines page).
 
 > **Cadence:** the web Routines scheduler offers **daily / weekly** only. Schedule **weekly**;
-> the prompt's WHEN-TO-SEND gate decides internally whether the week warrants an email (a fired
-> signal or a catalyst landing in the window). Most weeks it runs, finds nothing new, and sends
-> nothing — so "weekly" is the *session* cadence, not the *email* cadence.
+> the prompt's WHEN-TO-DRAFT gate decides internally whether the week warrants a draft (a fired
+> signal or a catalyst landing in the window). Most weeks it runs, finds nothing new, and drafts
+> nothing — so "weekly" is the *session* cadence, not the *draft* cadence.
 
 1. **Merge this to `main`** — routines clone the repo's *default* branch, and the agent pushes
    `last_run.md` back to that branch.
@@ -74,24 +75,29 @@ session, so use the web Routines page).
      portfolio monitor."*
    - **Repository:** `laurentbello/fundbello`.
    - **Environment:** set **Network access = Full** (the agent fetches IR sites, congress.gov,
-     regulators, etc., and Gmail SMTP `smtp.gmail.com:465` isn't in the default "Trusted"
-     allowlist), and add **environment variables**:
-     - `GMAIL_ADDRESS` — the Gmail account to send **from**
-     - `GMAIL_APP_PASSWORD` — a Gmail **App Password** (16 chars, **no spaces**; Security → App
-       passwords, requires 2-Step Verification)
-     - *(optional `RECIPIENT` — defaults to `laurentbello@gmail.com`)*
+     regulators, etc.). **Connect the Gmail MCP** for the session (the same Gmail tools this
+     repo uses to create drafts) — that's the *only* delivery credential needed. **No
+     `GMAIL_APP_PASSWORD`, no env vars, no SMTP allowlist** — the draft path doesn't touch
+     SMTP, which is exactly why it's easier and safer to set up.
    - **Trigger → Schedule:** **weekly** (any day/time; enter local Mauritius time, the form
      converts to UTC).
 3. Click **Create**, then **Run now** to test.
 
+> **Legacy SMTP auto-send (optional):** if you'd rather the routine *send* instead of draft,
+> set `GMAIL_ADDRESS` + `GMAIL_APP_PASSWORD` (a Gmail **App Password** — Security → App
+> passwords, requires 2-Step Verification) and **Network access = Full** so
+> `smtp.gmail.com:465` is reachable, then run `send_email.py`. The Gmail draft path above is
+> the default and needs none of this.
+
 ## Testing it now
-**Guaranteed-email check (recommended first run):** start a manual session with the SETUP TEST
+**Guaranteed-draft check (recommended first run):** start a manual session with the SETUP TEST
 prompt — *"Follow `portfolio/PROMPT.md` — SETUP TEST — and confirm delivery."* The `SETUP TEST`
-token bypasses the send-gate and emails a short "setup confirmed" digest (the roster + clusters)
-without researching or committing. If it arrives, your env vars + egress are correct.
+token bypasses the draft-gate and creates a short "setup confirmed" Gmail draft (the roster +
+clusters) without researching or committing. If it shows up in your Drafts, your Gmail MCP
+connection is wired correctly.
 
 **Normal manual run:** *"Follow `portfolio/PROMPT.md` and run this cycle's portfolio monitor."*
-— signal-gated, so unless something fired or a catalyst is in the window, it correctly sends
+— signal-gated, so unless something fired or a catalyst is in the window, it correctly drafts
 nothing and logs why.
 
 ## Optional: headless runner (`portfolio_monitor.sh`)
@@ -116,5 +122,5 @@ same hands-off send, zero API billing. Routines must be **created by you** at
 claude.ai/code/routines; everything the routine *runs* is committed and ready.
 
 ## Cost
-Zero API spend on the Routine path — the model work is part of your Claude membership. SMTP is
-free.
+Zero API spend on the Routine path — the model work is part of your Claude membership. The
+Gmail draft delivery is free (and SMTP, if you opt into the legacy auto-send, is free too).
