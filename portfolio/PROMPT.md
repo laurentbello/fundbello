@@ -4,11 +4,12 @@
 > Routine** (a scheduled cloud session billed to Laurent's Claude membership — no paid
 > API). The routine's prompt points here: *"Follow portfolio/PROMPT.md and run this
 > cycle's portfolio monitor."* The session does the per-position research itself,
-> consolidates by cluster, writes the digest, then **sends** it via `send_email.py`
-> (Gmail SMTP). See `README.md` for routine + environment setup.
+> consolidates by cluster, writes the digest, then **drafts** it as a Gmail draft via the
+> Gmail MCP `create_draft` tool — Laurent reviews and hits send. No app password, no SMTP
+> egress, nothing auto-leaves the account. See `README.md` for routine + environment setup.
 >
 > This is the multi-position sibling of `watchlist/PROMPT.md` (which deep-monitors Visa).
-> Same delivery pipe and "Routine, not cron" philosophy — scaled to the whole book.
+> Same "Routine, not cron" philosophy — scaled to the whole book.
 
 ---
 
@@ -42,12 +43,13 @@ sources; never invent data.
 ### 0. SETUP TEST MODE
 If the run prompt for this session contains the token `SETUP TEST` (case-insensitive),
 this is a one-time delivery check, not a real monitoring run. Do the minimum: read
-`holdings.md` and list the positions, then compose and SEND (steps 5–7) a short
+`holdings.md` and list the positions, then compose and DRAFT (steps 5–7) a short
 confirmation digest — subject `Portfolio Monitor — setup confirmed (DD Mon YYYY)`, body
 one line "Delivery path verified — this is a setup test, not an alert" plus the roster
-(ticker, weight, cluster) and which clusters are configured. **Bypass the WHEN TO SEND
-gate** (always send in this mode). Do NOT research developments, do NOT commit/push. End
-with the one-line confirmation. Otherwise, ignore this step and proceed normally.
+(ticker, weight, cluster) and which clusters are configured. **Bypass the WHEN TO DRAFT
+gate** (always draft in this mode). Do NOT research developments, do NOT commit/push. End
+with the one-line confirmation (and the draft id). Otherwise, ignore this step and proceed
+normally.
 
 ### 1. ORIENT
 - Determine **cadence + lookback**: read `last_run.md` for the last run date; the lookback
@@ -133,28 +135,37 @@ Write one JSON object with exactly these keys:
 Write the JSON to `portfolio/out/digest.json` (create `out/` if needed). Don't print the
 full JSON in chat.
 
-### 7. SEND
-`python3 portfolio/send_email.py portfolio/out/digest.json`
-Needs `GMAIL_ADDRESS` and `GMAIL_APP_PASSWORD` in the environment and outbound SMTP. If it
-errors (missing env / blocked egress), report the exact one-line error — do not silently
-fail.
+### 7. DRAFT
+Create a **Gmail draft** (do NOT auto-send) with the Gmail MCP `create_draft` tool, reading
+the values straight from `portfolio/out/digest.json`:
+- `to`: `["laurentbello@gmail.com"]`
+- `subject`: the digest `subject`
+- `body`: the digest `text_body` (plain-text alternative)
+- `htmlBody`: the digest `html_body` (rich version Laurent sees in Gmail)
+
+This needs only the **Gmail MCP connection** — no `GMAIL_APP_PASSWORD`, no outbound SMTP.
+The draft lands in Laurent's Drafts; he reviews and hits send. If the tool errors (e.g.
+Gmail MCP not connected), report the exact one-line error and fall back to leaving the
+digest at `portfolio/out/digest.json` with a note — do not silently fail. (Legacy SMTP
+auto-send via `python3 portfolio/send_email.py portfolio/out/digest.json` still works if
+`GMAIL_ADDRESS`/`GMAIL_APP_PASSWORD` are set, but the draft path is the default.)
 
 ### 8. CONFIRM
-End with a one-line confirmation: subject sent (or skipped) + the single most important
-takeaway (which signal, if any, fired and the discipline it invokes). Don't ask follow-up
-questions during an unattended run.
+End with a one-line confirmation: subject **drafted** (or skipped) + the draft id + the
+single most important takeaway (which signal, if any, fired and the discipline it invokes).
+Don't ask follow-up questions during an unattended run.
 
-## WHEN TO SEND (self-clocking — run weekly, email only on signal)
+## WHEN TO DRAFT (self-clocking — run weekly, draft only on signal)
 This routine runs **weekly** (the web Routines scheduler offers daily/weekly only), but
-most weeks nothing crosses a registered signal. Gate the email on real signal, not the
+most weeks nothing crosses a registered signal. Gate the draft on real signal, not the
 calendar:
-- **SEND** the full digest (steps 5–7) when **any** of: a position is URGENT; any registered
+- **DRAFT** the full digest (steps 5–7) when **any** of: a position is URGENT; any registered
   BREAK/STRENGTHEN/PRICE signal fired; a cluster read-through trips a break test; OR a HARD
-  catalyst lands inside the lookahead window (e.g. a holding reported this week — send the
+  catalyst lands inside the lookahead window (e.g. a holding reported this week — draft the
   ALL-CLEAR-with-results as the heartbeat). Keep an all-clear-with-catalyst short.
-- **DO NOT SEND** when nothing fired AND no catalyst hit the window (the normal quiet
+- **DO NOT DRAFT** when nothing fired AND no catalyst hit the window (the normal quiet
   week). Skip steps 5–7 and end with a one-line log:
-  `Portfolio monitor <date>: scanned <N> names, all clear, no catalyst in window — no email sent.`
+  `Portfolio monitor <date>: scanned <N> names, all clear, no catalyst in window — no draft created.`
 - Always still do step 4 (persist `last_run.md`) so the lookback window advances.
 
 ## STYLE
