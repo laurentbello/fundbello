@@ -48,15 +48,14 @@ for the full email content.
 Each new SemiAnalysis email = one digest email + one archive action. Run in order.
 
 ### 1. Find unprocessed SemiAnalysis emails
-Search Gmail for newsletters not yet digested:
+Detect by SENDER (this account's `SemiAnalysis` auto-label is unreliable, so do not depend on it).
+The `SemiAnalysis/Processed` label is the idempotency guard. For the daily scheduled run, use a short
+recency window so it only ever looks at genuinely new mail and never re-digests deep history:
 ```
-label:SemiAnalysis -label:SemiAnalysis/Processed
+from:(semianalysis.com OR semianalysis@substack.com) in:inbox -label:SemiAnalysis/Processed newer_than:7d
 ```
-If the `SemiAnalysis` label isn't set up, fall back to sender search and treat inbox items as new:
-```
-from:(semianalysis.com OR semianalysis@substack.com) in:inbox newer_than:14d
-```
-Process oldest first. If none, say so plainly and stop — do not invent content.
+(Drop `newer_than:7d` only for a deliberate manual backfill.) Process oldest first. If none, say so
+plainly and stop — do not invent content, do not create a draft.
 
 ### 2. Pull full content + canonical link
 Read the entire email body, not the snippet. Extract the article link and strip tracking junk
