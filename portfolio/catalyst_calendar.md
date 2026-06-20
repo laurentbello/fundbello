@@ -25,7 +25,7 @@
 - 2026-Q3    | MA      | Q2 earnings            | HARD | watch: GDV, cross-border, VAS growth, guidance
 - YE2026     | WM      | leverage checkpoint    | HARD | watch: net leverage ≤ 3.0x confirmed?
 - ongoing    | V/MA    | CCCA (S.3623/H.R.7035) | HARD | watch: amendment / must-pass attachment (congress.gov)
-- ongoing    | AENA.MC | DORA III milestones    | HARD | watch: max-tariff path, dual-till treatment
+- by-2026-09-30 | AENA.MC | DORA III — Council of Ministers final decision | HARD | watch: max-tariff path, dual-till treatment; CNMC rec ~Jun 2 2026 = -0.59%/yr vs Aena +3.8% proposal (non-binding but traditionally influential); final sets BREAK-1 or STRENGTHEN-1
 - ongoing    | ASML/LRCX | export-control policy | HARD | watch: scope expansion to EUV/etch/dep tools
 - mid-2026   | V/MA    | RBA review (network fees) | HARD | watch: scheme-fee cap proposals
 
