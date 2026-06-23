@@ -25,12 +25,12 @@
 - 2026-Q3    | MA      | Q2 earnings            | HARD | watch: GDV, cross-border, VAS growth, guidance
 - YE2026     | WM      | leverage checkpoint    | HARD | watch: net leverage ≤ 3.0x confirmed?
 - ongoing    | V/MA    | CCCA (S.3623/H.R.7035) | HARD | watch: amendment / must-pass attachment (congress.gov)
-- ongoing    | AENA.MC | DORA III milestones    | HARD | watch: max-tariff path, dual-till treatment
-- ongoing    | ASML/LRCX | export-control policy | HARD | watch: scope expansion to EUV/etch/dep tools
-- mid-2026   | V/MA    | RBA review (network fees) | HARD | watch: scheme-fee cap proposals
+- ongoing    | AENA.MC | DORA III milestones    | HARD | watch: max-tariff path, dual-till treatment — CNMC advisory Jun 2026: -0.59%/yr (vs Aena +3.82% ask); Council of Ministers decision ≤ Sep 30 2026; approaches BREAK-1
+- ongoing    | ASML/LRCX | export-control policy | HARD | watch: scope expansion to EUV/etch/dep tools — MATCH Act (DUV ban) cleared Senate committee Apr 2026; BIS EUV enforcement probe Jun 21-22; LRCX Hua Hong etch/dep restriction ~$600M China revenue cut; approaches BREAK-1 both names
 
 ## PAST (rolled-off; keep for reference)
 # - <date> | <ticker> | <event> | <outcome>
+- 2026-03    | V/MA    | RBA review (network fees) | RESOLVED | conclusions paper Mar 2026: scheme/network fees NOT capped; interchange caps announced separately (not BREAK-2 trigger); BREAK-2 not fired; move to past
 
 # -----------------------------------------------------------------------------
 # NOTE: dates without a day (YYYY-MM / YYYY-Qn) are approximate windows — the monitor
