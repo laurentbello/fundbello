@@ -25,9 +25,9 @@
 - 2026-Q3    | MA      | Q2 earnings            | HARD | watch: GDV, cross-border, VAS growth, guidance
 - YE2026     | WM      | leverage checkpoint    | HARD | watch: net leverage ≤ 3.0x confirmed?
 - ongoing    | V/MA    | CCCA (S.3623/H.R.7035) | HARD | watch: amendment / must-pass attachment (congress.gov)
-- ongoing    | AENA.MC | DORA III milestones    | HARD | watch: max-tariff path, dual-till treatment
-- ongoing    | ASML/LRCX | export-control policy | HARD | watch: scope expansion to EUV/etch/dep tools
-- mid-2026   | V/MA    | RBA review (network fees) | HARD | watch: scheme-fee cap proposals
+- ongoing    | AENA.MC | DORA III milestones    | HARD | watch: max-tariff path, dual-till treatment — CNMC recommended -0.59%/yr (vs Aena's +3.82% proposal). Final decision: Ministry of Transport by 30 Sep 2026. Dual-till commercial leg: no claw-back proposed. BREAK-1 not fired yet.
+- ongoing    | ASML/LRCX | export-control policy | HARD | watch: scope expansion to EUV/etch/dep tools — MATCH Act cleared House Foreign Affairs Committee Apr 22 2026; Senate Banking/Foreign Relations no markup yet. Jun 21: Lutnick EUV accusation (ASML denied). Monitor Senate markup schedule.
+- mid-2026   | V/MA    | RBA review (network fees) | HARD | watch: scheme-fee cap proposals — RESOLVED FAVORABLY (Mar 2026 Conclusions Paper: interchange reductions only; scheme fees = transparency requirement only, no cap enacted. Close this watch.)
 
 ## PAST (rolled-off; keep for reference)
 # - <date> | <ticker> | <event> | <outcome>
