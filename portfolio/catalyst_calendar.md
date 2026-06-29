@@ -25,8 +25,8 @@
 - 2026-Q3    | MA      | Q2 earnings            | HARD | watch: GDV, cross-border, VAS growth, guidance
 - YE2026     | WM      | leverage checkpoint    | HARD | watch: net leverage ≤ 3.0x confirmed?
 - ongoing    | V/MA    | CCCA (S.3623/H.R.7035) | HARD | watch: amendment / must-pass attachment (congress.gov)
-- ongoing    | AENA.MC | DORA III milestones    | HARD | watch: max-tariff path, dual-till treatment
-- ongoing    | ASML/LRCX | export-control policy | HARD | watch: scope expansion to EUV/etch/dep tools
+- 2026-09    | AENA.MC | DORA III govt decision  | HARD | watch: max-tariff path, dual-till treatment; airlines (IATA/ALA) pushed for 4.9% cuts vs Aena's +3.8% proposal — gov decision ~Sep 2026
+- ongoing    | ASML/LRCX | export-control policy | HARD | watch: scope expansion to EUV/etch/dep tools; MATCH Act (US bipartisan bill to ban DUV immersion to China) pending Congress — NL lobbied US 2026-06-24; vote timing unknown
 - mid-2026   | V/MA    | RBA review (network fees) | HARD | watch: scheme-fee cap proposals
 
 ## PAST (rolled-off; keep for reference)
