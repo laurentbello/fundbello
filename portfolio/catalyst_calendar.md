@@ -9,13 +9,14 @@
 ## UPCOMING
 
 - 2026-07-28 | WM      | Q2 earnings            | HARD | watch: core price vs 4.5%, price/cost spread vs 150bps, Healthcare synergy, leverage path
-- 2026-07    | DG.PA   | H1 results             | HARD | watch: toll tariff/traffic, airport pax, backlog, ND/EBITDA
-- 2026-07    | AENA.MC | H1 results             | HARD | watch: traffic, commercial rev/pax, ND/EBITDA, guidance
+- 2026-07-29 | DG.PA   | H1 results             | HARD | watch: toll tariff/traffic, windfall-tax P&L, airport pax, backlog, ND/EBITDA
+- 2026-07    | AENA.MC | H1 results             | HARD | watch: traffic, commercial rev/pax, ND/EBITDA, guidance; DORA III update
 - 2026-07    | CLNX.MC | H1 results             | HARD | watch: ND/EBITDA path, RLFCF guidance, buyback
 - 2026-07    | FER.MC  | H1 results             | HARD | watch: managed-lane revenue/traffic, 407 dividend, recycling
 - 2026-07    | AI.PA   | H1 results             | HARD | watch: pricing, operating margin, ROCE, backlog/IRR
 - 2026-07    | SAF.PA  | H1 results             | HARD | watch: civil aftermarket %, LEAP ramp, FCF, guidance
-- 2026-07    | AIR.PA  | H1 results             | HARD | watch: deliveries vs guide, A320 rate, margin, FCF
+- 2026-07-28 | AIR.PA  | H1 results             | HARD | watch: deliveries vs 870 guide, A320 rate, margin, FCF; P&W update
+- 2026-07-21 | AIR.PA  | Business Update London | HARD | watch: any delivery-guide change or P&W commentary ahead of H1
 - 2026-Q3    | LIN     | Q2 earnings            | HARD | watch: pricing, margin, ROCE, backlog, buyback
 - 2026-Q3    | SPGI    | Q2 earnings            | HARD | watch: ratings vs issuance, recurring growth, margin, buyback
 - 2026-Q3    | MCO     | Q2 earnings            | HARD | watch: MIS vs issuance, MA ARR/retention, margin, buyback
