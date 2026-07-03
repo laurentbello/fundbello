@@ -80,6 +80,9 @@ session, so use the web Routines page).
      - `GMAIL_APP_PASSWORD` — a Gmail **App Password** (16 chars, **no spaces**; Security → App
        passwords, requires 2-Step Verification)
      - *(optional `RECIPIENT` — defaults to `laurentbello@gmail.com`)*
+     - These are optional in practice: if unset (or SMTP is blocked), the routine falls back
+       to creating a Gmail **draft** via the connected Gmail MCP tool instead of erroring out
+       — see PROMPT.md step 7. Set them anyway for true zero-touch delivery straight to the inbox.
    - **Trigger → Schedule:** **weekly** (any day/time; enter local Mauritius time, the form
      converts to UTC).
 3. Click **Create**, then **Run now** to test.
