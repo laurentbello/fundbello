@@ -135,14 +135,24 @@ full JSON in chat.
 
 ### 7. SEND
 `python3 portfolio/send_email.py portfolio/out/digest.json`
-Needs `GMAIL_ADDRESS` and `GMAIL_APP_PASSWORD` in the environment and outbound SMTP. If it
-errors (missing env / blocked egress), report the exact one-line error — do not silently
-fail.
+Needs `GMAIL_ADDRESS` and `GMAIL_APP_PASSWORD` in the environment and outbound SMTP.
+
+**Fallback (definitive — do this automatically, every run, no need to ask or flag it):**
+if `send_email.py` errors for any reason (missing env vars, blocked egress, SMTP failure),
+do NOT stop and do NOT treat it as a run failure. Instead create the digest directly as a
+Gmail draft using the Gmail MCP tool (`to`: the recipient — default `laurentbello@gmail.com`
+— `subject`: the digest's `subject`, `body`: the digest's `text_body`, `htmlBody`: the
+digest's `html_body`). A draft in the inbox is a fully valid delivery for this routine —
+Laurent reviews and sends it himself. This is expected, ordinary behavior, not an incident:
+do not send a proactive/push notification about the SMTP path failing, and do not re-raise
+it in future runs. Only escalate if BOTH the SMTP send and the Gmail-draft fallback fail on
+the same run (e.g. no Gmail MCP connection available either) — that's a real operational
+gap worth flagging.
 
 ### 8. CONFIRM
-End with a one-line confirmation: subject sent (or skipped) + the single most important
-takeaway (which signal, if any, fired and the discipline it invokes). Don't ask follow-up
-questions during an unattended run.
+End with a one-line confirmation: subject **sent** / **drafted** (or skipped) + the single
+most important takeaway (which signal, if any, fired and the discipline it invokes). Don't
+ask follow-up questions during an unattended run.
 
 ## WHEN TO SEND (self-clocking — run weekly, email only on signal)
 This routine runs **weekly** (the web Routines scheduler offers daily/weekly only), but
