@@ -8,7 +8,6 @@
 
 ## UPCOMING
 
-- 2026-07-06 | SPGI    | ex-Mobility recast financials | HARD | watch: re-based recurring-revenue/margin KPIs post spin-off
 - 2026-07-15 | ASML    | Q2 2026 earnings (confirmed, pre-market) | HARD | watch: net bookings, China mix, gross margin, guidance, any comment on EUV-diversion allegation
 - 2026-07-15 | AIR.PA  | Pre-Q2 quarterly communication (deliveries/orders) | HARD | watch: June/H1 delivery cadence vs ~870 FY26 guide, P&W/GTF commentary
 - 2026-07-15 | CLNX.MC | 2nd €250m dividend tranche payable | SOFT | routine, part of pre-announced €500m 2026 program
@@ -34,7 +33,8 @@
 
 ## PAST (rolled-off; keep for reference)
 # - <date> | <ticker> | <event> | <outcome>
-- 2026-07-01 | SPGI | Mobility Global (MBGL) spin-off completed, 1-for-1 distribution | stock +~8% on separation + sell-side upgrade; recast ex-Mobility financials due 07-06
+- 2026-07-01 | SPGI | Mobility Global (MBGL) spin-off completed, 1-for-1 distribution | stock +~8% on separation + sell-side upgrade
+- 2026-07-06 | SPGI | ex-Mobility recast financials press release | confirmed issued per plan (FY2025, 4Q2025, Q1 2026 recast); actual recurring-revenue/margin KPI content not yet indexed/retrievable as of this scan (2026-07-06) — RE-CONFIRM next cycle, do not treat as resolved
 
 # -----------------------------------------------------------------------------
 # NOTE: dates without a day (YYYY-MM / YYYY-Qn) are approximate windows — the monitor
