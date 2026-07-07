@@ -8,10 +8,10 @@
 
 ## UPCOMING
 
-- 2026-07-06 | SPGI    | ex-Mobility recast financials | HARD | watch: re-based recurring-revenue/margin KPIs post spin-off
 - 2026-07-15 | ASML    | Q2 2026 earnings (confirmed, pre-market) | HARD | watch: net bookings, China mix, gross margin, guidance, any comment on EUV-diversion allegation
 - 2026-07-15 | AIR.PA  | Pre-Q2 quarterly communication (deliveries/orders) | HARD | watch: June/H1 delivery cadence vs ~870 FY26 guide, P&W/GTF commentary
 - 2026-07-15 | CLNX.MC | 2nd €250m dividend tranche payable | SOFT | routine, part of pre-announced €500m 2026 program
+- 2026-07-21 | AIR.PA  | Business Update (London, Faury/Toepfer) | SOFT | new precursor catalyst ahead of H1 results; watch rate/ramp commentary
 - 2026-07-23~28 | MCO  | Q2 2026 earnings (date unconfirmed by IR — est.) | HARD | watch: MIS vs issuance, MA ARR/retention, margin, buyback
 - 2026-07-23~30 | MA   | Q2 2026 earnings (date unconfirmed by IR — est.) | HARD | watch: GDV, cross-border trend (April showed deceleration to ~9%, travel ~2%), VAS growth, guidance
 - 2026-07-28 | WM      | Q2 earnings (confirmed: release after close; call 07-29 10am ET) | HARD | watch: core price vs 4.5%, price/cost spread vs 150bps (Q1 ran >200bps), Healthcare synergy (raised to $300M target), leverage path (Q1: 2.94x)
@@ -35,6 +35,8 @@
 ## PAST (rolled-off; keep for reference)
 # - <date> | <ticker> | <event> | <outcome>
 - 2026-07-01 | SPGI | Mobility Global (MBGL) spin-off completed, 1-for-1 distribution | stock +~8% on separation + sell-side upgrade; recast ex-Mobility financials due 07-06
+- 2026-07-06 | SPGI | ex-Mobility recast financials published on schedule | new 4-segment structure (Ratings, Dow Jones Indices, Energy, Market Intelligence); MI reorganized into Kensho Data & Platforms / Enterprise Solutions; 2026 guidance deferred to 07-28 Q2 print — no KPI test yet, watch there
+- 2026-07-03 | SAF.PA | exclusive Exail Technologies acquisition talks (~€2bn) ended without agreement | unrelated to CFM/LEAP civil-aftermarket thesis; no registered signal to map to
 
 # -----------------------------------------------------------------------------
 # NOTE: dates without a day (YYYY-MM / YYYY-Qn) are approximate windows — the monitor
