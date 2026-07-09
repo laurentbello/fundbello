@@ -8,14 +8,14 @@
 
 ## UPCOMING
 
-- 2026-07-06 | SPGI    | ex-Mobility recast financials | HARD | watch: re-based recurring-revenue/margin KPIs post spin-off
 - 2026-07-15 | ASML    | Q2 2026 earnings (confirmed, pre-market) | HARD | watch: net bookings, China mix, gross margin, guidance, any comment on EUV-diversion allegation
-- 2026-07-15 | AIR.PA  | Pre-Q2 quarterly communication (deliveries/orders) | HARD | watch: June/H1 delivery cadence vs ~870 FY26 guide, P&W/GTF commentary
+- 2026-07-15 | AIR.PA  | Pre-Q2 quarterly communication (deliveries/orders) | HARD | watch: June/H1 delivery cadence vs ~870 FY26 guide, P&W/GTF commentary — largely pre-empted by June data already out (H1 deliveries 351, +15% YoY, best H1 since 2019; informal internal goal 900+ vs official ~870 guide unraised)
 - 2026-07-15 | CLNX.MC | 2nd €250m dividend tranche payable | SOFT | routine, part of pre-announced €500m 2026 program
-- 2026-07-23~28 | MCO  | Q2 2026 earnings (date unconfirmed by IR — est.) | HARD | watch: MIS vs issuance, MA ARR/retention, margin, buyback
-- 2026-07-23~30 | MA   | Q2 2026 earnings (date unconfirmed by IR — est.) | HARD | watch: GDV, cross-border trend (April showed deceleration to ~9%, travel ~2%), VAS growth, guidance
+- 2026-07-21 | AIR.PA  | 2026 Business Update event, London (newly identified, not previously tracked) | HARD | watch: CEO Faury/CFO Toepfer rate/guidance commentary ahead of H1 earnings
+- 2026-07-22 | MCO     | Q2 2026 earnings (confirmed via BusinessWire 2026-07-08, before NYSE open) | HARD | watch: MIS vs issuance, MA ARR/retention, margin, buyback
+- 2026-07-30 | MA      | Q2 2026 earnings (confirmed via BusinessWire 2026-07-08, call 9:00am ET) | HARD | watch: GDV, cross-border trend (April showed deceleration to ~9%, travel ~2%), VAS growth, guidance
 - 2026-07-28 | WM      | Q2 earnings (confirmed: release after close; call 07-29 10am ET) | HARD | watch: core price vs 4.5%, price/cost spread vs 150bps (Q1 ran >200bps), Healthcare synergy (raised to $300M target), leverage path (Q1: 2.94x)
-- 2026-07-28~30 | V    | fiscal-Q3 earnings (date unconfirmed by IR — est.) | HARD | watch: PV, cross-border, Europe-vs-US spread
+- 2026-07-28 | V      | fiscal-Q3 earnings (confirmed via investor.visa.com) | HARD | watch: PV, cross-border, Europe-vs-US spread
 - 2026-07-28 | FER.MC  | H1 results (indicative, unconfirmed by IR) | HARD | watch: managed-lane revenue/traffic, 407 dividend, recycling
 - 2026-07-28 | SAF.PA  | H1 2026 results (confirmed, webcast 08:30 CET) | HARD | watch: civil aftermarket %, LEAP ramp/durability fix, FCF, guidance vs May global RPK dip (-2.2%, ME-driven)
 - 2026-07-28 | AIR.PA  | H1 2026 results press release | HARD | watch: deliveries vs ~870 guide, A320 rate, margin, FCF, P&W/GTF dispute status
@@ -24,7 +24,7 @@
 - 2026-07-29~30 | AENA.MC | H1 2026 results (indicative, unconfirmed by IR) | HARD | watch: traffic, commercial rev/pax, ND/EBITDA, guidance
 - 2026-07-27~31 | AI.PA | H1 results (date unconfirmed by IR — pre-results comms doc issued 07-01) | HARD | watch: pricing, operating margin, ROCE, backlog/IRR
 - 2026-07-31 | LIN     | Q2 2026 earnings (confirmed, 06:00 EDT release / 09:00 EDT call) | HARD | watch: pricing, margin, ROCE, backlog, buyback
-- 2026-08-04~05 | SPGI | Q2 2026 earnings (date unconfirmed by IR — est.) | HARD | watch: ex-Mobility recurring growth, margin, buyback
+- 2026-07-28 | SPGI | Q2 2026 earnings (confirmed via investor.spglobal.com) | HARD | watch: ex-Mobility recurring growth, margin, official 2026 guidance reset, buyback
 - 2026-08-05 | LRCX    | fiscal-Q4 2026 earnings (date unconfirmed by IR — est., quarter ended 06-28) | HARD | watch: WFE outlook, China mix, CSBG, gross margin, buyback, any China export-control update
 - 2026-09-30 | AENA.MC | DORA III final resolution (Council of Ministers deadline) | HARD | watch: CNMC's 06-03 report recommends -0.59%/yr tariff cut for 2027-31 vs Aena's +3.82% ask (WACC also cut 9%→7.4%); dual-till/commercial treatment untouched so far — this is the live BREAK-1 swing factor
 - YE2026     | WM      | leverage checkpoint    | HARD | watch: net leverage ≤ 3.0x confirmed? (Q1: 2.94x, on track)
@@ -35,6 +35,7 @@
 ## PAST (rolled-off; keep for reference)
 # - <date> | <ticker> | <event> | <outcome>
 - 2026-07-01 | SPGI | Mobility Global (MBGL) spin-off completed, 1-for-1 distribution | stock +~8% on separation + sell-side upgrade; recast ex-Mobility financials due 07-06
+- 2026-07-06 | SPGI | ex-Mobility recast financials published | segment growth healthy (Ratings +8%, Indices +14%, Market Intelligence +7%, Energy +6%); no deceleration signal; official 2026 guidance/margin detail still pending at 07-28 Q2 print
 
 # -----------------------------------------------------------------------------
 # NOTE: dates without a day (YYYY-MM / YYYY-Qn) are approximate windows — the monitor
