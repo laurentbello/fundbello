@@ -6,3 +6,4 @@ last_run: 2026-07-23
 mode: weekly
 verdicts: 15
 digest: portfolio/out/digest.json (MCO STRENGTHEN-1 fired -> ADD; WM price >$230 re-underwrite trigger fired; all other 13 names WATCH/none URGENT; no cluster break fired; nearly the full book reports H1/Q2 results 07-28~07-31 -- re-check next cycle)
+repeat_fire_2026-07-23T05:16Z: routine re-triggered same-day, minutes after the prior cycle -- lookback window (since last_run) was ~0 elapsed time, no earnings in the 07-28~07-31 cluster had landed yet, so no re-scan was run and no duplicate digest was sent; state otherwise unchanged from the prior cycle above.
