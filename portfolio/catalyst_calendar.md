@@ -8,33 +8,32 @@
 
 ## UPCOMING
 
-- 2026-07-06 | SPGI    | ex-Mobility recast financials | HARD | watch: re-based recurring-revenue/margin KPIs post spin-off
-- 2026-07-15 | ASML    | Q2 2026 earnings (confirmed, pre-market) | HARD | watch: net bookings, China mix, gross margin, guidance, any comment on EUV-diversion allegation
-- 2026-07-15 | AIR.PA  | Pre-Q2 quarterly communication (deliveries/orders) | HARD | watch: June/H1 delivery cadence vs ~870 FY26 guide, P&W/GTF commentary
-- 2026-07-15 | CLNX.MC | 2nd €250m dividend tranche payable | SOFT | routine, part of pre-announced €500m 2026 program
-- 2026-07-23~28 | MCO  | Q2 2026 earnings (date unconfirmed by IR — est.) | HARD | watch: MIS vs issuance, MA ARR/retention, margin, buyback
-- 2026-07-23~30 | MA   | Q2 2026 earnings (date unconfirmed by IR — est.) | HARD | watch: GDV, cross-border trend (April showed deceleration to ~9%, travel ~2%), VAS growth, guidance
-- 2026-07-28 | WM      | Q2 earnings (confirmed: release after close; call 07-29 10am ET) | HARD | watch: core price vs 4.5%, price/cost spread vs 150bps (Q1 ran >200bps), Healthcare synergy (raised to $300M target), leverage path (Q1: 2.94x)
-- 2026-07-28~30 | V    | fiscal-Q3 earnings (date unconfirmed by IR — est.) | HARD | watch: PV, cross-border, Europe-vs-US spread
-- 2026-07-28 | FER.MC  | H1 results (indicative, unconfirmed by IR) | HARD | watch: managed-lane revenue/traffic, 407 dividend, recycling
-- 2026-07-28 | SAF.PA  | H1 2026 results (confirmed, webcast 08:30 CET) | HARD | watch: civil aftermarket %, LEAP ramp/durability fix, FCF, guidance vs May global RPK dip (-2.2%, ME-driven)
-- 2026-07-28 | AIR.PA  | H1 2026 results press release | HARD | watch: deliveries vs ~870 guide, A320 rate, margin, FCF, P&W/GTF dispute status
-- 2026-07-29 | AIR.PA  | H1 2026 analyst call | HARD | watch: same as above
-- 2026-07-29 | DG.PA   | H1 2026 results (confirmed, before market open Paris) | HARD | watch: toll tariff/traffic, airport pax, backlog (~€75bn, 1.28x book-to-bill), ND/EBITDA; loi-cadre transports (Senate-passed 04-28) applies only to concession renewals 2031-36, not current formula
-- 2026-07-29~30 | AENA.MC | H1 2026 results (indicative, unconfirmed by IR) | HARD | watch: traffic, commercial rev/pax, ND/EBITDA, guidance
-- 2026-07-27~31 | AI.PA | H1 results (date unconfirmed by IR — pre-results comms doc issued 07-01) | HARD | watch: pricing, operating margin, ROCE, backlog/IRR
-- 2026-07-31 | LIN     | Q2 2026 earnings (confirmed, 06:00 EDT release / 09:00 EDT call) | HARD | watch: pricing, margin, ROCE, backlog, buyback
-- 2026-08-04~05 | SPGI | Q2 2026 earnings (date unconfirmed by IR — est.) | HARD | watch: ex-Mobility recurring growth, margin, buyback
-- 2026-08-05 | LRCX    | fiscal-Q4 2026 earnings (date unconfirmed by IR — est., quarter ended 06-28) | HARD | watch: WFE outlook, China mix, CSBG, gross margin, buyback, any China export-control update
-- 2026-09-30 | AENA.MC | DORA III final resolution (Council of Ministers deadline) | HARD | watch: CNMC's 06-03 report recommends -0.59%/yr tariff cut for 2027-31 vs Aena's +3.82% ask (WACC also cut 9%→7.4%); dual-till/commercial treatment untouched so far — this is the live BREAK-1 swing factor
-- YE2026     | WM      | leverage checkpoint    | HARD | watch: net leverage ≤ 3.0x confirmed? (Q1: 2.94x, on track)
-- ongoing    | V/MA    | CCCA (S.3623/H.R.7035) | HARD | watch: standalone bill stalled in committee; failed attachment to CLARITY Act (01-29) and housing bill (spring); FY2027 NDAA cleared committee both chambers ~06-05/06-09 and is now the live must-pass vehicle to watch for an amendment
-- ongoing    | ASML/LRCX | export-control policy | HARD | watch: US Commerce Sec. Lutnick alleged (06-19, denied by ASML) EUV tooling may have reached China — no BIS/Dutch license action followed; Netherlands joined "Pax Silica" alliance (06-23); MATCH Act (DUV ban) coalition push continues, cryogenic-etch/LRCX provision reportedly already stripped pre-committee — no enacted rule yet
-- 2026-09    | V/MA    | RBA review (network fees) | HARD | watch: scheme fees NOT capped in 03-2026 conclusions paper (only interchange, capped from 2026-10-01); schemes must submit fee-transparency plans by Sept 2026 — a possible precursor to a future cap
+- 2026-09-30 | AENA.MC | DORA III final resolution (Council of Ministers deadline) | HARD | watch: CNMC's 06-03 report recommended -0.59%/yr tariff cut for 2027-31 vs Aena's +3.82% ask (WACC also cut 9%->7.4%); as of H1 print (07-29) still unresolved — Aena reportedly preparing a "recurso de reposición"; dual-till/commercial treatment untouched so far — this remains the live BREAK-1 swing factor
+- ongoing    | V/MA    | CCCA (S.3623/H.R.7035) | HARD | watch: standalone bill still stalled in committee; FY2027 NDAA (the live must-pass vehicle) passed the House but stalled in the Senate as of 2026-08-04 — conference/reconciliation expected fall 2026 / post-election; watch for an amendment there
+- ongoing    | ASML/LRCX | export-control policy | HARD | watch: EUV-diversion allegation (Lutnick, 06-19) still unresolved — ASML has circulated documentation accounting for all 314 operational + 26 decommissioned tools, no BIS enforcement action or public evidence found; Netherlands formally joined "Pax Silica" alliance (dated 2026-07-23 per government.nl); MATCH Act cleared House Foreign Affairs Cmte 44-0 (04-22) with DUV-ban language intact but the LRCX-relevant cryogenic-etch provision dropped pre-committee — still needs a House floor vote + Senate action, nothing enacted yet
+- 2026-10    | V/MA    | RBA fee-transparency plans due | HARD | watch: RBA conclusions paper (finalized Apr 2026) requires designated schemes to publish quarterly scheme-fee/interchange data starting with Q3-2026 (due 2026-10-30); Scheme Fee Roadmaps due 2027-04-01 — disclosure only so far, not a fee cap; a possible precursor to one
+- 2026-10~11 | ALL     | Q3 2026 earnings season (dates TBD, confirm via each IR page nearer the time) | HARD | watch: first full read on H2 trajectory across the book — SPGI/MCO/V/MA/ASML/LRCX/AI/LIN/SAF/AIR/VINCI/AENA/FER/CLNX/WM all report roughly late-Oct to mid-Nov
+- YE2026     | WM      | leverage checkpoint    | HARD | watch: net leverage ≤ 3.0x confirmed? (Q2 2026: 2.96x, on track per 08-14 review)
 
 ## PAST (rolled-off; keep for reference)
 # - <date> | <ticker> | <event> | <outcome>
-- 2026-07-01 | SPGI | Mobility Global (MBGL) spin-off completed, 1-for-1 distribution | stock +~8% on separation + sell-side upgrade; recast ex-Mobility financials due 07-06
+- 2026-07-01 | SPGI | Mobility Global (MBGL) spin-off completed, 1-for-1 distribution | stock +~8% on separation + sell-side upgrade; recast ex-Mobility financials folded into 07-28 Q2 print
+- 2026-07-15 | ASML | Q2 2026 earnings | beat + FY26 sales guide raised to €43-45B; GM 54.0%; net bookings disclosure discontinued as of Q1'26 (playbook gap — KPI needs a new proxy)
+- 2026-07-15 | CLNX.MC | 2nd €250m dividend tranche | paid as scheduled, routine
+- 2026-07-22 | MCO | Q2 2026 earnings | "exceptional results" — issuance >$2T 2nd straight qtr, MA ARR +9%, buyback guide raised to $3.0B; STRENGTHEN-1 fired
+- 2026-07-28 | SPGI | Q2 2026 earnings (calendar had est. 08-04/05 — corrected) | beat; Ratings +17%, Indices 13th consecutive record qtr; Energy softer (Iran-conflict friction on renewals); buyback target raised to >$7B
+- 2026-07-28 | AI.PA | H1 2026 results | recurring OIR margin +110bps ex-energy, ahead of 100bps/yr target; Industrial Merchant pricing +5.2%; net debt up on DIG AIRGAS close; STRENGTHEN-1 fired
+- 2026-07-28 | SAF.PA | H1 2026 results | civil aftermarket +27.9%, record 18.4% recurring op margin, FY26 guidance raised; STRENGTHEN-1 fired
+- 2026-07-28 | AIR.PA | H1 2026 results | 351 deliveries (+15%), FY26 guide (~870) maintained, margin 8.2% vs 7.4% H1'25; no signal fired
+- 2026-07-28/29 | WM | Q2 2026 earnings + call | core price +5.7%, leverage 2.96x (within target), Healthcare synergy on track >$300M; STRENGTHEN-1 plausible, price >add-band so no trade
+- 2026-07-28 | V | fiscal-Q3 2026 earnings | PV crossed $4T qtr milestone, cross-border +13%, VAS +34% (partly FIFA World Cup one-off); STRENGTHEN-1 plausible, low confidence
+- 2026-07-29 | DG.PA (VINCI) | H1 2026 results | revenue +2%, EBITDA +4%, ND/EBITDA 1.6x, record order book; no signal fired, fully CLEAR
+- 2026-07-29 | AENA.MC | H1 2026 results | revenue +10.1%, traffic +3.9%; DORA III unresolved, rolled to UPCOMING
+- 2026-07-29 | FER.MC | H1 2026 results (calendar had est. 07-28 — corrected) | revenue +11.3% LFL, 407 ETR +18.7% rev on toll pricing, CAD550m Q3 distribution approved; STRENGTHEN-2 fired
+- 2026-07-30 | CLNX.MC | H1 2026 results + new buyback | FCF surged to €301m (from €19m), additional €200m buyback launched same day; STRENGTHEN-1 fired
+- 2026-07-30 | MA | Q2 2026 earnings | GDV +8%, cross-border reaccelerated 9%->12% (travel recovering), VAS +18%; STRENGTHEN-1 fired
+- 2026-07-31 | LIN | Q2 2026 earnings | adj. operating margin -60bps YoY (1st of 2 qtrs toward BREAK-2 threshold, not fired); price attainment +2% flat, ROCE 23.5%
+- 2026-08-05/06 | LRCX | fiscal-Q4 2026 earnings | record $6.72B revenue (+30% y/y), GM 52% (20-yr high); China mix fell 34%->26% (customer-mix rotation, not policy); buyback pace slowed; no signal cleanly fired
 
 # -----------------------------------------------------------------------------
 # NOTE: dates without a day (YYYY-MM / YYYY-Qn) are approximate windows — the monitor
