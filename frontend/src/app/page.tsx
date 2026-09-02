@@ -6,6 +6,16 @@ import ActionBadge from "@/components/ActionBadge";
 import SearchBox from "@/components/SearchBox";
 import SponsorSlot from "@/components/SponsorSlot";
 
+/** "2026-04-29" -> "29 Apr 2026" */
+function formatFilingDate(iso: string): string {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
 export default function Home() {
   const stocks = aggregateStocks();
   const topStocks = stocks.slice(0, 8);
@@ -126,6 +136,11 @@ export default function Home() {
                       }`}
                     >
                       {inv.quarterLabel}
+                      {inv.offCycle && (
+                        <span className="block text-xs text-fg-faint">
+                          filed {formatFilingDate(inv.asOf)}
+                        </span>
+                      )}
                     </td>
                   </tr>
                 ))}
