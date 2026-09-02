@@ -59,7 +59,7 @@ export default function Home() {
             </h2>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[480px] text-sm">
+            <table className="w-full min-w-[560px] text-sm">
               <thead>
                 <tr className="border-b border-line text-left text-[11px] tracking-widest text-fg-faint uppercase">
                   <th scope="col" className="px-6 py-3 font-medium">
@@ -71,8 +71,11 @@ export default function Home() {
                   <th scope="col" className="px-4 py-3 text-right font-medium">
                     Portfolio
                   </th>
-                  <th scope="col" className="px-6 py-3 text-right font-medium">
+                  <th scope="col" className="px-4 py-3 text-right font-medium">
                     Holdings
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-right font-medium">
+                    As of
                   </th>
                 </tr>
               </thead>
@@ -114,8 +117,15 @@ export default function Home() {
                     <td className="px-4 py-3.5 text-right font-medium text-fg">
                       {formatMoney(inv.aum)}
                     </td>
-                    <td className="px-6 py-3.5 text-right text-fg-soft">
+                    <td className="px-4 py-3.5 text-right text-fg-soft">
                       {inv.holdingsCount}
+                    </td>
+                    <td
+                      className={`px-6 py-3.5 text-right ${
+                        inv.isLatest ? "text-fg-soft" : "text-fg-faint"
+                      }`}
+                    >
+                      {inv.quarterLabel}
                     </td>
                   </tr>
                 ))}
