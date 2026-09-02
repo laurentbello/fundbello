@@ -103,10 +103,13 @@ export default async function StockPage({
             <h2 className="font-display text-xl font-semibold text-fg">
               Who holds {stock.ticker}
             </h2>
-            <p className="text-xs text-fg-faint">As filed · {LATEST_QUARTER}</p>
+            <p className="text-xs text-fg-faint">
+              Latest filing per manager · click a manager for its {stock.ticker}{" "}
+              history
+            </p>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] text-sm">
+            <table className="w-full min-w-[760px] text-sm">
               <thead>
                 <tr className="border-b border-line text-left text-[11px] tracking-widest text-fg-faint uppercase">
                   <th scope="col" className="px-7 py-4 font-medium">
@@ -121,6 +124,9 @@ export default async function StockPage({
                   <th scope="col" className="px-4 py-4 text-right font-medium">
                     % of portfolio
                   </th>
+                  <th scope="col" className="px-4 py-4 text-right font-medium">
+                    As of
+                  </th>
                   <th scope="col" className="px-7 py-4 text-right font-medium">
                     Action
                   </th>
@@ -134,8 +140,9 @@ export default async function StockPage({
                   >
                     <td className="px-7 py-4">
                       <Link
-                        href={`/investors/${investor.slug}`}
+                        href={`/investors/${investor.slug}/${stock.tickerSlug}`}
                         className="group flex flex-col"
+                        title={`${investor.name}'s ${stock.ticker} position history`}
                       >
                         <span className="font-semibold text-fg transition-colors group-hover:text-gold-soft">
                           {investor.name}
@@ -170,6 +177,9 @@ export default async function StockPage({
                           {formatPct(holding.weight)}
                         </span>
                       </div>
+                    </td>
+                    <td className="px-4 py-4 text-right text-fg-soft">
+                      {investor.quarterLabel}
                     </td>
                     <td className="px-7 py-4 text-right">
                       <ActionBadge action={holding.action} />

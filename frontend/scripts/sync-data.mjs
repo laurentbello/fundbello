@@ -131,7 +131,10 @@ const records = [];
 for (const r of rows.slice(1)) {
   const fund = (r[idx.fund] ?? "").trim();
   const snapshot = toIsoDate(r[idx.snapshot]);
-  if (!/Investments$/.test(fund) || !snapshot) continue;
+  // Every row of the Main tab is kept. Most fund labels carry a trailing
+  // " Investments" from the Dataroma page heading, but some (ETFs, funds
+  // added by hand) do not — filtering on that suffix silently dropped them.
+  if (!fund || !snapshot) continue;
   // Dual-ticker cells (e.g. "PRM\nPRMB" after a symbol change) keep the
   // current symbol, which is listed last.
   const ticker = (r[idx.ticker] ?? "").trim().split(/\s+/).pop() ?? "";
@@ -147,7 +150,7 @@ for (const r of rows.slice(1)) {
     pctOutstanding: toNumber(r[idx.pctOutstanding]),
     holdingsDate: (r[idx.holdingsDate] ?? "").trim(),
     filingType: (r[idx.filingType] ?? "").trim(),
-    fund: fund.replace(/ Investments$/, ""),
+    fund: fund.replace(/\s+Investments$/, ""),
     snapshot,
   });
 }

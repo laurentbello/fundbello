@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { investors, getInvestor } from "@/lib/data";
+import { investors, getInvestor, LATEST_QUARTER } from "@/lib/data";
 import { formatMoney, formatPct, formatShares } from "@/lib/format";
 import Reveal from "@/components/Reveal";
 import ActionBadge from "@/components/ActionBadge";
@@ -67,6 +67,12 @@ export default async function InvestorPage({
             {investor.manager ? `${investor.manager} · ` : ""}
             As filed {investor.quarterLabel} ({formatDate(investor.asOf)})
           </p>
+          {!investor.isLatest && (
+            <p className="mt-3 inline-block rounded-lg border border-line bg-raised/60 px-3 py-2 text-xs text-fg-soft">
+              No {LATEST_QUARTER} filing yet — showing the most recent quarter
+              this manager has reported.
+            </p>
+          )}
         </div>
 
         {/* Stats strip */}
@@ -122,7 +128,8 @@ export default async function InvestorPage({
               Holdings
             </h2>
             <p className="text-xs text-fg-faint">
-              As filed · {investor.quarterLabel}
+              As filed · {investor.quarterLabel} · click a security for its
+              full position history
             </p>
           </div>
           <div className="overflow-x-auto">
@@ -157,8 +164,9 @@ export default async function InvestorPage({
                   >
                     <td className="px-6 py-3.5">
                       <Link
-                        href={`/stocks/${h.tickerSlug}`}
+                        href={`/investors/${investor.slug}/${h.tickerSlug}`}
                         className="group flex flex-col"
+                        title={`${h.ticker} position history`}
                       >
                         <span className="font-semibold text-fg transition-colors group-hover:text-gold-soft">
                           {h.ticker}
@@ -238,7 +246,7 @@ export default async function InvestorPage({
                   className="border-b border-line/50 last:border-0"
                 >
                   <Link
-                    href={`/stocks/${a.tickerSlug}`}
+                    href={`/investors/${investor.slug}/${a.tickerSlug}`}
                     className="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-raised/60"
                   >
                     <ActionBadge action={a.action} />
