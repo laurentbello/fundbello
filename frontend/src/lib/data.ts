@@ -48,6 +48,7 @@ export interface Investor {
   asOf: string; // ISO snapshot date
   quarterLabel: string;
   isLatest: boolean; // has filed for the newest quarter in the sheet
+  offCycle: boolean; // filing date is not the quarter-end most managers use
   trend: number[]; // portfolio value per snapshot, oldest first
   holdings: Holding[];
   activity: Activity[];
@@ -121,6 +122,12 @@ export function quarterLabel(isoDate: string): string {
   return `Q${Math.ceil(m / 3)} ${y}`;
 }
 
+/** "2026-04-29" -> "2026-2": the calendar quarter the filing falls in. */
+function quarterKey(isoDate: string): string {
+  const [y, m] = isoDate.split("-").map(Number);
+  return `${y}-${Math.ceil(m / 3)}`;
+}
+
 function formatChangeShares(n: number): string {
   const abs = Math.abs(n);
   if (abs >= 1e6) return `${(abs / 1e6).toFixed(1)}M`;
@@ -146,6 +153,25 @@ function buildInvestors(rows: SheetRow[]): Investor[] {
     (max, r) => (r.snapshot > max ? r.snapshot : max),
     "",
   );
+
+  // Not every manager reports on the same day: 13F filers use the calendar
+  // quarter-end, while funds disclosing as "Aggregate MFs" file off-cycle.
+  // Staleness is therefore judged by quarter, and the date is surfaced for
+  // any manager filing away from the day most of them use.
+  const datesPerQuarter = new Map<string, Map<string, number>>();
+  for (const r of rows) {
+    const q = quarterKey(r.snapshot);
+    const counts = datesPerQuarter.get(q) ?? new Map<string, number>();
+    counts.set(r.snapshot, (counts.get(r.snapshot) ?? 0) + 1);
+    datesPerQuarter.set(q, counts);
+  }
+  const usualDate = new Map<string, string>();
+  for (const [q, counts] of datesPerQuarter) {
+    usualDate.set(
+      q,
+      [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0],
+    );
+  }
 
   const byFund = new Map<string, SheetRow[]>();
   for (const r of rows) {
@@ -249,7 +275,8 @@ function buildInvestors(rows: SheetRow[]): Investor[] {
         .reduce((sum, r) => sum + (r.weightPct ?? 0), 0),
       asOf: latest,
       quarterLabel: quarterLabel(latest),
-      isLatest: latest === globalLatest,
+      isLatest: quarterKey(latest) === quarterKey(globalLatest),
+      offCycle: usualDate.get(quarterKey(latest)) !== latest,
       trend: snapshots.map(totalFor),
       holdings,
       activity,
