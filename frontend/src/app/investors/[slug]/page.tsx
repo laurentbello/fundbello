@@ -67,6 +67,13 @@ export default async function InvestorPage({
             {investor.manager ? `${investor.manager} · ` : ""}
             As filed {investor.quarterLabel} ({formatDate(investor.asOf)})
           </p>
+          {investor.offCycle && investor.isLatest && (
+            <p className="mt-3 inline-block rounded-lg border border-line bg-raised/60 px-3 py-2 text-xs text-fg-soft">
+              Reports off the calendar-quarter cycle — this filing is dated{" "}
+              {formatDate(investor.asOf)}, where most managers report at the
+              quarter end.
+            </p>
+          )}
           {!investor.isLatest && (
             <p className="mt-3 inline-block rounded-lg border border-line bg-raised/60 px-3 py-2 text-xs text-fg-soft">
               No {LATEST_QUARTER} filing yet — showing the most recent quarter
