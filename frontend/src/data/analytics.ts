@@ -16,3 +16,16 @@
  * here stays the same.
  */
 export const CLOUDFLARE_TOKEN = "";
+
+/**
+ * Plausible Analytics (plausible.io). Set to the site domain registered in
+ * the Plausible dashboard to enable; empty string disables it.
+ * Register the site as exactly this value.
+ */
+export const PLAUSIBLE_DOMAIN = "";
+
+/**
+ * Google Analytics 4. Paste the measurement ID (looks like "G-XXXXXXXXXX")
+ * from analytics.google.com -> Admin -> Data streams. Empty string disables.
+ */
+export const GA_MEASUREMENT_ID = "G-LTXT18VSMZ";
