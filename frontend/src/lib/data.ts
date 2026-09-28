@@ -1,4 +1,12 @@
 import rawHoldings from "@/data/holdings.json";
+import rawSectors from "@/data/sectors.json";
+
+/** Custom sector map (not GICS) — see src/data/sectors.json. */
+const SECTORS: Record<string, string> = rawSectors as Record<string, string>;
+export const UNCLASSIFIED = "Unclassified";
+export function sectorOf(ticker: string): string {
+  return SECTORS[ticker] ?? UNCLASSIFIED;
+}
 
 /** One row of the synced Google Sheet (see scripts/sync-data.mjs). */
 interface SheetRow {
@@ -27,6 +35,16 @@ export interface Holding {
   shares: number;
   action: HoldingAction;
   changePct: number | null; // share count change vs prior quarter
+  prevWeight: number | null; // % of portfolio in the prior snapshot, null if new
+  sector: string;
+}
+
+export type Tier = "clone" | "read-only" | "trader";
+
+export interface SectorSlice {
+  sector: string;
+  weight: number; // % of portfolio
+  count: number;
 }
 
 export interface Activity {
@@ -52,46 +70,82 @@ export interface Investor {
   trend: number[]; // portfolio value per snapshot, oldest first
   holdings: Holding[];
   activity: Activity[];
+  sectors: SectorSlice[]; // custom-sector breakdown, largest first
+  tier: Tier | null; // editorial tier, see FUND_META
+  note: string | null; // editorial caveat shown on the manager page
+  ranking: Ranking;
+}
+
+/**
+ * How a manager scores on the filing record alone. Every component is
+ * 0-100 and reproducible from the sheet; performance is deliberately
+ * excluded because 13Fs cannot measure it.
+ */
+export interface Ranking {
+  score: number; // weighted composite, 0-100
+  continuity: number; // share of the earliest top-10 still held today
+  concentration: number; // top-10 weight, capped at 60% = 100
+  stability: number; // 100 minus trailing-4-quarter name turnover
+  conviction: number; // adds outnumber trims among positions >= 2%
+  quarters: number; // how many snapshots the record rests on
 }
 
 /** Display metadata for funds we know; anything new in the sheet still works. */
 const FUND_META: Record<
   string,
-  { slug: string; display: string; manager: string | null }
+  {
+    slug: string;
+    display: string;
+    manager: string | null;
+    tier?: Tier;
+    note?: string;
+  }
 > = {
-  "Akre Capital Management, LLC": { slug: "akre-capital", display: "Akre Capital Management", manager: "John Neff" },
-  "AltaRock Partners LP": { slug: "altarock-partners", display: "AltaRock Partners", manager: "Mark Massey" },
-  "Altimeter Capital Management, LP": { slug: "altimeter-capital", display: "Altimeter Capital", manager: "Brad Gerstner" },
-  "Atreides Management, LP": { slug: "atreides-management", display: "Atreides Management", manager: "Gavin Baker" },
+  "Akre Capital Management, LLC": { slug: "akre-capital", display: "Akre Capital Management", manager: "John Neff", tier: "read-only" },
+  "AltaRock Partners LP": { slug: "altarock-partners", display: "AltaRock Partners", manager: "Mark Massey", tier: "clone" },
+  "Altimeter Capital Management, LP": { slug: "altimeter-capital", display: "Altimeter Capital", manager: "Brad Gerstner", tier: "read-only" },
+  "Atreides Management, LP": { slug: "atreides-management", display: "Atreides Management", manager: "Gavin Baker", tier: "trader", note: "Long/short book with index hedges; the 13F shows roughly half the exposure and turns over most names each quarter." },
   "Blue Box Wealth Management SA": { slug: "blue-box", display: "Blue Box Wealth Management", manager: "William de Gale" },
-  "Blue Whale Capital LLP": { slug: "blue-whale", display: "Blue Whale Capital", manager: "Stephen Yiu" },
-  "Coatue Management, L.L.C.": { slug: "coatue", display: "Coatue Management", manager: "Philippe Laffont" },
+  "Blue Whale Capital LLP": { slug: "blue-whale", display: "Blue Whale Capital", manager: "Stephen Yiu", tier: "read-only" },
+  "Coatue Management, L.L.C.": { slug: "coatue", display: "Coatue Management", manager: "Philippe Laffont", tier: "read-only" },
   "Crake Asset Management LLP": { slug: "crake", display: "Crake Asset Management", manager: null },
-  "Edgewood Management LLC": { slug: "edgewood", display: "Edgewood Management", manager: "Alan Breed" },
+  "Edgewood Management LLC": { slug: "edgewood", display: "Edgewood Management", manager: "Alan Breed", tier: "read-only" },
   "Egerton Capital (UK) LLP": { slug: "egerton", display: "Egerton Capital", manager: "John Armitage" },
-  "Fundsmith Investment Services Ltd.": { slug: "fundsmith-investment-services", display: "Fundsmith Investment Services", manager: "Terry Smith" },
-  "Fundsmith LLP": { slug: "fundsmith", display: "Fundsmith", manager: "Terry Smith" },
+  "Fundsmith Investment Services Ltd.": { slug: "fundsmith-investment-services", display: "Fundsmith Investment Services", manager: "Terry Smith", tier: "clone" },
+  "Fundsmith LLP": { slug: "fundsmith", display: "Fundsmith", manager: "Terry Smith", tier: "clone" },
   "Harvard Management Company, Inc.": { slug: "harvard-management", display: "Harvard Management Company", manager: null },
   "I.G.Y. Ltd": { slug: "igy", display: "I.G.Y.", manager: "Nick Sleep" },
-  "Lakehouse Capital Pty Ltd.": { slug: "lakehouse", display: "Lakehouse Capital", manager: null },
-  "Lone Pine Capital, L.L.C.": { slug: "lone-pine", display: "Lone Pine Capital", manager: "Stephen Mandel" },
+  "Lakehouse Capital Pty Ltd.": { slug: "lakehouse", display: "Lakehouse Capital", manager: null, tier: "read-only" },
+  "Lone Pine Capital, L.L.C.": { slug: "lone-pine", display: "Lone Pine Capital", manager: "Stephen Mandel", tier: "read-only" },
   "Miller Value Partners Appreciation ETF": { slug: "miller-value", display: "Miller Value Partners", manager: "Bill Miller IV" },
   "Oakcliff Capital Management LLC": { slug: "oakcliff", display: "Oakcliff Capital", manager: "Bryan Lawrence" },
   "Octahedron Capital Management LP": { slug: "octahedron", display: "Octahedron Capital", manager: "Ram Parameswaran" },
-  "Pershing Square Capital Management, L.P.": { slug: "pershing-square", display: "Pershing Square", manager: "Bill Ackman" },
+  "Pershing Square Capital Management, L.P.": { slug: "pershing-square", display: "Pershing Square", manager: "Bill Ackman", tier: "read-only" },
   "Punch Card Management, LP": { slug: "punch-card", display: "Punch Card Management", manager: "Norbert Lou" },
   "Rivulet Capital, LLC": { slug: "rivulet", display: "Rivulet Capital", manager: "Joshua Kuntz & Barry Lebovits" },
   "Ruane, Cunniff & Goldfarb L.P.": { slug: "ruane-cunniff", display: "Ruane, Cunniff & Goldfarb", manager: null },
-  "RV Capital AG": { slug: "rv-capital", display: "RV Capital", manager: "Rob Vinall" },
+  "RV Capital AG": { slug: "rv-capital", display: "RV Capital", manager: "Rob Vinall", tier: "clone" },
   "Skye Global Management LP": { slug: "skye-global", display: "Skye Global Management", manager: "Jamie Sterne" },
-  "Soroban Capital Partners LP": { slug: "soroban", display: "Soroban Capital", manager: "Eric Mandelblatt" },
+  "Soroban Capital Partners LP": { slug: "soroban", display: "Soroban Capital", manager: "Eric Mandelblatt", tier: "read-only", note: "Reports call options at full notional, so the headline portfolio value overstates equity exposure." },
   "Stenham Growth": { slug: "stenham-growth", display: "Stenham Growth", manager: null },
   "Surgocap Partners LP": { slug: "surgocap", display: "Surgocap Partners", manager: "Mala Gaonkar" },
-  "TCI Fund Management Limited": { slug: "tci", display: "TCI Fund Management", manager: "Sir Christopher Hohn" },
+  "TCI Fund Management Limited": { slug: "tci", display: "TCI Fund Management", manager: "Sir Christopher Hohn", tier: "clone" },
   "The WindAcre Partnership LLC": { slug: "windacre", display: "The WindAcre Partnership", manager: "Snehal Amin" },
   "Triple Frond Partners LLC": { slug: "triple-frond", display: "Triple Frond Partners", manager: null },
-  "Valley Forge Capital Management, LP": { slug: "valley-forge", display: "Valley Forge Capital", manager: "Dev Kantesaria" },
+  "Valley Forge Capital Management, LP": { slug: "valley-forge", display: "Valley Forge Capital", manager: "Dev Kantesaria", tier: "clone" },
 };
+
+export const TIER_LABEL: Record<Tier, string> = {
+  clone: "Clone",
+  "read-only": "Read-only",
+  trader: "Trader",
+};
+export const TIER_BLURB: Record<Tier, string> = {
+  clone: "Long-hold, valuation-disciplined books whose positions are worth studying as candidates.",
+  "read-only": "Good signal on what quality managers own, but the book is shaped by something other than moat-and-price.",
+  trader: "Macro, event-driven or activist books; the 13F is a trading snapshot, not a list of things to own.",
+};
+
 
 /**
  * The sheet labels the same manager differently across quarters (a renamed
@@ -208,6 +262,16 @@ function buildInvestors(rows: SheetRow[]): Investor[] {
       (a, b) => (b.weightPct ?? 0) - (a.weightPct ?? 0),
     );
 
+    const prevWeights = new Map<string, number>();
+    if (previous) {
+      for (const r of fundRows.filter((r) => r.snapshot === previous)) {
+        prevWeights.set(
+          r.ticker,
+          (prevWeights.get(r.ticker) ?? 0) + (r.weightPct ?? 0),
+        );
+      }
+    }
+
     const holdings: Holding[] = latestRows.map((r) => ({
       ticker: r.ticker,
       tickerSlug: tickerSlug(r.ticker),
@@ -217,7 +281,22 @@ function buildInvestors(rows: SheetRow[]): Investor[] {
       shares: r.shares ?? 0,
       action: actionFor(r),
       changePct: r.sharesChangePct,
+      prevWeight: previous ? (prevWeights.get(r.ticker) ?? null) : null,
+      sector: sectorOf(r.ticker),
     }));
+
+    const sectorMap = new Map<string, SectorSlice>();
+    for (const h of holdings) {
+      const slice = sectorMap.get(h.sector) ?? {
+        sector: h.sector,
+        weight: 0,
+        count: 0,
+      };
+      slice.weight += h.weight;
+      slice.count += 1;
+      sectorMap.set(h.sector, slice);
+    }
+    const sectors = [...sectorMap.values()].sort((a, b) => b.weight - a.weight);
 
     const activity: Activity[] = [];
     for (const r of latestRows) {
@@ -280,10 +359,114 @@ function buildInvestors(rows: SheetRow[]): Investor[] {
       trend: snapshots.map(totalFor),
       holdings,
       activity,
+      sectors,
+      tier: meta.tier ?? null,
+      note: meta.note ?? null,
+      ranking: rankFund(fundRows, snapshots, latestRows),
     });
   }
 
   return result.sort((a, b) => b.aum - a.aum);
+}
+
+/* ------------------------------------------------------------------ */
+/* Ranking                                                             */
+/* ------------------------------------------------------------------ */
+
+const clamp = (n: number) => Math.max(0, Math.min(100, n));
+
+function tickersAt(rows: SheetRow[], snap: string): Set<string> {
+  return new Set(rows.filter((r) => r.snapshot === snap).map((r) => r.ticker));
+}
+
+function rankFund(
+  fundRows: SheetRow[],
+  snapshots: string[],
+  latestRows: SheetRow[],
+): Ranking {
+  const latest = snapshots[snapshots.length - 1];
+  const nowSet = tickersAt(fundRows, latest);
+
+  // Continuity: of the ten largest positions in the earliest snapshot we
+  // have, how many are still in the book today.
+  const earliest = snapshots[0];
+  const earliestTop = fundRows
+    .filter((r) => r.snapshot === earliest)
+    .sort((a, b) => (b.weightPct ?? 0) - (a.weightPct ?? 0))
+    .slice(0, 10)
+    .map((r) => r.ticker);
+  const continuity =
+    earliestTop.length && snapshots.length > 1
+      ? (earliestTop.filter((t) => nowSet.has(t)).length / earliestTop.length) *
+        100
+      : 50;
+
+  // Concentration: top-10 weight; 60% or more scores full marks.
+  const top10 = latestRows
+    .slice(0, 10)
+    .reduce((sum, r) => sum + (r.weightPct ?? 0), 0);
+  const concentration = clamp((top10 / 60) * 100);
+
+  // Stability: names added + dropped per quarter over the trailing four
+  // quarters, as a share of the average book size, inverted.
+  const window = snapshots.slice(-5);
+  let churn = 0;
+  let books = 0;
+  for (let i = 1; i < window.length; i++) {
+    const prev = tickersAt(fundRows, window[i - 1]);
+    const cur = tickersAt(fundRows, window[i]);
+    let added = 0;
+    let dropped = 0;
+    for (const t of cur) if (!prev.has(t)) added++;
+    for (const t of prev) if (!cur.has(t)) dropped++;
+    const avgBook = (prev.size + cur.size) / 2 || 1;
+    churn += (added + dropped) / avgBook;
+    books++;
+  }
+  const stability = books ? clamp(100 - (churn / books) * 100) : 50;
+
+  // Conviction: among meaningful positions (>= 2%), do adds outnumber trims?
+  const meaningful = latestRows.filter((r) => (r.weightPct ?? 0) >= 2);
+  const adds = meaningful.filter(
+    (r) => r.sharesChangePct != null && r.sharesChangePct > 0 && r.sharesChangePct < 100,
+  ).length;
+  const trims = meaningful.filter(
+    (r) => r.sharesChangePct != null && r.sharesChangePct < 0,
+  ).length;
+  const conviction =
+    adds + trims === 0 ? 50 : clamp((adds / (adds + trims)) * 100);
+
+  const score =
+    0.35 * continuity + 0.25 * stability + 0.25 * concentration + 0.15 * conviction;
+
+  return {
+    score: Math.round(score),
+    continuity: Math.round(continuity),
+    concentration: Math.round(concentration),
+    stability: Math.round(stability),
+    conviction: Math.round(conviction),
+    quarters: snapshots.length,
+  };
+}
+
+/** Managers ordered by composite score, best first. */
+export function rankedInvestors(): Investor[] {
+  return [...investors].sort((a, b) => b.ranking.score - a.ranking.score);
+}
+
+/** Aggregate custom-sector exposure across all tracked managers, equal-weighted. */
+export function aggregateSectors(): SectorSlice[] {
+  const map = new Map<string, SectorSlice>();
+  const n = investors.length || 1;
+  for (const inv of investors) {
+    for (const s of inv.sectors) {
+      const slice = map.get(s.sector) ?? { sector: s.sector, weight: 0, count: 0 };
+      slice.weight += s.weight / n;
+      slice.count += s.count;
+      map.set(s.sector, slice);
+    }
+  }
+  return [...map.values()].sort((a, b) => b.weight - a.weight);
 }
 
 export const investors: Investor[] = buildInvestors(rawHoldings as SheetRow[]);
@@ -312,6 +495,9 @@ export interface StockAggregate {
   totalValue: number;
   buys: number;
   sells: number;
+  avgWeight: number; // mean portfolio weight across holders, %
+  avgWeightChange: number | null; // mean change in weight vs prior quarter, pp
+  sector: string;
 }
 
 export function aggregateStocks(): StockAggregate[] {
@@ -328,6 +514,9 @@ export function aggregateStocks(): StockAggregate[] {
           totalValue: 0,
           buys: 0,
           sells: 0,
+          avgWeight: 0,
+          avgWeightChange: null,
+          sector: h.sector,
         };
         map.set(h.tickerSlug, agg);
       }
@@ -336,6 +525,17 @@ export function aggregateStocks(): StockAggregate[] {
       if (h.action === "new" || h.action === "add") agg.buys += 1;
       if (h.action === "trim" || h.action === "exit") agg.sells += 1;
     }
+  }
+  for (const agg of map.values()) {
+    const n = agg.holders.length;
+    agg.avgWeight = agg.holders.reduce((s, x) => s + x.holding.weight, 0) / n;
+    const withPrev = agg.holders.filter((x) => x.holding.prevWeight != null);
+    agg.avgWeightChange = withPrev.length
+      ? withPrev.reduce(
+          (s, x) => s + (x.holding.weight - (x.holding.prevWeight as number)),
+          0,
+        ) / withPrev.length
+      : null;
   }
   return [...map.values()].sort((a, b) => b.totalValue - a.totalValue);
 }

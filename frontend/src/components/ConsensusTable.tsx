@@ -1,0 +1,188 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { formatMoney, formatPct } from "@/lib/format";
+
+/** Serialisable slice of StockAggregate for the client. */
+export interface ConsensusRow {
+  ticker: string;
+  tickerSlug: string;
+  company: string;
+  sector: string;
+  holders: number;
+  totalValue: number;
+  avgWeight: number;
+  avgWeightChange: number | null;
+  buys: number;
+  sells: number;
+}
+
+type SortKey = "holders" | "avgWeight" | "conviction" | "value";
+
+const SORTS: { key: SortKey; label: string; hint: string }[] = [
+  { key: "holders", label: "Holders", hint: "Number of managers holding" },
+  { key: "avgWeight", label: "Avg weight", hint: "Mean portfolio weight across holders" },
+  { key: "conviction", label: "Conviction", hint: "Mean change in weight vs prior quarter" },
+  { key: "value", label: "Value", hint: "Combined position value" },
+];
+
+function sortRows(rows: ConsensusRow[], key: SortKey): ConsensusRow[] {
+  const v = (r: ConsensusRow) =>
+    key === "holders"
+      ? r.holders * 1e6 + r.avgWeight
+      : key === "avgWeight"
+        ? r.avgWeight
+        : key === "conviction"
+          ? (r.avgWeightChange ?? -Infinity)
+          : r.totalValue;
+  return [...rows].sort((a, b) => v(b) - v(a));
+}
+
+export default function ConsensusTable({
+  rows,
+  limit,
+  minHolders = 1,
+  showRank = false,
+  compact = false,
+}: {
+  rows: ConsensusRow[];
+  limit?: number;
+  minHolders?: number;
+  showRank?: boolean;
+  compact?: boolean;
+}) {
+  const [sort, setSort] = useState<SortKey>("holders");
+  const [sector, setSector] = useState<string>("all");
+
+  const sectors = [...new Set(rows.map((r) => r.sector))].sort();
+  const filtered = rows.filter(
+    (r) => r.holders >= minHolders && (sector === "all" || r.sector === sector),
+  );
+  const sorted = sortRows(filtered, sort).slice(0, limit ?? filtered.length);
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center gap-2 border-b border-line px-6 py-3">
+        <span className="text-[11px] tracking-widest text-fg-faint uppercase">
+          Sort
+        </span>
+        <div className="flex flex-wrap gap-1" role="group" aria-label="Sort by">
+          {SORTS.map((s) => (
+            <button
+              key={s.key}
+              type="button"
+              title={s.hint}
+              onClick={() => setSort(s.key)}
+              aria-pressed={sort === s.key}
+              className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                sort === s.key
+                  ? "border-gold/40 bg-gold/10 text-gold-soft"
+                  : "border-line text-fg-soft hover:text-fg"
+              }`}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+        {!compact && (
+          <label className="ml-auto flex items-center gap-2 text-xs text-fg-faint">
+            Sector
+            <select
+              value={sector}
+              onChange={(e) => setSector(e.target.value)}
+              className="rounded-md border border-line bg-raised px-2 py-1 text-xs text-fg"
+            >
+              <option value="all">All sectors</option>
+              {sectors.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+      </div>
+      <div className="overflow-x-auto">
+        <table className={`w-full text-sm ${compact ? "" : "min-w-[640px]"}`}>
+          <thead>
+            <tr className="border-b border-line text-left text-[11px] tracking-widest text-fg-faint uppercase">
+              {showRank && (
+                <th scope="col" className="px-6 py-3 font-medium">
+                  #
+                </th>
+              )}
+              <th scope="col" className={`${showRank ? "px-4" : "px-6"} py-3 font-medium`}>
+                Security
+              </th>
+              <th scope="col" className="px-4 py-3 text-right font-medium">
+                Holders
+              </th>
+              <th scope="col" className="px-4 py-3 text-right font-medium">
+                Avg weight
+              </th>
+              <th scope="col" className="px-4 py-3 text-right font-medium">
+                Δ weight
+              </th>
+              {!compact && (
+                <th scope="col" className="px-6 py-3 text-right font-medium">
+                  Value
+                </th>
+              )}
+            </tr>
+          </thead>
+          <tbody style={{ fontVariantNumeric: "tabular-nums" }}>
+            {sorted.map((s, i) => (
+              <tr
+                key={s.tickerSlug}
+                className="group border-b border-line/50 transition-colors last:border-0 hover:bg-raised/60"
+              >
+                {showRank && (
+                  <td className="px-6 py-3 text-fg-faint">{i + 1}</td>
+                )}
+                <td className={`${showRank ? "px-4" : "px-6"} py-3`}>
+                  <Link href={`/stocks/${s.tickerSlug}`} className="flex flex-col">
+                    <span className="font-semibold text-fg transition-colors group-hover:text-gold-soft">
+                      {s.ticker}
+                    </span>
+                    <span className="text-xs text-fg-faint">
+                      {s.company}
+                      {!compact && (
+                        <span className="text-fg-faint/70"> · {s.sector}</span>
+                      )}
+                    </span>
+                  </Link>
+                </td>
+                <td className="px-4 py-3 text-right text-fg-soft">{s.holders}</td>
+                <td className="px-4 py-3 text-right font-medium text-fg">
+                  {formatPct(s.avgWeight)}
+                </td>
+                <td
+                  className={`px-4 py-3 text-right ${
+                    s.avgWeightChange == null
+                      ? "text-fg-faint"
+                      : s.avgWeightChange > 0.05
+                        ? "text-gain"
+                        : s.avgWeightChange < -0.05
+                          ? "text-loss"
+                          : "text-fg-soft"
+                  }`}
+                  title="Mean change in portfolio weight across holders vs prior quarter, in percentage points"
+                >
+                  {s.avgWeightChange == null
+                    ? "new"
+                    : `${s.avgWeightChange > 0 ? "+" : ""}${s.avgWeightChange.toFixed(1)}pp`}
+                </td>
+                {!compact && (
+                  <td className="px-6 py-3 text-right font-medium text-fg">
+                    {formatMoney(s.totalValue)}
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
