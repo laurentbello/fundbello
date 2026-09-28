@@ -5,6 +5,8 @@ import Reveal from "@/components/Reveal";
 import ActionBadge from "@/components/ActionBadge";
 import SearchBox from "@/components/SearchBox";
 import SponsorSlot from "@/components/SponsorSlot";
+import ConsensusTable from "@/components/ConsensusTable";
+import TierBadge from "@/components/TierBadge";
 
 /** "2026-04-29" -> "29 Apr 2026" */
 function formatFilingDate(iso: string): string {
@@ -18,7 +20,18 @@ function formatFilingDate(iso: string): string {
 
 export default function Home() {
   const stocks = aggregateStocks();
-  const topStocks = stocks.slice(0, 8);
+  const consensusRows = stocks.map((s) => ({
+    ticker: s.ticker,
+    tickerSlug: s.tickerSlug,
+    company: s.company,
+    sector: s.sector,
+    holders: s.holders.length,
+    totalValue: s.totalValue,
+    avgWeight: s.avgWeight,
+    avgWeightChange: s.avgWeightChange,
+    buys: s.buys,
+    sells: s.sells,
+  }));
   const recentMoves = investors
     .flatMap((inv) =>
       inv.activity.map((a) => ({
@@ -63,13 +76,19 @@ export default function Home() {
       {/* Managers table */}
       <Reveal delay={80}>
         <section className="mt-10 overflow-hidden rounded-2xl border border-line bg-surface/60">
-          <div className="border-b border-line px-6 py-4">
+          <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-line px-6 py-4">
             <h2 className="font-display text-lg font-semibold text-fg">
               Managers
             </h2>
+            <Link
+              href="/rankings"
+              className="text-sm text-gold-soft transition-colors hover:text-gold"
+            >
+              Rankings →
+            </Link>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[560px] text-sm">
+            <table className="w-full min-w-[720px] text-sm">
               <thead>
                 <tr className="border-b border-line text-left text-[11px] tracking-widest text-fg-faint uppercase">
                   <th scope="col" className="px-6 py-3 font-medium">
@@ -83,6 +102,16 @@ export default function Home() {
                   </th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">
                     Holdings
+                  </th>
+                  <th scope="col" className="px-4 py-3 font-medium">
+                    Tier
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-4 py-3 text-right font-medium"
+                    title="Filing-record score, 0-100 — see Rankings"
+                  >
+                    Score
                   </th>
                   <th scope="col" className="px-6 py-3 text-right font-medium">
                     As of
@@ -130,6 +159,14 @@ export default function Home() {
                     <td className="px-4 py-3.5 text-right text-fg-soft">
                       {inv.holdingsCount}
                     </td>
+                    <td className="px-4 py-3.5">
+                      <TierBadge tier={inv.tier} />
+                    </td>
+                    <td className="px-4 py-3.5 text-right font-medium text-fg">
+                      <Link href="/rankings" className="hover:text-gold-soft">
+                        {inv.ranking.score}
+                      </Link>
+                    </td>
                     <td
                       className={`px-6 py-3.5 text-right ${
                         inv.isLatest ? "text-fg-soft" : "text-fg-faint"
@@ -170,49 +207,7 @@ export default function Home() {
                 View all →
               </Link>
             </div>
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-line text-left text-[11px] tracking-widest text-fg-faint uppercase">
-                  <th scope="col" className="px-6 py-3 font-medium">
-                    Security
-                  </th>
-                  <th scope="col" className="px-4 py-3 text-right font-medium">
-                    Holders
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-right font-medium">
-                    Value
-                  </th>
-                </tr>
-              </thead>
-              <tbody style={{ fontVariantNumeric: "tabular-nums" }}>
-                {topStocks.map((s) => (
-                  <tr
-                    key={s.tickerSlug}
-                    className="group border-b border-line/50 transition-colors last:border-0 hover:bg-raised/60"
-                  >
-                    <td className="px-6 py-3">
-                      <Link
-                        href={`/stocks/${s.tickerSlug}`}
-                        className="flex flex-col"
-                      >
-                        <span className="font-semibold text-fg transition-colors group-hover:text-gold-soft">
-                          {s.ticker}
-                        </span>
-                        <span className="text-xs text-fg-faint">
-                          {s.company}
-                        </span>
-                      </Link>
-                    </td>
-                    <td className="px-4 py-3 text-right text-fg-soft">
-                      {s.holders.length}
-                    </td>
-                    <td className="px-6 py-3 text-right font-medium text-fg">
-                      {formatMoney(s.totalValue)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <ConsensusTable rows={consensusRows} limit={8} minHolders={2} compact />
           </section>
         </Reveal>
 

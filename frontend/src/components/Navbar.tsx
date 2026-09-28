@@ -19,6 +19,14 @@ export default function Navbar() {
             Dataroma Global
           </span>
         </Link>
+        <div className="ml-auto flex items-center gap-5 text-sm text-fg-soft">
+          <Link href="/stocks" className="transition-colors hover:text-fg">
+            Holdings
+          </Link>
+          <Link href="/rankings" className="transition-colors hover:text-fg">
+            Rankings
+          </Link>
+        </div>
       </nav>
     </header>
   );

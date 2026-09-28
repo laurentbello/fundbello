@@ -5,6 +5,8 @@ import { investors, getInvestor, LATEST_QUARTER } from "@/lib/data";
 import { formatMoney, formatPct, formatShares } from "@/lib/format";
 import Reveal from "@/components/Reveal";
 import ActionBadge from "@/components/ActionBadge";
+import TierBadge from "@/components/TierBadge";
+import SectorBar from "@/components/SectorBar";
 import { ArrowLeft } from "lucide-react";
 
 export function generateStaticParams() {
@@ -63,10 +65,25 @@ export default async function InvestorPage({
           <h1 className="font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
             {investor.name}
           </h1>
-          <p className="mt-1.5 text-fg-soft">
-            {investor.manager ? `${investor.manager} · ` : ""}
-            As filed {investor.quarterLabel} ({formatDate(investor.asOf)})
+          <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-fg-soft">
+            <span>
+              {investor.manager ? `${investor.manager} · ` : ""}
+              As filed {investor.quarterLabel} ({formatDate(investor.asOf)})
+            </span>
+            <TierBadge tier={investor.tier} />
+            <Link
+              href="/rankings"
+              className="text-xs text-gold-soft hover:text-gold"
+              title="Filing-record score, 0-100"
+            >
+              score {investor.ranking.score}
+            </Link>
           </p>
+          {investor.note && (
+            <p className="mt-3 inline-block rounded-lg border border-line bg-raised/60 px-3 py-2 text-xs text-fg-soft">
+              {investor.note}
+            </p>
+          )}
           {investor.offCycle && investor.isLatest && (
             <p className="mt-3 inline-block rounded-lg border border-line bg-raised/60 px-3 py-2 text-xs text-fg-soft">
               Reports off the calendar-quarter cycle — this filing is dated{" "}
@@ -125,6 +142,14 @@ export default async function InvestorPage({
             </div>
           ))}
         </dl>
+      </Reveal>
+
+      <Reveal delay={60} className="mt-8">
+        <SectorBar
+          sectors={investor.sectors}
+          title="Sector mix"
+          subtitle="Custom sectors, not GICS · by portfolio weight"
+        />
       </Reveal>
 
       {/* Holdings table */}
