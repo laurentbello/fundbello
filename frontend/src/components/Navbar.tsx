@@ -26,6 +26,9 @@ export default function Navbar() {
           <Link href="/rankings" className="transition-colors hover:text-fg">
             Rankings
           </Link>
+          <Link href="/classification" className="transition-colors hover:text-fg">
+            Method
+          </Link>
         </div>
       </nav>
     </header>

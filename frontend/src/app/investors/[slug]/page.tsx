@@ -150,7 +150,7 @@ export default async function InvestorPage({
           sectors={investor.sectors}
           models={rollUpModels(investor.sectors)}
           title="Sector mix"
-          subtitle="Custom classification, not GICS · by portfolio weight"
+          subtitle={<>by portfolio weight · <Link href="/classification" className="underline decoration-line underline-offset-2 hover:text-fg">custom classification, not GICS</Link></>}
         />
       </Reveal>
 
