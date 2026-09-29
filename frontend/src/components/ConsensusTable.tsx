@@ -27,7 +27,9 @@ const SORTS: { key: SortKey; label: string; hint: string }[] = [
   { key: "value", label: "Value", hint: "Combined position value" },
 ];
 
-function sortRows(rows: ConsensusRow[], key: SortKey): ConsensusRow[] {
+type SortDir = "desc" | "asc";
+
+function sortRows(rows: ConsensusRow[], key: SortKey, dir: SortDir): ConsensusRow[] {
   const v = (r: ConsensusRow) =>
     key === "holders"
       ? r.holders * 1e6 + r.avgWeight
@@ -36,7 +38,8 @@ function sortRows(rows: ConsensusRow[], key: SortKey): ConsensusRow[] {
         : key === "conviction"
           ? (r.avgWeightChange ?? -Infinity)
           : r.totalValue;
-  return [...rows].sort((a, b) => v(b) - v(a));
+  const sign = dir === "desc" ? 1 : -1;
+  return [...rows].sort((a, b) => sign * (v(b) - v(a)));
 }
 
 export default function ConsensusTable({
@@ -53,13 +56,25 @@ export default function ConsensusTable({
   compact?: boolean;
 }) {
   const [sort, setSort] = useState<SortKey>("holders");
+  const [dir, setDir] = useState<SortDir>("desc");
+
+  /** Click a column: sort largest→smallest; click again to flip. */
+  const toggleSort = (key: SortKey) => {
+    if (key === sort) setDir((d) => (d === "desc" ? "asc" : "desc"));
+    else {
+      setSort(key);
+      setDir("desc");
+    }
+  };
+  const arrow = (key: SortKey) =>
+    sort === key ? (dir === "desc" ? " ▼" : " ▲") : "";
   const [sector, setSector] = useState<string>("all");
 
   const sectors = [...new Set(rows.map((r) => r.sector))].sort();
   const filtered = rows.filter(
     (r) => r.holders >= minHolders && (sector === "all" || r.sector === sector),
   );
-  const sorted = sortRows(filtered, sort).slice(0, limit ?? filtered.length);
+  const sorted = sortRows(filtered, sort, dir).slice(0, limit ?? filtered.length);
 
   return (
     <div>
@@ -72,8 +87,8 @@ export default function ConsensusTable({
             <button
               key={s.key}
               type="button"
-              title={s.hint}
-              onClick={() => setSort(s.key)}
+              title={`${s.hint} — click again to flip order`}
+              onClick={() => toggleSort(s.key)}
               aria-pressed={sort === s.key}
               className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
                 sort === s.key
@@ -82,6 +97,7 @@ export default function ConsensusTable({
               }`}
             >
               {s.label}
+              {arrow(s.key)}
             </button>
           ))}
         </div>
@@ -115,19 +131,63 @@ export default function ConsensusTable({
               <th scope="col" className={`${showRank ? "px-4" : "px-6"} py-3 font-medium`}>
                 Security
               </th>
-              <th scope="col" className="px-4 py-3 text-right font-medium">
-                Holders
+              <th
+                scope="col"
+                aria-sort={sort === "holders" ? (dir === "desc" ? "descending" : "ascending") : "none"}
+                className="px-4 py-3 text-right font-medium"
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleSort("holders")}
+                  className={`uppercase tracking-widest hover:text-fg ${sort === "holders" ? "text-gold-soft" : ""}`}
+                  title="Click to sort largest to smallest; click again to flip"
+                >
+                  Holders{arrow("holders")}
+                </button>
               </th>
-              <th scope="col" className="px-4 py-3 text-right font-medium">
-                Avg weight
+              <th
+                scope="col"
+                aria-sort={sort === "avgWeight" ? (dir === "desc" ? "descending" : "ascending") : "none"}
+                className="px-4 py-3 text-right font-medium"
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleSort("avgWeight")}
+                  className={`uppercase tracking-widest hover:text-fg ${sort === "avgWeight" ? "text-gold-soft" : ""}`}
+                  title="Click to sort largest to smallest; click again to flip"
+                >
+                  Avg weight{arrow("avgWeight")}
+                </button>
               </th>
-              <th scope="col" className="px-4 py-3 text-right font-medium">
-                Δ weight
+              <th
+                scope="col"
+                aria-sort={sort === "conviction" ? (dir === "desc" ? "descending" : "ascending") : "none"}
+                className="px-4 py-3 text-right font-medium"
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleSort("conviction")}
+                  className={`uppercase tracking-widest hover:text-fg ${sort === "conviction" ? "text-gold-soft" : ""}`}
+                  title="Click to sort largest to smallest; click again to flip"
+                >
+                  Δ weight{arrow("conviction")}
+                </button>
               </th>
               {!compact && (
-                <th scope="col" className="px-6 py-3 text-right font-medium">
-                  Value
-                </th>
+                <th
+                scope="col"
+                aria-sort={sort === "value" ? (dir === "desc" ? "descending" : "ascending") : "none"}
+                className="px-6 py-3 text-right font-medium"
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleSort("value")}
+                  className={`uppercase tracking-widest hover:text-fg ${sort === "value" ? "text-gold-soft" : ""}`}
+                  title="Click to sort largest to smallest; click again to flip"
+                >
+                  Value{arrow("value")}
+                </button>
+              </th>
               )}
             </tr>
           </thead>
