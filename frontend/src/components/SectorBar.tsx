@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import type { SectorSlice } from "@/lib/data";
 import { formatPct } from "@/lib/format";
 
@@ -28,7 +28,7 @@ export default function SectorBar({
   models?: SectorSlice[];
   max?: number;
   title?: string;
-  subtitle?: string;
+  subtitle?: ReactNode;
 }) {
   const [view, setView] = useState<"model" | "industry">(models ? "model" : "industry");
   const active = view === "model" && models ? models : sectors;

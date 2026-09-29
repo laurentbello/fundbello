@@ -187,7 +187,7 @@ export default function RankingsPage() {
           models={rollUpModels(sectors)}
           max={10}
           title="Where the managers sit, in aggregate"
-          subtitle="Equal-weighted across managers · custom classification, not GICS"
+          subtitle={<>Equal-weighted across managers · <Link href="/classification" className="underline decoration-line underline-offset-2 hover:text-fg">custom classification, not GICS</Link></>}
         />
       </Reveal>
     </div>
