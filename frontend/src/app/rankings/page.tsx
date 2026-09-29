@@ -11,6 +11,7 @@ import { formatMoney, formatPct } from "@/lib/format";
 import Reveal from "@/components/Reveal";
 import TierBadge from "@/components/TierBadge";
 import SectorBar from "@/components/SectorBar";
+import { rollUpModels } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Manager Rankings",
@@ -183,9 +184,10 @@ export default function RankingsPage() {
       <Reveal delay={160} className="mt-8">
         <SectorBar
           sectors={sectors}
+          models={rollUpModels(sectors)}
           max={10}
           title="Where the managers sit, in aggregate"
-          subtitle="Equal-weighted across managers · custom sectors, not GICS"
+          subtitle="Equal-weighted across managers · custom classification, not GICS"
         />
       </Reveal>
     </div>

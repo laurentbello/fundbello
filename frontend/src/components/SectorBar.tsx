@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type { SectorSlice } from "@/lib/data";
 import { formatPct } from "@/lib/format";
 
@@ -15,18 +18,23 @@ const PALETTE = [
 /** Stacked bar + legend for a custom-sector breakdown. */
 export default function SectorBar({
   sectors,
+  models,
   max = 8,
   title,
   subtitle,
 }: {
   sectors: SectorSlice[];
+  /** Business-model roll-up; when given, a toggle switches between the two views. */
+  models?: SectorSlice[];
   max?: number;
   title?: string;
   subtitle?: string;
 }) {
-  const total = sectors.reduce((s, x) => s + x.weight, 0) || 1;
-  const shown = sectors.slice(0, max);
-  const rest = sectors.slice(max).reduce((s, x) => s + x.weight, 0);
+  const [view, setView] = useState<"model" | "industry">(models ? "model" : "industry");
+  const active = view === "model" && models ? models : sectors;
+  const total = active.reduce((s, x) => s + x.weight, 0) || 1;
+  const shown = active.slice(0, max);
+  const rest = active.slice(max).reduce((s, x) => s + x.weight, 0);
   const slices = rest > 0 ? [...shown, { sector: "Other", weight: rest, count: 0 }] : shown;
 
   return (
@@ -36,7 +44,28 @@ export default function SectorBar({
           {title && (
             <h2 className="font-display text-lg font-semibold text-fg">{title}</h2>
           )}
-          {subtitle && <p className="text-xs text-fg-faint">{subtitle}</p>}
+          <div className="flex items-center gap-3">
+            {subtitle && <p className="text-xs text-fg-faint">{subtitle}</p>}
+            {models && (
+              <div className="flex gap-1" role="group" aria-label="Classification">
+                {(["model", "industry"] as const).map((v) => (
+                  <button
+                    key={v}
+                    type="button"
+                    onClick={() => setView(v)}
+                    aria-pressed={view === v}
+                    className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                      view === v
+                        ? "border-gold/40 bg-gold/10 text-gold-soft"
+                        : "border-line text-fg-soft hover:text-fg"
+                    }`}
+                  >
+                    {v === "model" ? "Business model" : "Industry"}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
       <div className="px-6 py-5">
