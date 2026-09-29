@@ -10,6 +10,7 @@ export interface ConsensusRow {
   tickerSlug: string;
   company: string;
   sector: string;
+  model: string;
   holders: number;
   totalValue: number;
   avgWeight: number;
@@ -71,8 +72,14 @@ export default function ConsensusTable({
   const [sector, setSector] = useState<string>("all");
 
   const sectors = [...new Set(rows.map((r) => r.sector))].sort();
+  const models = [...new Set(rows.map((r) => r.model))].sort();
+  // Filter values are prefixed: "m:" = business model, "s:" = granular industry.
   const filtered = rows.filter(
-    (r) => r.holders >= minHolders && (sector === "all" || r.sector === sector),
+    (r) =>
+      r.holders >= minHolders &&
+      (sector === "all" ||
+        (sector.startsWith("m:") && r.model === sector.slice(2)) ||
+        (sector.startsWith("s:") && r.sector === sector.slice(2))),
   );
   const sorted = sortRows(filtered, sort, dir).slice(0, limit ?? filtered.length);
 
@@ -109,12 +116,21 @@ export default function ConsensusTable({
               onChange={(e) => setSector(e.target.value)}
               className="rounded-md border border-line bg-raised px-2 py-1 text-xs text-fg"
             >
-              <option value="all">All sectors</option>
-              {sectors.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
+              <option value="all">All</option>
+              <optgroup label="Business model">
+                {models.map((m) => (
+                  <option key={m} value={`m:${m}`}>
+                    {m}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Industry">
+                {sectors.map((s) => (
+                  <option key={s} value={`s:${s}`}>
+                    {s}
+                  </option>
+                ))}
+              </optgroup>
             </select>
           </label>
         )}
@@ -208,7 +224,7 @@ export default function ConsensusTable({
                     <span className="text-xs text-fg-faint">
                       {s.company}
                       {!compact && (
-                        <span className="text-fg-faint/70"> · {s.sector}</span>
+                        <span className="text-fg-faint/70"> · {s.sector} · {s.model}</span>
                       )}
                     </span>
                   </Link>

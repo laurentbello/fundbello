@@ -25,6 +25,7 @@ export default function Home() {
     tickerSlug: s.tickerSlug,
     company: s.company,
     sector: s.sector,
+    model: s.model,
     holders: s.holders.length,
     totalValue: s.totalValue,
     avgWeight: s.avgWeight,

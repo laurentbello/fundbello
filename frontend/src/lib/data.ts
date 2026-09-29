@@ -1,11 +1,32 @@
 import rawHoldings from "@/data/holdings.json";
 import rawSectors from "@/data/sectors.json";
+import rawModels from "@/data/models.json";
 
 /** Custom sector map (not GICS) — see src/data/sectors.json. */
 const SECTORS: Record<string, string> = rawSectors as Record<string, string>;
 export const UNCLASSIFIED = "Unclassified";
 export function sectorOf(ticker: string): string {
   return SECTORS[ticker] ?? UNCLASSIFIED;
+}
+
+/** Business-model layer above the granular sectors — see src/data/models.json. */
+const MODELS: Record<string, string> = rawModels as Record<string, string>;
+export const OTHER_MODEL = "Cyclical & other";
+export function modelOf(sector: string): string {
+  return MODELS[sector] ?? OTHER_MODEL;
+}
+
+/** Roll granular sector slices up into business-model slices. */
+export function rollUpModels(sectors: SectorSlice[]): SectorSlice[] {
+  const map = new Map<string, SectorSlice>();
+  for (const s of sectors) {
+    const m = modelOf(s.sector);
+    const slice = map.get(m) ?? { sector: m, weight: 0, count: 0 };
+    slice.weight += s.weight;
+    slice.count += s.count;
+    map.set(m, slice);
+  }
+  return [...map.values()].sort((a, b) => b.weight - a.weight);
 }
 
 /** One row of the synced Google Sheet (see scripts/sync-data.mjs). */
@@ -37,6 +58,7 @@ export interface Holding {
   changePct: number | null; // share count change vs prior quarter
   prevWeight: number | null; // % of portfolio in the prior snapshot, null if new
   sector: string;
+  model: string;
 }
 
 export type Tier = "clone" | "read-only" | "trader";
@@ -283,6 +305,7 @@ function buildInvestors(rows: SheetRow[]): Investor[] {
       changePct: r.sharesChangePct,
       prevWeight: previous ? (prevWeights.get(r.ticker) ?? null) : null,
       sector: sectorOf(r.ticker),
+      model: modelOf(sectorOf(r.ticker)),
     }));
 
     const sectorMap = new Map<string, SectorSlice>();
@@ -498,6 +521,7 @@ export interface StockAggregate {
   avgWeight: number; // mean portfolio weight across holders, %
   avgWeightChange: number | null; // mean change in weight vs prior quarter, pp
   sector: string;
+  model: string;
 }
 
 export function aggregateStocks(): StockAggregate[] {
@@ -517,6 +541,7 @@ export function aggregateStocks(): StockAggregate[] {
           avgWeight: 0,
           avgWeightChange: null,
           sector: h.sector,
+          model: h.model,
         };
         map.set(h.tickerSlug, agg);
       }

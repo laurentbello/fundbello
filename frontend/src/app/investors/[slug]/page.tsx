@@ -7,6 +7,7 @@ import Reveal from "@/components/Reveal";
 import ActionBadge from "@/components/ActionBadge";
 import TierBadge from "@/components/TierBadge";
 import SectorBar from "@/components/SectorBar";
+import { rollUpModels } from "@/lib/data";
 import { ArrowLeft } from "lucide-react";
 
 export function generateStaticParams() {
@@ -147,8 +148,9 @@ export default async function InvestorPage({
       <Reveal delay={60} className="mt-8">
         <SectorBar
           sectors={investor.sectors}
+          models={rollUpModels(investor.sectors)}
           title="Sector mix"
-          subtitle="Custom sectors, not GICS · by portfolio weight"
+          subtitle="Custom classification, not GICS · by portfolio weight"
         />
       </Reveal>
 
