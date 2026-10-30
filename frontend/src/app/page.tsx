@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { investors, aggregateStocks, LATEST_QUARTER } from "@/lib/data";
+import {
+  investors,
+  aggregateStocks,
+  LATEST_QUARTER,
+  type Investor,
+} from "@/lib/data";
 import { formatMoney, formatPct } from "@/lib/format";
 import Reveal from "@/components/Reveal";
 import ActionBadge from "@/components/ActionBadge";
@@ -55,6 +60,81 @@ export default function Home() {
     name: i.name,
     manager: i.manager,
   }));
+
+  // Dataroma-style ordering: managers already on the newest quarter first
+  // (most recent snapshot at the top), the rest below a divider.
+  const sortedInvestors = [...investors].sort((a, b) =>
+    a.asOf === b.asOf
+      ? a.name.localeCompare(b.name)
+      : b.asOf.localeCompare(a.asOf),
+  );
+  const updated = sortedInvestors.filter((i) => i.isLatest);
+  const pending = sortedInvestors.filter((i) => !i.isLatest);
+
+  function renderRow(inv: Investor) {
+    return (
+            <tr
+              key={inv.slug}
+              className="group border-b border-line/50 transition-colors last:border-0 hover:bg-raised/60"
+            >
+              <td className="px-6 py-3.5">
+                <Link
+                  href={`/investors/${inv.slug}`}
+                  className="flex flex-col"
+                >
+                  <span className="font-semibold text-fg transition-colors group-hover:text-gold-soft">
+                    {inv.name}
+                  </span>
+                  {inv.manager && (
+                    <span className="text-xs text-fg-faint">
+                      {inv.manager}
+                    </span>
+                  )}
+                </Link>
+              </td>
+              <td className="px-4 py-3.5 text-fg-soft">
+                {inv.holdings[0] ? (
+                  <>
+                    <span className="font-medium text-fg">
+                      {inv.holdings[0].ticker}
+                    </span>{" "}
+                    <span className="text-xs text-fg-faint">
+                      {formatPct(inv.holdings[0].weight)}
+                    </span>
+                  </>
+                ) : (
+                  "—"
+                )}
+              </td>
+              <td className="px-4 py-3.5 text-right font-medium text-fg">
+                {formatMoney(inv.aum)}
+              </td>
+              <td className="px-4 py-3.5 text-right text-fg-soft">
+                {inv.holdingsCount}
+              </td>
+              <td className="px-4 py-3.5">
+                <TierBadge tier={inv.tier} />
+              </td>
+              <td className="px-4 py-3.5 text-right font-medium text-fg">
+                <Link href="/rankings" className="hover:text-gold-soft">
+                  {inv.ranking.score}
+                </Link>
+              </td>
+              <td
+                className={`px-6 py-3.5 text-right ${
+                  inv.isLatest ? "text-fg-soft" : "text-fg-faint"
+                }`}
+              >
+                {inv.quarterLabel}
+                {inv.offCycle && (
+                  <span className="block text-xs text-fg-faint">
+                    filed {formatFilingDate(inv.asOf)}
+                  </span>
+                )}
+              </td>
+            </tr>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-7xl px-4 pt-28 pb-20 sm:px-6 lg:px-8">
@@ -120,68 +200,21 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody style={{ fontVariantNumeric: "tabular-nums" }}>
-                {investors.map((inv) => (
-                  <tr
-                    key={inv.slug}
-                    className="group border-b border-line/50 transition-colors last:border-0 hover:bg-raised/60"
-                  >
-                    <td className="px-6 py-3.5">
-                      <Link
-                        href={`/investors/${inv.slug}`}
-                        className="flex flex-col"
-                      >
-                        <span className="font-semibold text-fg transition-colors group-hover:text-gold-soft">
-                          {inv.name}
-                        </span>
-                        {inv.manager && (
-                          <span className="text-xs text-fg-faint">
-                            {inv.manager}
-                          </span>
-                        )}
-                      </Link>
-                    </td>
-                    <td className="px-4 py-3.5 text-fg-soft">
-                      {inv.holdings[0] ? (
-                        <>
-                          <span className="font-medium text-fg">
-                            {inv.holdings[0].ticker}
-                          </span>{" "}
-                          <span className="text-xs text-fg-faint">
-                            {formatPct(inv.holdings[0].weight)}
-                          </span>
-                        </>
-                      ) : (
-                        "—"
-                      )}
-                    </td>
-                    <td className="px-4 py-3.5 text-right font-medium text-fg">
-                      {formatMoney(inv.aum)}
-                    </td>
-                    <td className="px-4 py-3.5 text-right text-fg-soft">
-                      {inv.holdingsCount}
-                    </td>
-                    <td className="px-4 py-3.5">
-                      <TierBadge tier={inv.tier} />
-                    </td>
-                    <td className="px-4 py-3.5 text-right font-medium text-fg">
-                      <Link href="/rankings" className="hover:text-gold-soft">
-                        {inv.ranking.score}
-                      </Link>
-                    </td>
-                    <td
-                      className={`px-6 py-3.5 text-right ${
-                        inv.isLatest ? "text-fg-soft" : "text-fg-faint"
-                      }`}
-                    >
-                      {inv.quarterLabel}
-                      {inv.offCycle && (
-                        <span className="block text-xs text-fg-faint">
-                          filed {formatFilingDate(inv.asOf)}
-                        </span>
-                      )}
+                <tr className="bg-raised/40 text-[11px] tracking-widest text-fg-faint uppercase">
+                  <td colSpan={7} className="px-6 py-2">
+                    Recently updated · {LATEST_QUARTER} · {updated.length} of{" "}
+                    {investors.length} managers
+                  </td>
+                </tr>
+                {updated.map(renderRow)}
+                {pending.length > 0 && (
+                  <tr className="bg-raised/40 text-[11px] tracking-widest text-fg-faint uppercase">
+                    <td colSpan={7} className="px-6 py-2">
+                      Awaiting {LATEST_QUARTER} filing · {pending.length} managers
                     </td>
                   </tr>
-                ))}
+                )}
+                {pending.map(renderRow)}
               </tbody>
             </table>
           </div>
