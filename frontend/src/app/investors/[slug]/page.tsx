@@ -7,7 +7,8 @@ import Reveal from "@/components/Reveal";
 import ActionBadge from "@/components/ActionBadge";
 import TierBadge from "@/components/TierBadge";
 import SectorBar from "@/components/SectorBar";
-import { rollUpModels } from "@/lib/data";
+import { rollUpModels, investorActivity } from "@/lib/data";
+import ActivityHistory from "@/components/ActivityHistory";
 import { ArrowLeft } from "lucide-react";
 
 export function generateStaticParams() {
@@ -260,43 +261,14 @@ export default async function InvestorPage({
         </section>
       </Reveal>
 
-      {/* Quarterly activity */}
-      <Reveal delay={120}>
-        <section className="mt-8 overflow-hidden rounded-2xl border border-line bg-surface/60">
-          <div className="border-b border-line px-6 py-4">
-            <h2 className="font-display text-lg font-semibold text-fg">
-              Activity · {investor.quarterLabel}
-            </h2>
-          </div>
-          {investor.activity.length === 0 ? (
-            <p className="px-6 py-8 text-sm text-fg-soft">
-              No position changes reported this quarter.
-            </p>
-          ) : (
-            <ul>
-              {investor.activity.map((a) => (
-                <li
-                  key={`${a.action}-${a.ticker}`}
-                  className="border-b border-line/50 last:border-0"
-                >
-                  <Link
-                    href={`/investors/${investor.slug}/${a.tickerSlug}`}
-                    className="flex items-center gap-3 px-6 py-3 transition-colors hover:bg-raised/60"
-                  >
-                    <ActionBadge action={a.action} />
-                    <span className="font-semibold text-fg">{a.ticker}</span>
-                    <span className="hidden truncate text-xs text-fg-faint sm:block">
-                      {a.company}
-                    </span>
-                    <span className="ml-auto pl-3 text-right text-xs text-fg-soft">
-                      {a.detail}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
+      {/* Activity history — every quarter we hold */}
+      <Reveal delay={120} className="mt-8">
+        <ActivityHistory
+          events={investorActivity(investor.slug)}
+          by="stock"
+          title="Activity history"
+          subtitle="Every filing we hold · impact = share of the portfolio bought or sold"
+        />
       </Reveal>
     </div>
   );

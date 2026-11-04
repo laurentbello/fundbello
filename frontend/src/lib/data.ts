@@ -591,6 +591,8 @@ export interface PositionQuarter {
   weight: number | null; // % of portfolio
   filingType: string;
   action: HoldingAction;
+  /** True on the earliest snapshot we have for this manager. */
+  firstFiling: boolean;
 }
 
 export interface PositionHistory {
@@ -677,6 +679,7 @@ function buildHistories(rows: SheetRow[]): Map<string, PositionHistory> {
             weight: row.weightPct,
             filingType: row.filingType,
             action,
+            firstFiling: i === 0,
           });
           heldLast = true;
         } else if (heldLast) {
@@ -691,6 +694,7 @@ function buildHistories(rows: SheetRow[]): Map<string, PositionHistory> {
             weight: null,
             filingType: "",
             action: "exit",
+            firstFiling: false,
           });
           heldLast = false;
         }
@@ -727,4 +731,152 @@ export function getPositionHistory(
   ticker: string,
 ): PositionHistory | undefined {
   return histories.get(`${slug}/${ticker.toLowerCase()}`);
+}
+
+/* ------------------------------------------------------------------ */
+/* Activity log — every buy and sell, every quarter                    */
+/* ------------------------------------------------------------------ */
+
+export type ActivityAction = Exclude<HoldingAction, "hold">;
+
+/** One manager changing one position in one filing. */
+export interface ActivityEvent {
+  investorSlug: string;
+  investorName: string;
+  manager: string | null;
+  tier: Tier | null;
+  ticker: string;
+  tickerSlug: string;
+  company: string;
+  snapshot: string; // ISO date of the filing
+  quarter: string; // sortable key, "2026-2"
+  quarterLabel: string;
+  action: ActivityAction;
+  sharesChange: number | null;
+  changePct: number | null;
+  shares: number | null; // after the change (0 on exit)
+  /** Weight after the change; for an exit, the weight that was sold. */
+  weight: number | null;
+  /**
+   * Percentage points of the portfolio bought (+) or sold (-) — what
+   * Dataroma calls "% change to portfolio". New = the new weight, exit =
+   * minus the prior weight, add/trim = weight x (shares changed / shares now).
+   */
+  impact: number | null;
+}
+
+function buildActivityLog(): ActivityEvent[] {
+  const out: ActivityEvent[] = [];
+  for (const h of histories.values()) {
+    const qs = h.quarters; // newest first
+    for (const [i, q] of qs.entries()) {
+      // At a manager's first filing we cannot see the prior book, so only
+      // trust the sheet's own change column; a blank there is not a buy.
+      let action: HoldingAction = q.action;
+      if (q.firstFiling) {
+        action =
+          q.changePct === 100
+            ? "new"
+            : q.changePct != null && q.changePct > 0
+              ? "add"
+              : q.changePct != null && q.changePct < 0
+                ? "trim"
+                : "hold";
+      }
+      if (action === "hold") continue;
+
+      const prior = qs[i + 1];
+      let weight = q.weight;
+      let impact: number | null = null;
+      if (action === "exit") {
+        weight = prior?.weight ?? null;
+        impact = weight == null ? null : -weight;
+      } else if (action === "new") {
+        impact = q.weight;
+      } else if (q.weight != null && q.shares && q.sharesChange != null) {
+        impact = (q.weight * q.sharesChange) / q.shares;
+      }
+
+      out.push({
+        investorSlug: h.investor.slug,
+        investorName: h.investor.name,
+        manager: h.investor.manager,
+        tier: h.investor.tier,
+        ticker: h.ticker,
+        tickerSlug: h.tickerSlug,
+        company: h.company,
+        snapshot: q.snapshot,
+        quarter: quarterKey(q.snapshot),
+        quarterLabel: q.quarterLabel,
+        action: action as ActivityAction,
+        sharesChange:
+          action === "exit" ? (prior?.shares != null ? -prior.shares : null) : q.sharesChange,
+        changePct: action === "exit" ? -100 : q.changePct,
+        shares: q.shares,
+        weight,
+        impact,
+      });
+    }
+  }
+  return out.sort(
+    (a, b) =>
+      b.quarter.localeCompare(a.quarter) ||
+      Math.abs(b.impact ?? 0) - Math.abs(a.impact ?? 0),
+  );
+}
+
+export const activityLog: ActivityEvent[] = buildActivityLog();
+
+/** Quarters that have any activity, newest first. */
+export const ACTIVITY_QUARTERS: { key: string; label: string }[] = [
+  ...new Map(activityLog.map((e) => [e.quarter, e.quarterLabel])).entries(),
+]
+  .sort((a, b) => b[0].localeCompare(a[0]))
+  .map(([key, label]) => ({ key, label }));
+
+export function stockActivity(slug: string): ActivityEvent[] {
+  const target = slug.toLowerCase();
+  return activityLog.filter((e) => e.tickerSlug === target);
+}
+
+export function investorActivity(slug: string): ActivityEvent[] {
+  return activityLog.filter((e) => e.investorSlug === slug);
+}
+
+/** Every security any tracked manager has ever reported, held today or not. */
+export function everTickerSlugs(): string[] {
+  return [...new Set([...histories.values()].map((h) => h.tickerSlug))];
+}
+
+/** Managers who held a security at some point but no longer do. */
+export function pastHolders(slug: string): {
+  investorSlug: string;
+  investorName: string;
+  manager: string | null;
+  lastHeld: string; // quarter label
+  exited: string | null; // quarter label of the exit filing
+}[] {
+  const target = slug.toLowerCase();
+  const res = [];
+  for (const h of histories.values()) {
+    if (h.tickerSlug !== target || h.current) continue;
+    const lastHeldQ = h.quarters.find((q) => q.held);
+    const exitQ = h.quarters.find((q) => !q.held);
+    res.push({
+      investorSlug: h.investor.slug,
+      investorName: h.investor.name,
+      manager: h.investor.manager,
+      lastHeld: lastHeldQ?.quarterLabel ?? "—",
+      exited: exitQ?.quarterLabel ?? null,
+    });
+  }
+  return res;
+}
+
+/** A company name for a ticker even when nobody holds it any more. */
+export function companyFor(slug: string): { ticker: string; company: string } | undefined {
+  const target = slug.toLowerCase();
+  for (const h of histories.values())
+    if (h.tickerSlug === target) return { ticker: h.ticker, company: h.company };
+  return undefined;
 }
