@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { aggregateStocks, getStock, LATEST_QUARTER } from "@/lib/data";
+import {
+  aggregateStocks,
+  getStock,
+  everTickerSlugs,
+  stockActivity,
+  pastHolders,
+  companyFor,
+  ACTIVITY_QUARTERS,
+} from "@/lib/data";
+import ActivityHistory from "@/components/ActivityHistory";
 import { formatMoney, formatPct, formatShares } from "@/lib/format";
 import Reveal from "@/components/Reveal";
 import ActionBadge from "@/components/ActionBadge";
@@ -9,7 +18,11 @@ import SponsorSlot from "@/components/SponsorSlot";
 import { ArrowLeft } from "lucide-react";
 
 export function generateStaticParams() {
-  return aggregateStocks().map((s) => ({ ticker: s.tickerSlug }));
+  const slugs = new Set([
+    ...aggregateStocks().map((s) => s.tickerSlug),
+    ...everTickerSlugs(),
+  ]);
+  return [...slugs].map((ticker) => ({ ticker }));
 }
 
 export async function generateMetadata({
@@ -18,11 +31,11 @@ export async function generateMetadata({
   params: Promise<{ ticker: string }>;
 }): Promise<Metadata> {
   const { ticker } = await params;
-  const stock = getStock(decodeURIComponent(ticker));
-  if (!stock) return {};
+  const id = companyFor(decodeURIComponent(ticker)) ?? getStock(decodeURIComponent(ticker));
+  if (!id) return {};
   return {
-    title: `${stock.ticker} — Who owns ${stock.company}`,
-    description: `See which legendary investors hold ${stock.company} (${stock.ticker}), their position sizes, and ${LATEST_QUARTER} buying and selling activity.`,
+    title: `${id.ticker} — Who owns ${id.company}`,
+    description: `See which legendary investors hold ${id.company} (${id.ticker}), who bought and sold it each quarter, and who has exited.`,
   };
 }
 
@@ -32,12 +45,30 @@ export default async function StockPage({
   params: Promise<{ ticker: string }>;
 }) {
   const { ticker } = await params;
-  const stock = getStock(decodeURIComponent(ticker));
-  if (!stock) notFound();
+  const slug = decodeURIComponent(ticker);
+  const found = getStock(slug);
+  const id = found ?? companyFor(slug);
+  if (!id) notFound();
+  // A security every tracked manager has sold still gets a page.
+  const stock = found ?? {
+    ticker: id.ticker,
+    tickerSlug: slug.toLowerCase(),
+    company: id.company,
+    holders: [],
+    totalValue: 0,
+    buys: 0,
+    sells: 0,
+  };
 
   const holders = [...stock.holders].sort(
     (a, b) => b.holding.value - a.holding.value,
   );
+  const events = stockActivity(stock.tickerSlug);
+  const former = pastHolders(stock.tickerSlug);
+  const recent = new Set(ACTIVITY_QUARTERS.slice(0, 4).map((q) => q.key));
+  const lastYear = events.filter((e) => recent.has(e.quarter));
+  const newCount = lastYear.filter((e) => e.action === "new").length;
+  const exitCount = lastYear.filter((e) => e.action === "exit").length;
 
   return (
     <div className="mx-auto max-w-7xl px-4 pt-28 pb-24 sm:px-6 lg:px-8">
@@ -94,6 +125,16 @@ export default async function StockPage({
               Net flow
             </dt>
           </div>
+          <div className="bg-surface/90 px-6 py-4 text-center">
+            <dd className="font-display text-2xl font-semibold text-fg">
+              <span className="text-gain">{newCount}</span>
+              <span className="text-fg-faint"> / </span>
+              <span className="text-loss">{exitCount}</span>
+            </dd>
+            <dt className="mt-1 text-[11px] tracking-widest text-fg-faint uppercase">
+              New / sold out · 4 qtrs
+            </dt>
+          </div>
         </dl>
       </Reveal>
 
@@ -133,6 +174,14 @@ export default async function StockPage({
                 </tr>
               </thead>
               <tbody style={{ fontVariantNumeric: "tabular-nums" }}>
+                {holders.length === 0 && (
+                  <tr>
+                    <td colSpan={6} className="px-7 py-6 text-sm text-fg-soft">
+                      No tracked manager holds {stock.ticker} in its latest
+                      filing — see who sold out below.
+                    </td>
+                  </tr>
+                )}
                 {holders.map(({ investor, holding }) => (
                   <tr
                     key={investor.slug}
@@ -191,6 +240,50 @@ export default async function StockPage({
           </div>
         </div>
       </Reveal>
+
+      <Reveal delay={160} className="mt-8">
+        <ActivityHistory
+          events={events}
+          by="investor"
+          title={`Who bought and sold ${stock.ticker}`}
+          subtitle="Every filing we hold, newest first · impact = share of the manager's portfolio"
+          openCount={4}
+        />
+      </Reveal>
+
+      {former.length > 0 && (
+        <Reveal delay={180} className="mt-8">
+          <section className="overflow-hidden rounded-2xl border border-line bg-surface/60">
+            <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-line px-6 py-4">
+              <h2 className="font-display text-lg font-semibold text-fg">
+                Former holders
+              </h2>
+              <p className="text-xs text-fg-faint">
+                Owned {stock.ticker} in an earlier filing, not in their latest
+              </p>
+            </div>
+            <ul>
+              {former.map((f) => (
+                <li key={f.investorSlug} className="border-b border-line/50 last:border-0">
+                  <Link
+                    href={`/investors/${f.investorSlug}/${stock.tickerSlug}`}
+                    className="flex items-center gap-3 px-6 py-3 text-sm transition-colors hover:bg-raised/60"
+                  >
+                    <span className="font-medium text-fg">{f.investorName}</span>
+                    {f.manager && (
+                      <span className="hidden text-xs text-fg-faint sm:block">{f.manager}</span>
+                    )}
+                    <span className="ml-auto text-xs text-fg-soft">
+                      Last held {f.lastHeld}
+                      {f.exited ? ` · sold out ${f.exited}` : ""}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </Reveal>
+      )}
 
       <Reveal delay={120} className="mt-8">
         <SponsorSlot />

@@ -23,6 +23,9 @@ export default function Navbar() {
           <Link href="/stocks" className="transition-colors hover:text-fg">
             Holdings
           </Link>
+          <Link href="/activity" className="transition-colors hover:text-fg">
+            Activity
+          </Link>
           <Link href="/rankings" className="transition-colors hover:text-fg">
             Rankings
           </Link>
