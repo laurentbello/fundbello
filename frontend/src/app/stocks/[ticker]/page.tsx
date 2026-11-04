@@ -241,16 +241,6 @@ export default async function StockPage({
         </div>
       </Reveal>
 
-      <Reveal delay={160} className="mt-8">
-        <ActivityHistory
-          events={events}
-          by="investor"
-          title={`Who bought and sold ${stock.ticker}`}
-          subtitle="Every filing we hold, newest first · impact = share of the manager's portfolio"
-          openCount={4}
-        />
-      </Reveal>
-
       {former.length > 0 && (
         <Reveal delay={180} className="mt-8">
           <section className="overflow-hidden rounded-2xl border border-line bg-surface/60">
@@ -284,6 +274,16 @@ export default async function StockPage({
           </section>
         </Reveal>
       )}
+
+      <Reveal delay={160} className="mt-8">
+        <ActivityHistory
+          events={events}
+          by="investor"
+          title={`Who bought and sold ${stock.ticker}`}
+          subtitle="Every filing we hold, newest first · impact = share of the manager's portfolio"
+          openCount={4}
+        />
+      </Reveal>
 
       <Reveal delay={120} className="mt-8">
         <SponsorSlot />
