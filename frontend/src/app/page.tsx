@@ -3,6 +3,7 @@ import {
   investors,
   aggregateStocks,
   LATEST_QUARTER,
+  quarterLabel,
   type Investor,
 } from "@/lib/data";
 import { formatMoney, formatPct } from "@/lib/format";
@@ -38,7 +39,16 @@ export default function Home() {
     buys: s.buys,
     sells: s.sells,
   }));
+  // Only moves from the newest quarter. Managers still on an older filing
+  // must not be shown under the newest-quarter heading (that mislabels
+  // stale moves as fresh ones).
+  const newestAsOf = investors.reduce(
+    (m, inv) => (inv.asOf > m ? inv.asOf : m),
+    "",
+  );
+  const newestQuarter = quarterLabel(newestAsOf);
   const recentMoves = investors
+    .filter((inv) => quarterLabel(inv.asOf) === newestQuarter)
     .flatMap((inv) =>
       inv.activity.map((a) => ({
         investor: inv,
@@ -253,6 +263,11 @@ export default function Home() {
               </h2>
             </div>
             <ul>
+              {recentMoves.length === 0 && (
+                <li className="px-6 py-3 text-sm text-fg-faint">
+                  No {LATEST_QUARTER} filings yet.
+                </li>
+              )}
               {recentMoves.map((m) => (
                 <li
                   key={`${m.investor.slug}-${m.ticker}`}

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Analytics from "@/components/Analytics";
+import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -18,6 +19,11 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(`${SITE_URL}/`),
+  openGraph: {
+    type: "website",
+    siteName: "Dataroma Global",
+  },
   title: {
     default: "Dataroma Global — Follow the World's Greatest Investors",
     template: "%s — Dataroma Global",
