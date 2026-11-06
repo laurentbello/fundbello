@@ -41,6 +41,10 @@ jobs:
         working-directory: frontend
         env:
           NEXT_BASE_PATH: /fundbello
+          # Public address, used by the sitemap and link previews. When you move
+          # to your own domain: set this to https://yourdomain.com, blank
+          # NEXT_BASE_PATH above, and add a CNAME file (see README).
+          SITE_URL: https://laurentbello.github.io/fundbello
         run: |
           npm run build
           touch out/.nojekyll
