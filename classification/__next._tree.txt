@@ -3,4 +3,4 @@
 :HL["/fundbello/_next/static/media/9d036f80216c14ee-s.p.3u4lli0-axodc.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"classification","h":96,"c":"$Q2"}]]
-0:{"b":"Hc8tvljtiMULEs0jj1s3r","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"VoUZ-7w0STNBvD1eQAnxT","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

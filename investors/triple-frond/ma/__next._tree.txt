@@ -5,4 +5,4 @@
 3:[["children",{"s":{"n":"ticker","t":"d","k":"ma","s":[]},"h":96,"c":"$Q4"}]]
 2:[["children",{"s":{"n":"slug","t":"d","k":"triple-frond","s":[]},"h":96,"c":"$Q3"}]]
 1:[["children",{"s":"investors","h":96,"c":"$Q2"}]]
-0:{"b":"Hc8tvljtiMULEs0jj1s3r","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"VoUZ-7w0STNBvD1eQAnxT","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
