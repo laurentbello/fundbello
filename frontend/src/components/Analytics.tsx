@@ -1,4 +1,5 @@
 import Script from "next/script";
+import ConsentBanner from "@/components/ConsentBanner";
 import {
   CLOUDFLARE_TOKEN,
   GA_MEASUREMENT_ID,
@@ -21,11 +22,18 @@ export default function Analytics() {
           <Script id="ga-init" strategy="afterInteractive">
             {`window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
+              var c = null;
+              try { c = localStorage.getItem('analytics-consent'); } catch (e) {}
+              gtag('consent', 'default', {
+                analytics_storage: c === 'granted' ? 'granted' : 'denied',
+                ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied'
+              });
               gtag('js', new Date());
               gtag('config', '${GA_MEASUREMENT_ID}');`}
           </Script>
         </>
       )}
+      {GA_MEASUREMENT_ID && <ConsentBanner />}
       {PLAUSIBLE_DOMAIN && (
         <Script
           strategy="afterInteractive"
