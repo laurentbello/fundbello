@@ -1,7 +1,7 @@
-:HL["/fundbello/_next/static/chunks/1d_u_i1r3a326.css","style"]
+:HL["/fundbello/_next/static/chunks/3yo6muy0h93hp.css","style"]
 :HL["/fundbello/_next/static/media/07c7676b89ed2778-s.p.2bn3s6zvc0dyp.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/fundbello/_next/static/media/9d036f80216c14ee-s.p.3u4lli0-axodc.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 3:[["children",{"s":"__PAGE__","h":160}]]
 2:[["children",{"s":{"n":"ticker","t":"d","k":"db1gn","s":[]},"h":96,"c":"$Q3"}]]
 1:[["children",{"s":"stocks","h":96,"c":"$Q2"}]]
-0:{"b":"FMj9A0xTyeaoB9btzqLPO","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"5LLqdXJaKbSk5z9hsKNM0","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
