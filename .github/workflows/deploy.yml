@@ -3,9 +3,8 @@ name: Deploy site
 on:
   push:
     branches: [main]
-  schedule:
-    # Re-sync from the Google Sheet and redeploy every Monday 06:00 UTC.
-    - cron: "0 6 * * 1"
+  # No schedule: the site re-syncs from the Google Sheet on each push to main
+  # or when run by hand (Actions > Deploy site > Run workflow) after a sheet update.
   workflow_dispatch:
 
 permissions:
